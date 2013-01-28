@@ -15,7 +15,30 @@
 **  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************/
 
-#ifndef LASTFM_HPP
-#define LASTFM_HPP
+#include <string>
 
-#endif // LASTFM_HPP
+#include "user.hpp"
+
+class User::impl {
+public:
+    impl(const std::string& username) : username(username) {
+
+    }
+    impl(const std::string& username, const std::string& sessionKey)
+        : username(username),
+          sessionKey(sessionKey)
+    {
+
+    }
+
+private:
+    const std::string& username;
+    std::string sessionKey;
+};
+
+User::User(const std::string& username) : pimpl(new impl(username)) {}
+
+User::User(const std::string& username, const std::string& sessionKey)
+    : pimpl(new impl(username, sessionKey))
+{
+}

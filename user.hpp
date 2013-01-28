@@ -15,7 +15,23 @@
 **  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************/
 
-#ifndef LASTFM_HPP
-#define LASTFM_HPP
+#ifndef USER_HPP
+#define USER_HPP
 
-#endif // LASTFM_HPP
+#include <memory>
+#include <string>
+
+class User {
+public:
+    User(const std::string& username);
+    User(const std::string &username, const std::string& sessionKey);
+
+    void authenticate();
+    const std::string& sessionKey();
+
+private:
+    class impl;
+    std::unique_ptr<impl> pimpl;
+};
+
+#endif // USER_HPP

@@ -15,7 +15,20 @@
 **  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************/
 
-#ifndef LASTFM_HPP
-#define LASTFM_HPP
+#ifndef LASTFM_UTILITIES_HPP
+#define LASTFM_UTILITIES_HPP
 
-#endif // LASTFM_HPP
+#include <boost/property_tree/ptree.hpp>
+#include <boost/thread/locks.hpp>
+
+namespace LastFM {
+
+struct NoAttributes {
+    bool operator()(const boost::property_tree::ptree::value_type& val) const {
+        return !(val.first == "<xmlattr>");
+    }
+};
+
+}//namespace LastFM
+
+#endif // LASTFM_UTILITIES_HPP

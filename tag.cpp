@@ -15,7 +15,26 @@
 **  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************/
 
-#ifndef LASTFM_HPP
-#define LASTFM_HPP
+#include "tag.hpp"
+#include "service.hpp"
 
-#endif // LASTFM_HPP
+#include <opqit/opaque_iterator.hpp>
+
+#include <list>
+
+namespace LastFM {
+
+Tag& Tag::operator=(const std::string& tag) {
+    name = tag;
+    return *this;
+}
+
+boost::iterator_range<opqit::opaque_iterator<Tag, opqit::forward>> Tag::getSimilar(std::shared_ptr<Service> lastserv) {
+    static std::list<Tag> similar;
+    if(!similar.empty())
+        return boost::make_iterator_range(similar);
+
+    return boost::make_iterator_range(similar);
+}
+
+}

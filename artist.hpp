@@ -15,7 +15,35 @@
 **  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************/
 
-#ifndef LASTFM_HPP
-#define LASTFM_HPP
+#ifndef LASTFM_ARTIST_HPP
+#define LASTFM_ARTIST_HPP
 
-#endif // LASTFM_HPP
+#include <list>
+#include <memory>
+
+#include "utilities.hpp"
+#include "tag.hpp"
+
+namespace LastFM {
+class Service;
+
+struct Artist {
+    Artist() = default;
+    Artist(const std::string& artist) : name(artist) {}
+    Artist(const std::string& artist, const std::string& url) : name(artist), url(url) {}
+    Artist& operator=(const Artist& artist);
+    Artist& operator=(const std::string& artist);
+
+    void getInfo(std::shared_ptr<Service> lastserv, bool autocorrect = false);
+    boost::iterator_range<opqit::opaque_iterator<Artist, opqit::forward>> getSimilar(std::shared_ptr<Service> lastserv);
+
+    std::string name;
+    network::uri url;
+    std::string biographySummary, biography;
+    bool streamable;
+    std::list<Tag> tags;
+};
+
+}//namespace LastFM
+
+#endif // LASTFM_ARTIST_HPP

@@ -15,7 +15,34 @@
 **  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************/
 
-#ifndef LASTFM_HPP
-#define LASTFM_HPP
+#ifndef LASTFM_BIOGRAPHY_HPP
+#define LASTFM_BIOGRAPHY_HPP
 
-#endif // LASTFM_HPP
+#include <QWidget>
+#include <QLabel>
+#include <QVBoxLayout>
+
+#include <memory>
+
+namespace LastFM {
+
+class Service;
+
+class BiographyWidget : public QWidget {
+    Q_OBJECT
+public:
+    BiographyWidget(std::weak_ptr<Service> lastserv, QWidget *parent = 0);
+
+Q_SIGNALS:
+
+public Q_SLOTS:
+
+private:
+    std::weak_ptr<Service> lastserv;
+    QLabel* text;
+    QVBoxLayout* layout;
+};
+
+}
+
+#endif // LASTFM_BIOGRAPHY_HPP

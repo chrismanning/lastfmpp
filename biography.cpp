@@ -15,7 +15,28 @@
 **  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************/
 
-#ifndef LASTFM_HPP
-#define LASTFM_HPP
+#include "biography.hpp"
+#include "service.hpp"
+#include "track.hpp"
 
-#endif // LASTFM_HPP
+#include <functional>
+
+namespace LastFM {
+
+BiographyWidget::BiographyWidget(std::weak_ptr<Service> lastserv, QWidget *parent)
+    : QWidget(parent),
+      lastserv(lastserv)
+{
+    text = new QLabel;
+    layout = new QVBoxLayout;
+    layout->addWidget(text);
+    this->setLayout(layout);
+    std::shared_ptr<Service> ptr(lastserv.lock());
+    if(ptr)
+        ptr->currentTrack()->getInfo([&](Track& t) {
+            this->text->setText(t.getUrl().string().c_str());
+            this->update();
+        });
+}
+
+}//namespace LastFM

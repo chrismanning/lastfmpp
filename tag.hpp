@@ -15,7 +15,33 @@
 **  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************/
 
-#ifndef LASTFM_HPP
-#define LASTFM_HPP
+#ifndef LASTFM_TAG_HPP
+#define LASTFM_TAG_HPP
 
-#endif // LASTFM_HPP
+#include <string>
+
+#include <opqit/opaque_iterator_fwd.hpp>
+#include <network/uri.hpp>
+
+#include "utilities.hpp"
+
+namespace LastFM {
+
+class Service;
+
+struct Tag {
+    Tag(const std::string& tag, const std::string& url) : name(tag), url(url) {}
+    Tag& operator=(const std::string& tag);
+    boost::iterator_range<opqit::opaque_iterator<Tag, opqit::forward>> getSimilar(std::shared_ptr<Service> lastserv);
+
+    std::string name;
+    network::uri url;
+    int reach = 0;
+    int taggings = 0;
+    bool streamable = false;
+    std::string wiki;
+};
+
+}//namespace LastFM
+
+#endif // LASTFM_TAG_HPP
