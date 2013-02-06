@@ -21,10 +21,12 @@
 #include <memory>
 #include <string>
 
+namespace LastFM {
+
 class User {
 public:
     User(const std::string& username);
-    User(const std::string &username, const std::string& sessionKey);
+    User(const std::string& username, const std::string& sessionKey);
 
     void authenticate();
     const std::string& sessionKey();
@@ -33,5 +35,7 @@ private:
     class impl;
     std::unique_ptr<impl> pimpl;
 };
+
+}//namespace LastFM
 
 #endif // USER_HPP
