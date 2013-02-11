@@ -21,6 +21,9 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/thread/locks.hpp>
 
+#include <functional>
+namespace ph = std::placeholders;
+
 namespace LastFM {
 
 struct NoAttributes {
