@@ -31,14 +31,14 @@ public:
 
     virtual ~LastFmConfig();
 
-    ConfigWidget* createWidget(Melosic::Config::Manager&) override;
+    ConfigWidget* createWidget() override;
     QIcon* getIcon() const override;
 };
 
 class LastFmConfigWidget : public GenericConfigWidget {
     Q_OBJECT
 public:
-    LastFmConfigWidget(Config::Base& conf, Melosic::Config::Manager& confman, QWidget* parent = nullptr);
+    LastFmConfigWidget(Config::Base& conf, QWidget* parent = nullptr);
     void apply();
 private Q_SLOTS:
     void authenticate();
