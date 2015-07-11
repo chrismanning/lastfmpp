@@ -15,35 +15,26 @@
 **  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************/
 
-#ifndef LASTFM_WIKI_HPP
-#define LASTFM_WIKI_HPP
+#ifndef LASTFM_DESERIALISE_MBID
+#define LASTFM_DESERIALISE_MBID
 
-#include <string>
-#include <experimental/string_view>
+#include <boost/uuid/string_generator.hpp>
 
-#include <lastfmpp/lastfmpp.hpp>
-#include <lastfmpp/date.hpp>
+#include <jbson/element.hpp>
 
-namespace lastfmpp {
+#include <lastfmpp/mbid.hpp>
 
-struct LASTFM_EXPORT wiki {
-    explicit wiki() = default;
+namespace boost::uuids {
 
-    std::string_view summary() const;
-    void summary(std::string_view);
+template <typename Container> void value_get(const jbson::basic_element<Container>& mbid_elem, uuid& var) {
+    static constexpr string_generator gen{};
+    auto str = jbson::get<jbson::element_type::string_element>(mbid_elem);
+    try {
+        var = gen(str.begin(), str.end());
+    } catch(...) {}
+}
 
-    std::string_view content() const;
-    void content(std::string_view);
+} // namespace boost::uuids
 
-    date_t published() const;
-    void published(date_t);
+#endif // LASTFM_DESERIALISE_MBID
 
-  private:
-    std::string m_summary;
-    std::string m_content;
-    date_t m_published;
-};
-
-} // namespace lastfm
-
-#endif // LASTFM_WIKI_HPP

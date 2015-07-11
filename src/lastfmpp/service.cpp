@@ -52,13 +52,13 @@ static constexpr convert_to_casablanca_string_impl convert_to_casablanca_string{
 
 struct service::impl {
     impl(std::string_view api_key, std::string_view shared_secret)
-        : cas_client(web::uri{base_url.to_string()}), api_key(api_key), shared_secret(shared_secret) {
+        : cas_client(uri_t{base_url.to_string()}), api_key(api_key), shared_secret(shared_secret) {
         assert(!api_key.empty());
         assert(!shared_secret.empty());
     }
 
     pplx::task<std::string> get(std::string_view method, params_t params) {
-        web::uri_builder uri_build;
+        uri_builder uri_build;
 
         uri_build.append_query(U("method"), convert_to_casablanca_string(method));
         for(auto&& member : params) {

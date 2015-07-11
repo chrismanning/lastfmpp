@@ -31,6 +31,7 @@
 
 #include <lastfmpp/artist.hpp>
 #include <lastfmpp/tag.hpp>
+#include <lastfmpp/detail/deserialise_artist.hpp>
 
 TEST_CASE("artist_deserialise") {
     boost::filesystem::path test_dir{LASTFMPP_TEST_DATA_DIR};

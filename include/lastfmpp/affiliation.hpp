@@ -19,6 +19,7 @@
 #define LASTFM_AFFILIATION_HPP
 
 #include <lastfmpp/lastfmpp.hpp>
+#include <lastfmpp/uri.hpp>
 
 namespace lastfmpp {
 
@@ -28,48 +29,25 @@ struct LASTFM_EXPORT affiliation {
     std::string_view supplier_name() const;
     void supplier_name(std::string_view);
 
-    const web::uri& buy_link() const;
-    void buy_link(web::uri);
+    const uri_t& buy_link() const;
+    void buy_link(uri_t);
 
     std::string_view price() const;
     void price(std::string_view);
 
-    const web::uri& supplier_icon() const;
-    void supplier_icon(web::uri);
+    const uri_t& supplier_icon() const;
+    void supplier_icon(uri_t);
 
     bool is_search() const;
     void is_search(bool);
 
   private:
     std::string m_supplier_name;
-    web::uri m_buy_link;
+    uri_t m_buy_link;
     std::string m_price;
-    web::uri m_supplier_icon;
+    uri_t m_supplier_icon;
     bool m_is_search = false;
 };
-
-template <typename Container> void value_get(const jbson::basic_element<Container>& elem, affiliation& var) {
-    auto doc = jbson::get<jbson::element_type::document_element>(elem);
-    for(auto&& elem : doc) {
-        if(elem.name() == "supplierName") {
-            auto str = jbson::get<jbson::element_type::string_element>(elem);
-            var.supplier_name({str.data(), str.size()});
-        } else if(elem.name() == "buyLink") {
-            var.buy_link(jbson::get<web::uri>(elem));
-        } else if(elem.name() == "price") {
-            for(auto&& e : jbson::get<jbson::element_type::document_element>(elem)) {
-                if(e.name() == "formatted") {
-                    auto str = jbson::get<jbson::element_type::string_element>(elem);
-                    var.price({str.data(), str.size()});
-                }
-            }
-        } else if(elem.name() == "supplierIcon") {
-            var.supplier_icon(jbson::get<web::uri>(elem));
-        } else if(elem.name() == "isSearch") {
-            var.is_search(jbson::get<jbson::element_type::string_element>(elem) == "1");
-        }
-    }
-}
 
 } // namespace lastfm
 

@@ -17,6 +17,8 @@
 
 #include <lastfmpp/location.hpp>
 
+namespace lastfmpp {
+
 std::string_view location::street() const {
     return m_street;
 }
@@ -48,3 +50,5 @@ std::string_view location::post_code() const {
 void location::post_code(std::string_view post_code) {
     m_post_code = post_code.to_string();
 }
+
+} // namespace lastfmpp

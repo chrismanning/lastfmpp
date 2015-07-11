@@ -20,9 +20,8 @@
 
 #include <unordered_map>
 
-#include <cpprest/uri.h>
-
 #include <lastfmpp/lastfmpp.hpp>
+#include <lastfmpp/uri.hpp>
 
 namespace lastfmpp {
 
@@ -31,37 +30,16 @@ enum class image_size { small, medium, large, extralarge, mega };
 struct LASTFM_EXPORT image {
     explicit image() = default;
 
-    const web::uri& uri() const;
-    void uri(web::uri);
+    const uri_t& uri() const;
+    void uri(uri_t);
 
     image_size size() const;
     void size(image_size);
 
   private:
-    web::uri m_uri;
+    uri_t m_uri;
     image_size m_size = image_size::small;
 };
-
-template <typename Container> void value_get(const jbson::basic_element<Container>& elem, image& var) {
-    auto doc = jbson::get<jbson::element_type::document_element>(elem);
-    for(auto&& elem : doc) {
-        if(elem.name() == "#text") {
-            var.uri(jbson::get<web::uri>(elem));
-        } else if(elem.name() == "size") {
-            var.size(jbson::get<image_size>(elem));
-        }
-    }
-}
-
-template <typename Container> void value_get(const jbson::basic_element<Container>& elem, image_size& var) {
-    static const std::unordered_map<std::string_view, image_size> map = {{"small"_sv, image_size::small},
-                                                                         {"medium"_sv, image_size::medium},
-                                                                         {"large"_sv, image_size::large},
-                                                                         {"extralarge"_sv, image_size::extralarge},
-                                                                         {"mega"_sv, image_size::mega}};
-    auto str = jbson::get<jbson::element_type::string_element>(elem);
-    var = map.at(str);
-}
 
 } // namespace lastfm
 

@@ -20,6 +20,12 @@
 #include <lastfmpp/user.hpp>
 #include <lastfmpp/artist.hpp>
 #include <lastfmpp/track.hpp>
+#include <lastfmpp/detail/deserialise_track.hpp>
+#include <lastfmpp/detail/deserialise_affiliation.hpp>
+#include <lastfmpp/detail/deserialise_ext.hpp>
+#include <lastfmpp/detail/deserialise_user.hpp>
+#include <lastfmpp/detail/deserialise_tag.hpp>
+#include <lastfmpp/detail/deserialise_shout.hpp>
 
 namespace lastfmpp {
 
@@ -79,11 +85,11 @@ void track::similar(std::vector<track> similar) {
     m_similar = std::move(similar);
 }
 
-const web::uri& track::url() const {
+const uri_t& track::url() const {
     return m_url;
 }
 
-void track::url(web::uri url) {
+void track::url(uri_t url) {
     m_url = std::move(url);
 }
 

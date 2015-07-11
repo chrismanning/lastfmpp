@@ -15,35 +15,16 @@
 **  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************/
 
-#ifndef LASTFM_WIKI_HPP
-#define LASTFM_WIKI_HPP
+#ifndef LASTFM_URI_HPP
+#define LASTFM_URI_HPP
 
-#include <string>
-#include <experimental/string_view>
-
-#include <lastfmpp/lastfmpp.hpp>
-#include <lastfmpp/date.hpp>
+#include <cpprest/uri.h>
 
 namespace lastfmpp {
 
-struct LASTFM_EXPORT wiki {
-    explicit wiki() = default;
+using uri_t = web::uri;
+using uri_builder = web::uri_builder;
 
-    std::string_view summary() const;
-    void summary(std::string_view);
+} // namespace lastfmpp
 
-    std::string_view content() const;
-    void content(std::string_view);
-
-    date_t published() const;
-    void published(date_t);
-
-  private:
-    std::string m_summary;
-    std::string m_content;
-    date_t m_published;
-};
-
-} // namespace lastfm
-
-#endif // LASTFM_WIKI_HPP
+#endif // LASTFM_URI_HPP

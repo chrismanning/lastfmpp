@@ -15,35 +15,31 @@
 **  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************/
 
-#ifndef LASTFM_WIKI_HPP
-#define LASTFM_WIKI_HPP
+#ifndef LASTFM_DESERIALISE_WIKI
+#define LASTFM_DESERIALISE_WIKI
 
-#include <string>
-#include <experimental/string_view>
+#include <jbson/element.hpp>
 
-#include <lastfmpp/lastfmpp.hpp>
-#include <lastfmpp/date.hpp>
+#include <lastfmpp/wiki.hpp>
 
 namespace lastfmpp {
 
-struct LASTFM_EXPORT wiki {
-    explicit wiki() = default;
+template <typename Container> void value_get(const jbson::basic_element<Container>& elem, wiki& var) {
+    auto doc = jbson::get<jbson::element_type::document_element>(elem);
+    for(auto&& elem : doc) {
+        if(elem.name() == "summary") {
+            auto str = jbson::get<jbson::element_type::string_element>(elem);
+            var.summary({str.data(), str.size()});
+        } else if(elem.name() == "content") {
+            auto str = jbson::get<jbson::element_type::string_element>(elem);
+            var.content({str.data(), str.size()});
+        } else if(elem.name() == "published") {
+            var.published(jbson::get<date_t>(elem));
+        }
+    }
+}
 
-    std::string_view summary() const;
-    void summary(std::string_view);
+} // namespace lastfmpp
 
-    std::string_view content() const;
-    void content(std::string_view);
+#endif // LASTFM_DESERIALISE_WIKI
 
-    date_t published() const;
-    void published(date_t);
-
-  private:
-    std::string m_summary;
-    std::string m_content;
-    date_t m_published;
-};
-
-} // namespace lastfm
-
-#endif // LASTFM_WIKI_HPP

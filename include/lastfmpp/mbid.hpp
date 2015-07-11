@@ -19,26 +19,11 @@
 #define LASTFM_MBID
 
 #include <boost/uuid/uuid.hpp>
-#include <boost/uuid/string_generator.hpp>
-
-#include <jbson/element.hpp>
 
 namespace lastfmpp {
 
 using mbid_t = boost::uuids::uuid;
 
 } // namespace lastfm
-
-namespace boost::uuids {
-
-template <typename Container> void value_get(const jbson::basic_element<Container>& mbid_elem, uuid& var) {
-    static constexpr string_generator gen{};
-    auto str = jbson::get<jbson::element_type::string_element>(mbid_elem);
-    try {
-        var = gen(str.begin(), str.end());
-    } catch(...) {}
-}
-
-} // namespace boost::uuids
 
 #endif // LASTFM_MBID

@@ -22,6 +22,7 @@
 #include <boost/hana/ext/std.hpp>
 
 #include <lastfmpp/lastfmpp.hpp>
+#include <lastfmpp/date.hpp>
 #include <lastfmpp/detail/hana_optional.hpp>
 
 namespace lastfmpp::detail {

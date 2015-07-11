@@ -31,6 +31,7 @@
 
 #include <lastfmpp/venue.hpp>
 #include <lastfmpp/detail/transform.hpp>
+#include <lastfmpp/detail/deserialise_venue.hpp>
 
 TEST_CASE("venues_deserialise") {
     boost::filesystem::path test_dir{LASTFMPP_TEST_DATA_DIR};

@@ -18,6 +18,11 @@
 #include <lastfmpp/album.hpp>
 #include <lastfmpp/service.hpp>
 #include <lastfmpp/track.hpp>
+#include <lastfmpp/detail/deserialise_album.hpp>
+#include <lastfmpp/detail/deserialise_affiliation.hpp>
+#include <lastfmpp/detail/deserialise_shout.hpp>
+#include <lastfmpp/detail/deserialise_tag.hpp>
+#include <lastfmpp/detail/deserialise_ext.hpp>
 
 namespace lastfmpp {
 
@@ -37,11 +42,11 @@ void album::artist(struct artist artist) {
     m_artist = artist;
 }
 
-const web::uri& album::url() const {
+const uri_t& album::url() const {
     return m_url;
 }
 
-void album::url(web::uri url) {
+void album::url(uri_t url) {
     m_url = std::move(url);
 }
 

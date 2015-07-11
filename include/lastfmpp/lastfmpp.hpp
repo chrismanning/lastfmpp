@@ -18,17 +18,17 @@
 #ifndef LASTFM_HPP
 #define LASTFM_HPP
 
-#include <chrono>
 #include <experimental/string_view>
 #include <experimental/optional>
 
 #include <pplx/pplxtasks.h>
 
-#include <cpprest/uri.h>
-
-#include <jbson/element.hpp>
-
 #include <lastfmpp/exports.hpp>
+
+namespace std {
+namespace experimental {}
+using namespace experimental;
+}
 
 namespace lastfmpp {
 
@@ -48,42 +48,6 @@ constexpr std::u32string_view operator""_sv(const char32_t* str, size_t len) {
     return {str, len};
 }
 
-using date_t = std::chrono::system_clock::time_point;
-
 } // namespace lastfm
-
-namespace std {
-namespace experimental {}
-using namespace experimental;
-namespace chrono {
-
-template <typename Container> void value_get(const jbson::basic_element<Container>& elem, lastfmpp::date_t& var) {
-    std::tm tm;
-    auto str = jbson::get<std::string>(elem);
-    std::stringstream ss{str};
-    ss >> std::get_time(&tm, "%a, %d %b %Y %H:%M:%S");
-    var = lastfmpp::date_t::clock::from_time_t(std::mktime(&tm));
-}
-
-} // namespace chrono
-
-template <typename Container, typename Elem>
-void value_get(const jbson::basic_element<Container>& vector_elem, vector<Elem>& var) {
-    auto arr = jbson::get<jbson::element_type::array_element>(vector_elem);
-    for(auto&& elem : arr) {
-        var.push_back(jbson::get<Elem>(elem));
-    }
-}
-
-} // namespace std
-
-namespace web {
-
-template <typename Container> void value_get(const jbson::basic_element<Container>& elem, uri& var) {
-    auto str = utility::conversions::to_string_t(jbson::get<std::string>(elem));
-    var = uri{std::move(str)};
-}
-
-} // namespace network
 
 #endif // LASTFM_HPP

@@ -18,11 +18,8 @@
 #ifndef LASTFM_USER_HPP
 #define LASTFM_USER_HPP
 
-#include <cpprest/uri.h>
-
-#include <jbson/element.hpp>
-
 #include <lastfmpp/lastfmpp.hpp>
+#include <lastfmpp/uri.hpp>
 
 namespace lastfmpp {
 class service;
@@ -30,12 +27,6 @@ class service;
 struct LASTFM_EXPORT user {
     explicit user() = default;
 };
-
-template <typename Container> void value_get(const jbson::basic_element<Container>& user_elem, user& var) {
-    //    auto doc = jbson::get<jbson::element_type::document_element>(user_elem);
-    //    for(auto&& elem : doc) {
-    //    }
-}
 
 } // namespace lastfm
 

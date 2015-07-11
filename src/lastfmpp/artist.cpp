@@ -20,6 +20,12 @@
 #include <lastfmpp/track.hpp>
 #include <lastfmpp/user.hpp>
 #include <lastfmpp/artist.hpp>
+#include <lastfmpp/detail/deserialise_ext.hpp>
+#include <lastfmpp/detail/deserialise_artist.hpp>
+#include <lastfmpp/detail/deserialise_event.hpp>
+#include <lastfmpp/detail/deserialise_shout.hpp>
+#include <lastfmpp/detail/deserialise_album.hpp>
+#include <lastfmpp/detail/deserialise_user.hpp>
 
 namespace lastfmpp {
 
@@ -31,11 +37,11 @@ void artist::name(std::string_view name) {
     m_name = name.to_string();
 }
 
-const web::uri& artist::url() const {
+const uri_t& artist::url() const {
     return m_url;
 }
 
-void artist::url(web::uri url) {
+void artist::url(uri_t url) {
     m_url = std::move(url);
 }
 

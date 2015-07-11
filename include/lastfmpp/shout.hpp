@@ -19,6 +19,7 @@
 #define LASTFM_SHOUT_HPP
 
 #include <lastfmpp/lastfmpp.hpp>
+#include <lastfmpp/date.hpp>
 
 namespace lastfmpp {
 
@@ -41,21 +42,6 @@ struct LASTFM_EXPORT shout {
     std::string m_body;
     date_t m_date;
 };
-
-template <typename Container> void value_get(const jbson::basic_element<Container>& elem, shout& var) {
-    auto doc = jbson::get<jbson::element_type::document_element>(elem);
-    for(auto&& elem : doc) {
-        if(elem.name() == "author") {
-            auto str = jbson::get<jbson::element_type::string_element>(elem);
-            var.body({str.data(), str.size()});
-        } else if(elem.name() == "body") {
-            auto str = jbson::get<jbson::element_type::string_element>(elem);
-            var.body({str.data(), str.size()});
-        } else if(elem.name() == "date") {
-            var.date(jbson::get<date_t>(elem));
-        }
-    }
-}
 
 } // namespace lastfm
 

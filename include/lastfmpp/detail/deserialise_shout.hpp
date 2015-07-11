@@ -15,39 +15,32 @@
 **  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************/
 
-#ifndef LASTFM_LOCATION_HPP
-#define LASTFM_LOCATION_HPP
+#ifndef LASTFM_DESERIALISE_SHOUT
+#define LASTFM_DESERIALISE_SHOUT
 
-#include <lastfmpp/lastfmpp.hpp>
+#include <jbson/element.hpp>
+
+#include <lastfmpp/shout.hpp>
+#include <lastfmpp/detail/deserialise_ext.hpp>
 
 namespace lastfmpp {
 
-struct LASTFM_EXPORT location {
-    explicit location() = default;
-
-    std::string_view street() const;
-    void street(std::string_view street);
-
-    std::string_view city() const;
-    void city(std::string_view city);
-
-    std::string_view country() const;
-    void country(std::string_view country);
-
-    std::string_view post_code() const;
-    void post_code(std::string_view post_code);
-
-    // api methods
-
-private:
-    std::string m_street;
-    std::string m_city;
-    std::string m_country;
-    std::string m_post_code;
-};
-
-using geo = location;
+template <typename Container> void value_get(const jbson::basic_element<Container>& elem, shout& var) {
+    auto doc = jbson::get<jbson::element_type::document_element>(elem);
+    for(auto&& elem : doc) {
+        if(elem.name() == "author") {
+            auto str = jbson::get<jbson::element_type::string_element>(elem);
+            var.body({str.data(), str.size()});
+        } else if(elem.name() == "body") {
+            auto str = jbson::get<jbson::element_type::string_element>(elem);
+            var.body({str.data(), str.size()});
+        } else if(elem.name() == "date") {
+            var.date(jbson::get<date_t>(elem));
+        }
+    }
+}
 
 } // namespace lastfmpp
 
-#endif // LASTFM_LOCATION_HPP
+#endif // LASTFM_DESERIALISE_SHOUT
+

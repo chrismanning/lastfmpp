@@ -31,6 +31,7 @@
 
 #include <lastfmpp/track.hpp>
 #include <lastfmpp/tag.hpp>
+#include <lastfmpp/detail/deserialise_track.hpp>
 
 TEST_CASE("track_deserialise") {
     boost::filesystem::path test_dir{LASTFMPP_TEST_DATA_DIR};

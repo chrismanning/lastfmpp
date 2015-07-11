@@ -17,5 +17,6 @@
 
 #include <lastfmpp/user.hpp>
 #include <lastfmpp/service.hpp>
+#include <lastfmpp/detail/deserialise_user.hpp>
 
 namespace lastfmpp {} // namespace lastfm

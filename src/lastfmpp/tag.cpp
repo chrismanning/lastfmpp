@@ -22,6 +22,11 @@
 #include <lastfmpp/album.hpp>
 #include <lastfmpp/track.hpp>
 #include <lastfmpp/service.hpp>
+#include <lastfmpp/detail/deserialise_tag.hpp>
+#include <lastfmpp/detail/deserialise_album.hpp>
+#include <lastfmpp/detail/deserialise_artist.hpp>
+#include <lastfmpp/detail/deserialise_ext.hpp>
+#include <lastfmpp/detail/deserialise_track.hpp>
 
 namespace lastfmpp {
 
@@ -33,11 +38,11 @@ void tag::name(std::string_view name) {
     m_name = name.to_string();
 }
 
-const web::uri& tag::url() const {
+const uri_t& tag::url() const {
     return m_url;
 }
 
-void tag::url(web::uri url) {
+void tag::url(uri_t url) {
     m_url = std::move(url);
 }
 

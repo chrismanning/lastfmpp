@@ -20,6 +20,8 @@
 
 #include <lastfmpp/lastfmpp.hpp>
 #include <lastfmpp/wiki.hpp>
+#include <lastfmpp/date.hpp>
+#include <lastfmpp/uri.hpp>
 
 namespace lastfmpp {
 
@@ -35,8 +37,8 @@ struct LASTFM_EXPORT tag {
     std::string_view name() const;
     void name(std::string_view);
 
-    const web::uri& url() const;
-    void url(web::uri);
+    const uri_t& url() const;
+    void url(uri_t);
 
     int reach() const;
     void reach(int);
@@ -96,34 +98,12 @@ struct LASTFM_EXPORT tag {
 
   private:
     std::string m_name;
-    web::uri m_url;
+    uri_t m_url;
     int m_reach = 0;
     int m_taggings = 0;
     bool m_streamable = false;
     struct wiki m_wiki;
 };
-
-template <typename Container> void value_get(const jbson::basic_element<Container>& tag_elem, tag& var) {
-    auto doc = jbson::get<jbson::element_type::document_element>(tag_elem);
-    for(auto&& elem : doc) {
-        if(elem.name() == "name") {
-            auto str = jbson::get<jbson::element_type::string_element>(elem);
-            var.name({str.data(), str.size()});
-        } else if(elem.name() == "url") {
-            var.url(jbson::get<web::uri>(elem));
-        } else if(elem.name() == "reach") {
-            auto str = jbson::get<jbson::element_type::string_element>(elem);
-            var.reach(std::strtol(str.data(), nullptr, 10));
-        } else if(elem.name() == "taggings") {
-            auto str = jbson::get<jbson::element_type::string_element>(elem);
-            var.taggings(std::strtol(str.data(), nullptr, 10));
-        } else if(elem.name() == "streamable") {
-            var.streamable(jbson::get<jbson::element_type::string_element>(elem) == "1");
-        } else if(elem.name() == "wiki") {
-            var.wiki(jbson::get<wiki>(elem));
-        }
-    }
-}
 
 } // namespace lastfm
 

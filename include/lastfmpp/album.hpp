@@ -21,8 +21,6 @@
 #include <string>
 #include <vector>
 
-#include <cpprest/uri.h>
-
 #include <boost/uuid/uuid.hpp>
 
 #include <lastfmpp/lastfmpp.hpp>
@@ -32,6 +30,7 @@
 #include <lastfmpp/image.hpp>
 #include <lastfmpp/tag.hpp>
 #include <lastfmpp/mbid.hpp>
+#include <lastfmpp/uri.hpp>
 
 namespace lastfmpp {
 
@@ -46,8 +45,8 @@ struct LASTFM_EXPORT album {
     const artist& artist() const;
     void artist(struct artist);
 
-    const web::uri& url() const;
-    void url(web::uri);
+    const uri_t& url() const;
+    void url(uri_t);
 
     date_t release_date() const;
     void release_date(date_t);
@@ -137,7 +136,7 @@ struct LASTFM_EXPORT album {
   private:
     std::string m_name;
     struct artist m_artist;
-    web::uri m_url;
+    uri_t m_url;
     date_t m_release_date;
     std::vector<tag> m_top_tags;
     std::vector<track> m_tracks;
@@ -149,54 +148,6 @@ struct LASTFM_EXPORT album {
     std::vector<image> m_images;
     mbid_t m_mbid{{0}};
 };
-
-template <typename Container> void value_get(const jbson::basic_element<Container>& album_elem, album& var) {
-    auto doc = jbson::get<jbson::element_type::document_element>(album_elem);
-    for(auto&& elem : doc) {
-        if(elem.name() == "name" || elem.name() == "title") {
-            var.name(jbson::get<jbson::element_type::string_element>(elem));
-        } else if(elem.name() == "artist") {
-            if(elem.type() == jbson::element_type::string_element) {
-                artist a;
-                a.name(jbson::get<jbson::element_type::string_element>(elem));
-                var.artist(std::move(a));
-            } else
-                var.artist(jbson::get<artist>(elem));
-        } else if(elem.name() == "url") {
-            var.url(jbson::get<web::uri>(elem));
-        } else if(elem.name() == "listeners") {
-            auto str = jbson::get<jbson::element_type::string_element>(elem);
-            var.listeners(std::strtol(str.data(), nullptr, 10));
-        } else if(elem.name() == "plays") {
-            auto str = jbson::get<jbson::element_type::string_element>(elem);
-            var.plays(std::strtol(str.data(), nullptr, 10));
-        } else if(elem.name() == "wiki") {
-            var.wiki(jbson::get<wiki>(elem));
-        } else if(elem.name() == "releasedate") {
-            var.release_date(jbson::get<date_t>(elem));
-        } else if(elem.name() == "toptags" || elem.name() == "tags") {
-            if(elem.type() == jbson::element_type::document_element) {
-                for(auto&& e : jbson::get<jbson::element_type::document_element>(elem))
-                    if(e.name() == "tag")
-                        var.top_tags(jbson::get<std::vector<tag>>(e));
-            } else {
-                var.top_tags(jbson::get<std::vector<tag>>(elem));
-            }
-        } else if(elem.name() == "tracks") {
-            if(elem.type() == jbson::element_type::document_element) {
-                for(auto&& e : jbson::get<jbson::element_type::document_element>(elem))
-                    if(e.name() == "track")
-                        var.tracks(jbson::get<std::vector<track>>(e));
-            } else {
-                var.tracks(jbson::get<std::vector<track>>(elem));
-            }
-        } else if(elem.name() == "image") {
-            var.images(jbson::get<std::vector<image>>(elem));
-        } else if(elem.name() == "mbid") {
-            var.mbid(jbson::get<mbid_t>(elem));
-        }
-    }
-}
 
 } // namespace lastfm
 

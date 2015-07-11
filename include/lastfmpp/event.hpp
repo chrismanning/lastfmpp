@@ -21,6 +21,7 @@
 #include <lastfmpp/lastfmpp.hpp>
 #include <lastfmpp/venue.hpp>
 #include <lastfmpp/image.hpp>
+#include <lastfmpp/date.hpp>
 
 namespace lastfmpp {
 
@@ -53,8 +54,8 @@ struct LASTFM_EXPORT event {
     int attendance() const;
     void attendance(int attendance);
 
-    const web::uri& url() const;
-    void url(web::uri url);
+    const uri_t& url() const;
+    void url(uri_t url);
 
   private:
     std::string m_id;
@@ -65,43 +66,8 @@ struct LASTFM_EXPORT event {
     std::string m_description;
     std::vector<image> m_images;
     int m_attendance = 0;
-    web::uri m_url;
+    uri_t m_url;
 };
-
-template <typename Container> void value_get(const jbson::basic_element<Container>& event_elem, event& var) {
-    auto doc = jbson::get<jbson::element_type::document_element>(event_elem);
-    for(auto&& elem : doc) {
-        if(elem.name() == "id") {
-            auto str = jbson::get<jbson::element_type::string_element>(elem);
-            var.id({str.data(), str.size()});
-        } else if(elem.name() == "title") {
-            auto str = jbson::get<jbson::element_type::string_element>(elem);
-            var.name({str.data(), str.size()});
-        } else if(elem.name() == "url") {
-            var.url(jbson::get<web::uri>(elem));
-        } else if(elem.name() == "attendance") {
-            auto str = jbson::get<jbson::element_type::string_element>(elem);
-            var.attendance(std::strtol(str.data(), nullptr, 10));
-        } else if(elem.name() == "description") {
-            auto str = jbson::get<jbson::element_type::string_element>(elem);
-            var.description(str);
-        } else if(elem.name() == "startDate") {
-            var.start_date(jbson::get<date_t>(elem));
-        } else if(elem.name() == "venue") {
-            var.venue(jbson::get<venue>(elem));
-        } else if(elem.name() == "artists") {
-            if(elem.type() == jbson::element_type::document_element) {
-                for(auto&& e : jbson::get<jbson::element_type::document_element>(elem))
-                    if(e.name() == "artist")
-                        var.artists(jbson::get<std::vector<artist>>(e));
-            } else {
-                var.artists(jbson::get<std::vector<artist>>(elem));
-            }
-        } else if(elem.name() == "image") {
-            var.images(jbson::get<std::vector<image>>(elem));
-        }
-    }
-}
 
 } // namespace lastfm
 

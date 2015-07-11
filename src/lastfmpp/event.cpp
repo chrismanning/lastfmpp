@@ -17,6 +17,7 @@
 
 #include <lastfmpp/event.hpp>
 #include <lastfmpp/artist.hpp>
+#include <lastfmpp/detail/deserialise_event.hpp>
 
 namespace lastfmpp {
 
@@ -84,11 +85,11 @@ void event::attendance(int attendance) {
     m_attendance = attendance;
 }
 
-const web::uri& event::url() const {
+const uri_t& event::url() const {
     return m_url;
 }
 
-void event::url(web::uri url) {
+void event::url(uri_t url) {
     m_url = std::move(url);
 }
 

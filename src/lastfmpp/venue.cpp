@@ -19,6 +19,9 @@
 #include <lastfmpp/service.hpp>
 #include <lastfmpp/event.hpp>
 #include <lastfmpp/artist.hpp>
+#include <lastfmpp/detail/deserialise_ext.hpp>
+#include <lastfmpp/detail/deserialise_venue.hpp>
+#include <lastfmpp/detail/deserialise_event.hpp>
 
 namespace lastfmpp {
 
@@ -38,19 +41,19 @@ void venue::name(std::string_view name) {
     m_name = name.to_string();
 }
 
-const web::uri& venue::url() const {
+const uri_t& venue::url() const {
     return m_url;
 }
 
-void venue::url(web::uri url) {
+void venue::url(uri_t url) {
     m_url = std::move(url);
 }
 
-const web::uri& venue::website() const {
+const uri_t& venue::website() const {
     return m_website;
 }
 
-void venue::website(web::uri website) {
+void venue::website(uri_t website) {
     m_website = std::move(website);
 }
 

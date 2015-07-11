@@ -15,35 +15,16 @@
 **  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************/
 
-#ifndef LASTFM_WIKI_HPP
-#define LASTFM_WIKI_HPP
+#ifndef LASTFM_DATE_HPP
+#define LASTFM_DATE_HPP
 
-#include <string>
-#include <experimental/string_view>
-
-#include <lastfmpp/lastfmpp.hpp>
-#include <lastfmpp/date.hpp>
+#include <chrono>
 
 namespace lastfmpp {
 
-struct LASTFM_EXPORT wiki {
-    explicit wiki() = default;
+using date_t = std::chrono::system_clock::time_point;
 
-    std::string_view summary() const;
-    void summary(std::string_view);
+} // namespace lastfmpp
 
-    std::string_view content() const;
-    void content(std::string_view);
+#endif // LASTFM_DATE_HPP
 
-    date_t published() const;
-    void published(date_t);
-
-  private:
-    std::string m_summary;
-    std::string m_content;
-    date_t m_published;
-};
-
-} // namespace lastfm
-
-#endif // LASTFM_WIKI_HPP

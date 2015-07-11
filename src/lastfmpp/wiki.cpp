@@ -19,10 +19,6 @@
 
 namespace lastfmpp {
 
-wiki::wiki(std::string_view summary, std::string_view content, date_t published)
-    : m_summary(summary), m_content(content.to_string()), m_published(published) {
-}
-
 std::string_view wiki::summary() const {
     return m_summary;
 }

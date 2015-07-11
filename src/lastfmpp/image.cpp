@@ -19,11 +19,11 @@
 
 namespace lastfmpp {
 
-const web::uri& image::uri() const {
+const uri_t& image::uri() const {
     return m_uri;
 }
 
-void image::uri(web::uri uri) {
+void image::uri(uri_t uri) {
     m_uri = std::move(uri);
 }
 

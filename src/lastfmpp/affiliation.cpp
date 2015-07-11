@@ -27,11 +27,11 @@ void affiliation::supplier_name(std::string_view supplier_name) {
     m_supplier_name = supplier_name.to_string();
 }
 
-const web::uri& affiliation::buy_link() const {
+const uri_t& affiliation::buy_link() const {
     return m_buy_link;
 }
 
-void affiliation::buy_link(web::uri buy_link) {
+void affiliation::buy_link(uri_t buy_link) {
     m_buy_link = std::move(buy_link);
 }
 
@@ -43,11 +43,11 @@ void affiliation::price(std::string_view price) {
     m_price = price.to_string();
 }
 
-const web::uri& affiliation::supplier_icon() const {
+const uri_t& affiliation::supplier_icon() const {
     return m_supplier_icon;
 }
 
-void affiliation::supplier_icon(web::uri supplier_icon) {
+void affiliation::supplier_icon(uri_t supplier_icon) {
     m_supplier_icon = std::move(supplier_icon);
 }
 
