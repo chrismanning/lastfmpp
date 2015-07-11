@@ -15,8 +15,8 @@
 **  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************/
 
-#ifndef MELOSIC_TEST_DATA_DIR
-#error "MELOSIC_TEST_DATA_DIR define needed"
+#ifndef LASTFMPP_TEST_DATA_DIR
+#error "LASTFMPP_TEST_DATA_DIR define needed"
 #endif
 
 #include "catch.hpp"
@@ -29,11 +29,11 @@
 
 #include <jbson/json_reader.hpp>
 
-#include <lastfm/venue.hpp>
-#include <lastfm/detail/transform.hpp>
+#include <lastfmpp/venue.hpp>
+#include <lastfmpp/detail/transform.hpp>
 
 TEST_CASE("venues_deserialise") {
-    boost::filesystem::path test_dir{MELOSIC_TEST_DATA_DIR};
+    boost::filesystem::path test_dir{LASTFMPP_TEST_DATA_DIR};
     SECTION("get_info") {
         boost::filesystem::ifstream is{test_dir / "venue_search.json"};
         std::string venue_json;
@@ -42,8 +42,8 @@ TEST_CASE("venues_deserialise") {
         auto doc = jbson::read_json(venue_json);
         REQUIRE(boost::size(doc) == 1);
 
-        std::vector<lastfm::venue> venues;
-        REQUIRE_NOTHROW(venues = lastfm::transform_select<std::vector<lastfm::venue>>("results.venuematches.venue.*")(doc));
+        std::vector<lastfmpp::venue> venues;
+        REQUIRE_NOTHROW(venues = lastfmpp::transform_select<std::vector<lastfmpp::venue>>("results.venuematches.venue.*")(doc));
 
         REQUIRE(venues.size() == 50);
         CHECK(venues.front().location().city() == "Moscow");

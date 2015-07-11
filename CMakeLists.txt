@@ -1,39 +1,92 @@
-set(LASTFM lastfm)
+project(lastfmpp CXX)
+cmake_minimum_required(VERSION 3.0)
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../)
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
-SET(SRC lastfm.cpp)
-SET(SRC ${SRC} service.cpp)
-SET(SRC ${SRC} tag.cpp)
-SET(SRC ${SRC} user.cpp)
-SET(SRC ${SRC} artist.cpp)
-SET(SRC ${SRC} album.cpp)
-SET(SRC ${SRC} track.cpp)
-SET(SRC ${SRC} error.cpp)
-SET(SRC ${SRC} wiki.cpp)
-SET(SRC ${SRC} shout.cpp)
-SET(SRC ${SRC} affiliation.cpp)
-SET(SRC ${SRC} image.cpp)
-SET(SRC ${SRC} event.cpp)
-SET(SRC ${SRC} venue.cpp)
-SET(SRC ${SRC} location.cpp)
+set(LASTFM lastfmpp)
 
-FILE(GLOB_RECURSE LASTFM_COMMON_SRC_LIST *.hpp)
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED 14)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Wno-c++1z-extensions")
+
+option(LASTFMPP_BUILD_TESTS "" ON)
+option(LASTFMPP_ENABLE_TESTING "" OFF)
+
+set(LASTFMPP_LIBDIR_SUFFIX "" CACHE STRING "Suffix for library installation directory")
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+macro(add_src src)
+  set(LASTFM_SRC ${LASTFM_SRC} ${CMAKE_CURRENT_SOURCE_DIR}/src/${LASTFM}/${src})
+endmacro()
+
+add_src(service.cpp)
+add_src(tag.cpp)
+add_src(user.cpp)
+add_src(artist.cpp)
+add_src(album.cpp)
+add_src(track.cpp)
+add_src(error.cpp)
+add_src(wiki.cpp)
+add_src(shout.cpp)
+add_src(affiliation.cpp)
+add_src(image.cpp)
+add_src(event.cpp)
+add_src(venue.cpp)
+add_src(location.cpp)
+
+add_library(${LASTFM} SHARED ${LASTFM_SRC})
+
+FILE(GLOB_RECURSE LASTFM_COMMON_SRC_LIST include/*.hpp)
 
 add_custom_target(lastfm_heads ALL SOURCES ${LASTFM_COMMON_SRC_LIST})
 
-add_library(${LASTFM} SHARED ${SRC})
+add_definitions(-DOPENSSL_NO_SSL2)
 
-add_subdirectory(test)
+include(ExternalProject)
 
-if(WIN32)
-set(LINK_LIBS network)
-else()
-set(LINK_LIBS network-http-v2-client)
-endif()
+ExternalProject_Add(
+    hana_${PROJECT_NAME}
+    GIT_REPOSITORY https://github.com/ldionne/hana.git
+#    GIT_TAG origin/master
+    TIMEOUT 10
+    UPDATE_COMMAND ""
+    CONFIGURE_COMMAND ""
+    BUILD_COMMAND ""
+    INSTALL_COMMAND ""
+    LOG_DOWNLOAD ON
+   )
+ExternalProject_Get_Property(hana_${PROJECT_NAME} source_dir)
+set(HANA_INCLUDE_DIR ${source_dir}/include CACHE INTERNAL "Path to include folder for Boost Hana")
 
-target_link_libraries(${LASTFM} ssl crypto ${LINK_LIBS} melosiclib cpprest)
-set_target_properties(${LASTFM} PROPERTIES PREFIX "")
-set_target_properties(${LASTFM} PROPERTIES SUFFIX ".melin")
+add_dependencies(${LASTFM} hana_${PROJECT_NAME})
+
+find_package(Boost REQUIRED)
+find_package(OpenSSL REQUIRED)
+find_package(JBSON REQUIRED)
+find_package(CPPREST REQUIRED)
+
+target_link_libraries(${LASTFM} ${OPENSSL_LIBRARIES} ${LINK_LIBS} ${CPPREST_LIBRARIES})
 set_target_properties(${LASTFM} PROPERTIES COMPILE_DEFINITIONS LASTFM_EXPORTS=${LASTFM}_EXPORTS)
-include_directories(SYSTEM ${Qt5Widgets_INCLUDES} ${Boost_INCLUDE_DIR})
+include_directories(SYSTEM
+    ${Boost_INCLUDE_DIR}
+    ${OPENSSL_INCLUDE_DIR}
+    ${JBSON_INCLUDE_DIRS}
+    ${HANA_INCLUDE_DIR}
+    ${CPPREST_INCLUDE_DIR}
+)
+
+install(TARGETS lastfmpp
+    LIBRARY DESTINATION lib${LASTFMPP_LIBDIR_SUFFIX}
+    ARCHIVE DESTINATION lib${LASTFMPP_LIBDIR_SUFFIX})
+install(DIRECTORY include/lastfmpp DESTINATION include
+    PATTERN "detail" EXCLUDE
+)
+
+if(LASTFMPP_BUILD_TESTS)
+  if(LASTFMPP_ENABLE_TESTING)
+    enable_testing()
+  endif(LASTFMPP_ENABLE_TESTING)
+  add_subdirectory(test)
+endif(LASTFMPP_BUILD_TESTS)

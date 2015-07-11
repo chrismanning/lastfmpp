@@ -15,8 +15,8 @@
 **  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************/
 
-#ifndef MELOSIC_TEST_DATA_DIR
-#error "MELOSIC_TEST_DATA_DIR define needed"
+#ifndef LASTFMPP_TEST_DATA_DIR
+#error "LASTFMPP_TEST_DATA_DIR define needed"
 #endif
 
 #include "catch.hpp"
@@ -29,11 +29,11 @@
 
 #include <jbson/json_reader.hpp>
 
-#include <lastfm/event.hpp>
-#include <lastfm/artist.hpp>
+#include <lastfmpp/event.hpp>
+#include <lastfmpp/artist.hpp>
 
 TEST_CASE("album_deserialise") {
-    boost::filesystem::path test_dir{MELOSIC_TEST_DATA_DIR};
+    boost::filesystem::path test_dir{LASTFMPP_TEST_DATA_DIR};
     SECTION("get_info") {
         boost::filesystem::ifstream is{test_dir / "event_getinfo.json"};
         std::string event_json;
@@ -44,9 +44,9 @@ TEST_CASE("album_deserialise") {
 
         auto event_elem = *doc.begin();
 
-        lastfm::event event;
+        lastfmpp::event event;
         try {
-            /*REQUIRE_NOTHROW*/ (event = jbson::get<lastfm::event>(event_elem));
+            /*REQUIRE_NOTHROW*/ (event = jbson::get<lastfmpp::event>(event_elem));
         } catch(...) {
             std::clog << boost::current_exception_diagnostic_information();
             CHECK(false);

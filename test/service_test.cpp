@@ -9,18 +9,18 @@ using namespace std::literals;
 #include <boost/exception/diagnostic_information.hpp>
 #include <boost/algorithm/string/case_conv.hpp>
 
-#include <lastfm/service.hpp>
-#include <lastfm/tag.hpp>
-#include <lastfm/track.hpp>
+#include <lastfmpp/service.hpp>
+#include <lastfmpp/tag.hpp>
+#include <lastfmpp/track.hpp>
 
 #include <jbson/json_reader.hpp>
 
 TEST_CASE("get_tag") {
-    lastfm::service serv{"47ee6adfdb3c68daeea2786add5e242d", "64a3811653376876431daad679ce5b67"};
+    lastfmpp::service serv{"47ee6adfdb3c68daeea2786add5e242d", "64a3811653376876431daad679ce5b67"};
 
-    auto tag_fut = lastfm::tag::get_info(serv, "Rock");
+    auto tag_fut = lastfmpp::tag::get_info(serv, "Rock");
 
-    lastfm::tag tag;
+    lastfmpp::tag tag;
     REQUIRE_NOTHROW(tag = tag_fut.get());
 
     CHECK(tag.name() == "rock");
@@ -34,7 +34,7 @@ TEST_CASE("get_tag") {
     CHECK(wiki.content().size() > 0);
     CHECK(wiki.summary().size() <= wiki.content().size());
 
-    auto published = lastfm::date_t::clock::to_time_t(wiki.published());
+    auto published = lastfmpp::date_t::clock::to_time_t(wiki.published());
     std::clog << std::put_time(std::gmtime(&published), "%a %d %b %Y %H:%M:%S") << std::endl;
 
     auto similar_tags_fut = tag.get_similar(serv);
@@ -49,11 +49,11 @@ TEST_CASE("get_tag") {
 }
 
 TEST_CASE("get_artist") {
-    lastfm::service serv{"47ee6adfdb3c68daeea2786add5e242d", "64a3811653376876431daad679ce5b67"};
+    lastfmpp::service serv{"47ee6adfdb3c68daeea2786add5e242d", "64a3811653376876431daad679ce5b67"};
 
-    auto artist_fut = lastfm::artist::get_info(serv, "Metallica");
+    auto artist_fut = lastfmpp::artist::get_info(serv, "Metallica");
 
-    lastfm::artist artist;
+    lastfmpp::artist artist;
     REQUIRE_NOTHROW(artist = artist_fut.get());
 
     CHECK(artist.name() == "Metallica");
@@ -64,7 +64,7 @@ TEST_CASE("get_artist") {
     CHECK(wiki.content().size() > 0);
     CHECK(wiki.summary().size() <= wiki.content().size());
 
-    auto published = lastfm::date_t::clock::to_time_t(wiki.published());
+    auto published = lastfmpp::date_t::clock::to_time_t(wiki.published());
     std::clog << std::put_time(std::gmtime(&published), "%a %d %b %Y %H:%M:%S") << std::endl;
 
     CHECK(artist.similar().size() > 0);
@@ -72,12 +72,12 @@ TEST_CASE("get_artist") {
 }
 
 TEST_CASE("get_artist_then") {
-    lastfm::service serv{"47ee6adfdb3c68daeea2786add5e242d", "64a3811653376876431daad679ce5b67"};
+    lastfmpp::service serv{"47ee6adfdb3c68daeea2786add5e242d", "64a3811653376876431daad679ce5b67"};
 
-    lastfm::artist::get_info(serv, "Metallica")
-        .then([](pplx::task<lastfm::artist> artist_fut) {
+    lastfmpp::artist::get_info(serv, "Metallica")
+        .then([](pplx::task<lastfmpp::artist> artist_fut) {
             REQUIRE(artist_fut.is_done());
-            lastfm::artist artist;
+            lastfmpp::artist artist;
             REQUIRE_NOTHROW(artist = artist_fut.get());
 
             CHECK(artist.name() == "Metallica");
@@ -88,7 +88,7 @@ TEST_CASE("get_artist_then") {
             CHECK(wiki.content().size() > 0);
             CHECK(wiki.summary().size() <= wiki.content().size());
 
-            auto published = lastfm::date_t::clock::to_time_t(wiki.published());
+            auto published = lastfmpp::date_t::clock::to_time_t(wiki.published());
             std::clog << std::put_time(std::gmtime(&published), "%a %d %b %Y %H:%M:%S") << std::endl;
 
             CHECK(artist.similar().size() > 0);
@@ -98,11 +98,11 @@ TEST_CASE("get_artist_then") {
 }
 
 TEST_CASE("get_track") {
-    lastfm::service serv{"47ee6adfdb3c68daeea2786add5e242d", "64a3811653376876431daad679ce5b67"};
+    lastfmpp::service serv{"47ee6adfdb3c68daeea2786add5e242d", "64a3811653376876431daad679ce5b67"};
 
-    auto track_fut = lastfm::track::get_info(serv, "Master of Puppets", "Metallica");
+    auto track_fut = lastfmpp::track::get_info(serv, "Master of Puppets", "Metallica");
 
-    lastfm::track track;
+    lastfmpp::track track;
     REQUIRE_NOTHROW(track = track_fut.get());
 
     CHECK(track.name() == "Master of Puppets");
@@ -113,7 +113,7 @@ TEST_CASE("get_track") {
     CHECK(wiki.content().size() > 0);
     CHECK(wiki.summary().size() <= wiki.content().size());
 
-    auto published = lastfm::date_t::clock::to_time_t(wiki.published());
+    auto published = lastfmpp::date_t::clock::to_time_t(wiki.published());
     std::clog << std::put_time(std::gmtime(&published), "%a %d %b %Y %H:%M:%S") << std::endl;
 
     CHECK(track.similar().size() == 0);

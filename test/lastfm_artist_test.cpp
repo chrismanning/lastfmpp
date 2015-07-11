@@ -15,8 +15,8 @@
 **  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************/
 
-#ifndef MELOSIC_TEST_DATA_DIR
-#error "MELOSIC_TEST_DATA_DIR define needed"
+#ifndef LASTFMPP_TEST_DATA_DIR
+#error "LASTFMPP_TEST_DATA_DIR define needed"
 #endif
 
 #include "catch.hpp"
@@ -29,11 +29,11 @@
 
 #include <jbson/json_reader.hpp>
 
-#include <lastfm/artist.hpp>
-#include <lastfm/tag.hpp>
+#include <lastfmpp/artist.hpp>
+#include <lastfmpp/tag.hpp>
 
 TEST_CASE("artist_deserialise") {
-    boost::filesystem::path test_dir{MELOSIC_TEST_DATA_DIR};
+    boost::filesystem::path test_dir{LASTFMPP_TEST_DATA_DIR};
     SECTION("get_info") {
         boost::filesystem::ifstream is{test_dir / "artist_getinfo.json"};
         std::string artist_json;
@@ -44,14 +44,14 @@ TEST_CASE("artist_deserialise") {
 
         auto artist_elem = *doc.begin();
 
-        lastfm::artist artist;
-        REQUIRE_NOTHROW(artist = jbson::get<lastfm::artist>(artist_elem));
+        lastfmpp::artist artist;
+        REQUIRE_NOTHROW(artist = jbson::get<lastfmpp::artist>(artist_elem));
 
         CHECK(artist.name() == "Metallica");
         CHECK(artist.top_tags().front().name() == "thrash metal");
         CHECK_FALSE(artist.streamable());
         CHECK(artist.wiki().summary().size() > 0);
         REQUIRE(artist.images().size() > 0);
-        CHECK(artist.images().back().size() != lastfm::image_size::small);
+        CHECK(artist.images().back().size() != lastfmpp::image_size::small);
     }
 }
