@@ -11,6 +11,7 @@
 #include <jbson/element.hpp>
 
 #include <lastfmpp/track.hpp>
+#include <lastfmpp/detail/transform.hpp>
 #include <lastfmpp/detail/deserialise_mbid.hpp>
 #include <lastfmpp/detail/deserialise_wiki.hpp>
 #include <lastfmpp/detail/deserialise_ext.hpp>

@@ -5,10 +5,18 @@
 ** of the MIT license.  See the LICENSE file for details.
 **************************************************************************/
 
-#include <lastfmpp/user.hpp>
-#include <lastfmpp/service.hpp>
-#include <lastfmpp/detail/params.hpp>
-#include <lastfmpp/detail/transform.hpp>
-#include <lastfmpp/detail/deserialise_user.hpp>
+#ifndef LASTFM_PARAMS_HPP
+#define LASTFM_PARAMS_HPP
 
-namespace lastfmpp {} // namespace lastfm
+#include <vector>
+#include <tuple>
+#include <string>
+
+namespace lastfmpp {
+
+using params_t = std::vector<std::tuple<std::string, std::string>>;
+
+} // namespace lastfmpp
+
+#endif // LASTFM_PARAMS_HPP
+

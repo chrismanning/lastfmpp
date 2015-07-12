@@ -8,6 +8,8 @@
 #include <lastfmpp/album.hpp>
 #include <lastfmpp/service.hpp>
 #include <lastfmpp/track.hpp>
+#include <lastfmpp/detail/params.hpp>
+#include <lastfmpp/detail/transform.hpp>
 #include <lastfmpp/detail/deserialise_album.hpp>
 #include <lastfmpp/detail/deserialise_affiliation.hpp>
 #include <lastfmpp/detail/deserialise_shout.hpp>

@@ -17,8 +17,7 @@
 #include <jbson/document.hpp>
 
 #include <lastfmpp/lastfmpp.hpp>
-#include <lastfmpp/detail/transform.hpp>
-#include <lastfmpp/detail/params.hpp>
+#include <lastfmpp/params.hpp>
 
 namespace lastfmpp {
 
@@ -29,8 +28,6 @@ struct artist;
 
 class LASTFM_EXPORT service {
   public:
-    using params_t = detail::params_t;
-
     explicit service(std::string_view api_key, std::string_view shared_secret);
 
     ~service();
@@ -52,10 +49,6 @@ template <typename TransformerT, typename ReturnT>
 pplx::task<ReturnT> service::get(std::string_view method, params_t params, TransformerT&& transform) {
     return get(method, std::move(params)).then(transform);
 }
-
-namespace detail {
-
-} // namespace detail
 
 } // namespace lastfm
 

@@ -13,6 +13,7 @@
 
 #include <lastfmpp/lastfmpp.hpp>
 #include <lastfmpp/date.hpp>
+#include <lastfmpp/params.hpp>
 #include <lastfmpp/detail/hana_optional.hpp>
 
 namespace lastfmpp::detail {
@@ -38,8 +39,6 @@ struct to_string_ {
     }
 };
 
-using params_t = std::vector<std::tuple<std::string, std::string>>;
-
 struct make_params_ {
     template <typename... PairT> params_t operator()(PairT&&... optional_params) const {
         params_t params{};
@@ -62,7 +61,7 @@ struct make_params_ {
 
 constexpr auto make_params = make_params_{};
 
-} // namespace lastfmpp ::detail
+} // namespace lastfmpp::detail
 
 #endif // LASTFM_PARAMS
 

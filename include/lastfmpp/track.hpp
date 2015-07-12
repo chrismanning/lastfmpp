@@ -11,7 +11,6 @@
 #include <lastfmpp/album.hpp>
 #include <lastfmpp/artist.hpp>
 #include <lastfmpp/mbid.hpp>
-#include <lastfmpp/detail/transform.hpp>
 
 namespace lastfmpp {
 

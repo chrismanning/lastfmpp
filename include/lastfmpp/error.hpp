@@ -10,8 +10,6 @@
 
 #include <system_error>
 
-#include <jbson/document.hpp>
-
 namespace lastfmpp {
 
 enum class api_error {
@@ -50,24 +48,6 @@ struct api_exception : std::system_error {
     explicit api_exception(api_error);
 };
 
-namespace detail {
-
-template <typename ContainerT>
-[[noreturn]] inline void handle_error_response(const jbson::basic_element<ContainerT>& elem) {
-    auto error = static_cast<api_error>(jbson::get<int>(elem));
-    throw api_exception(error);
-}
-
-template <typename ContainerT, typename EContainerT>
-inline void check_error(const jbson::basic_document<ContainerT, EContainerT>& doc) {
-    for(auto&& elem : doc) {
-        if(elem.name() == "error") {
-            handle_error_response(elem);
-        }
-    }
-}
-
-} // namespace detail
 } // namespace lastfm
 
 namespace std {

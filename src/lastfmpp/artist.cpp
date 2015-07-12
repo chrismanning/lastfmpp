@@ -10,6 +10,8 @@
 #include <lastfmpp/track.hpp>
 #include <lastfmpp/user.hpp>
 #include <lastfmpp/artist.hpp>
+#include <lastfmpp/detail/params.hpp>
+#include <lastfmpp/detail/transform.hpp>
 #include <lastfmpp/detail/deserialise_ext.hpp>
 #include <lastfmpp/detail/deserialise_artist.hpp>
 #include <lastfmpp/detail/deserialise_event.hpp>

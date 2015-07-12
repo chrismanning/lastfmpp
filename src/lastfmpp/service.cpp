@@ -18,7 +18,7 @@
 
 #include <lastfmpp/service.hpp>
 #include <lastfmpp/user.hpp>
-#include <lastfmpp/error.hpp>
+#include <lastfmpp/detail/error.hpp>
 
 namespace lastfmpp {
 
@@ -111,7 +111,7 @@ std::string_view service::shared_secret() const {
 //    return std::move(method);
 //}
 
-pplx::task<jbson::document> service::get(std::string_view method, service::params_t params) {
+pplx::task<jbson::document> service::get(std::string_view method, params_t params) {
     return pimpl->get(method, std::move(params))
         .then([](std::string body) {
             auto doc = jbson::read_json(body);
