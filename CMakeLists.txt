@@ -22,6 +22,10 @@ endif(LASTFMPP_ENABLE_LTO)
 
 set(LASTFMPP_LIBDIR_SUFFIX "" CACHE STRING "Suffix for library installation directory")
 
+if(CMAKE_BUILD_TYPE MATCHES Release)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden")
+endif(CMAKE_BUILD_TYPE MATCHES Release)
+
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 macro(add_src src)
