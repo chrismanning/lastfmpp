@@ -18,7 +18,7 @@ class service;
 struct tag;
 
 struct LASTFM_EXPORT track {
-    explicit track() = default;
+    track() = default;
 
     std::string_view name() const;
     void name(std::string_view);

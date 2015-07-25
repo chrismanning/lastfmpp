@@ -27,7 +27,7 @@ namespace lastfmpp {
 struct track;
 
 struct LASTFM_EXPORT album {
-    explicit album() = default;
+    album() = default;
 
     std::string_view name() const;
     void name(std::string_view);

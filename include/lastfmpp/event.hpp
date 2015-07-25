@@ -18,7 +18,7 @@ namespace lastfmpp {
 struct artist;
 
 struct LASTFM_EXPORT event {
-    explicit event() = default;
+    event() = default;
 
     std::string_view id() const;
     void id(std::string_view id);

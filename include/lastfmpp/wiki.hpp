@@ -17,7 +17,7 @@
 namespace lastfmpp {
 
 struct LASTFM_EXPORT wiki {
-    explicit wiki() = default;
+    wiki() = default;
 
     std::string_view summary() const;
     void summary(std::string_view);

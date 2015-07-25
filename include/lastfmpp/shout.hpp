@@ -16,7 +16,7 @@ namespace lastfmpp {
 class service;
 
 struct LASTFM_EXPORT shout {
-    explicit shout() = default;
+    shout() = default;
 
     std::string_view author() const;
     void author(std::string_view);

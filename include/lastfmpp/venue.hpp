@@ -19,7 +19,7 @@ struct image;
 struct event;
 
 struct LASTFM_EXPORT venue {
-    explicit venue() = default;
+    venue() = default;
 
     std::string_view id() const;
     void id(std::string_view id);

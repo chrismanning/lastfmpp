@@ -13,7 +13,7 @@
 namespace lastfmpp {
 
 struct LASTFM_EXPORT location {
-    explicit location() = default;
+    location() = default;
 
     std::string_view street() const;
     void street(std::string_view street);

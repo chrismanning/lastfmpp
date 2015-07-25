@@ -18,7 +18,7 @@ namespace lastfmpp {
 enum class image_size { small, medium, large, extralarge, mega };
 
 struct LASTFM_EXPORT image {
-    explicit image() = default;
+    image() = default;
 
     const uri_t& uri() const;
     void uri(uri_t);

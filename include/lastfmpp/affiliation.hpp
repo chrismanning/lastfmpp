@@ -14,7 +14,7 @@
 namespace lastfmpp {
 
 struct LASTFM_EXPORT affiliation {
-    explicit affiliation() = default;
+    affiliation() = default;
 
     std::string_view supplier_name() const;
     void supplier_name(std::string_view);

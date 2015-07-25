@@ -26,7 +26,7 @@ struct user;
 struct track;
 
 struct LASTFM_EXPORT artist {
-    explicit artist() = default;
+    artist() = default;
 
     std::string_view name() const;
     void name(std::string_view);

@@ -15,7 +15,7 @@ namespace lastfmpp {
 class service;
 
 struct LASTFM_EXPORT user {
-    explicit user() = default;
+    user() = default;
 };
 
 } // namespace lastfm

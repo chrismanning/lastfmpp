@@ -22,7 +22,7 @@ struct album;
 struct wiki;
 
 struct LASTFM_EXPORT tag {
-    explicit tag() = default;
+    tag() = default;
 
     std::string_view name() const;
     void name(std::string_view);
