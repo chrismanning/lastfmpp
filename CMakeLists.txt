@@ -60,7 +60,7 @@ include(ExternalProject)
 ExternalProject_Add(
     hana_${PROJECT_NAME}
     GIT_REPOSITORY https://github.com/ldionne/hana.git
-#    GIT_TAG origin/master
+    GIT_TAG e0b56a3d187447a870cd2a4d7246f07d7baa3e2f
     TIMEOUT 10
     UPDATE_COMMAND ""
     CONFIGURE_COMMAND ""
