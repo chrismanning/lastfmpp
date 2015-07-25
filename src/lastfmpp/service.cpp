@@ -28,13 +28,11 @@ static constexpr auto base_url = U("http://ws.audioscrobbler.com/2.0/"_sv);
 
 namespace {
 struct convert_to_casablanca_string_impl {
-    template <typename S> decltype(auto) operator()(S&& in) const {
-#ifdef _WIN32
-        thread_local std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-        return converter.from_bytes(in.begin(), in.end());
-#else
-        return std::forward<S>(in);
-#endif
+    template <typename S> auto operator()(S&& in) const -> decltype(in.to_string(), utility::string_t{}) {
+        return utility::conversions::to_string_t(in.to_string());
+    }
+    template <typename S> auto operator()(S&& in) const -> decltype(utility::conversions::to_string_t(in)) {
+        return utility::conversions::to_string_t(std::forward<S>(in));
     }
 };
 }
