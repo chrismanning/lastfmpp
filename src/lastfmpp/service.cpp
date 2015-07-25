@@ -12,6 +12,10 @@
 #include <cpprest/http_client.h>
 
 #include <boost/hana/ext/std.hpp>
+#include <boost/algorithm/hex.hpp>
+#include <boost/range/algorithm.hpp>
+#include <boost/range/numeric.hpp>
+#include <boost/range/adaptor/formatted.hpp>
 
 #include <jbson/document.hpp>
 #include <jbson/json_reader.hpp>
@@ -60,10 +64,49 @@ struct service::impl {
             .then([](web::http::http_response response) { return response.extract_utf8string(true); });
     }
 
+    pplx::task<std::string> post(std::string_view method, params_t params) {
+
+    }
+
+    params_t sign(std::string_view method, params_t params) {
+        params.emplace_back("api_key", api_key);
+        params.emplace_back("method", method);
+        using std::get;
+        boost::sort(params, [](auto&& a, auto&& b) { return get<0>(a) < get<1>(b); });
+
+        auto sig = join(flatten(params));
+
+        std::array<uint8_t, MD5_DIGEST_LENGTH> sigp;
+        MD5(reinterpret_cast<const uint8_t*>(sig.c_str()), sig.length(), sigp.data());
+
+        std::string hex_sig;
+        hex_sig.reserve(sigp.size() * 2);
+        boost::algorithm::hex(sigp, std::back_inserter(hex_sig));
+        assert(hex_sig.size() == MD5_DIGEST_LENGTH * 2);
+
+        return {{"api_key", api_key}, {"api_sig", hex_sig}, {"sk", session_key}, {"format", "json"}};
+    }
+
+    std::string join(std::vector<std::string_view> params) {
+        std::stringstream ss;
+        ss << boost::adaptors::format(params, "", "", "");
+        ss << shared_secret;
+        return ss.str();
+    }
+
+    static std::vector<std::string_view> flatten(const params_t& params) {
+        return boost::accumulate(params, std::vector<std::string_view>{},
+                                 [](auto&& out, auto&& param) -> decltype(auto) {
+            out.insert(out.end(), {std::get<0>(param), std::get<1>(param)});
+            return std::forward<decltype(out)>(out);
+        });
+    }
+
     web::http::client::http_client cas_client;
 
     const std::string api_key;
     const std::string shared_secret;
+    std::string session_key;
     user user;
     friend class service;
 };
@@ -82,32 +125,6 @@ std::string_view service::api_key() const {
 std::string_view service::shared_secret() const {
     return pimpl->shared_secret;
 }
-
-// Method service::sign(Method method) {
-//    TRACE_LOG(logject) << "Signing method call";
-//    method.getParameters().front().addMember("sk", getUser().getSessionKey());
-//    std::deque<Member> members(method.getParameters().front().getMembers().begin(),
-//                               method.getParameters().front().getMembers().end());
-//    members.emplace_back("method", method.methodName);
-//    sort(members, [](const Member& a, const Member& b) { return b.first > a.first; });
-//    std::string sig;
-//    for(auto& mem : members) {
-//        sig += mem.first + mem.second;
-//    }
-//    sig += shared_secret().to_string();
-//    TRACE_LOG(logject) << "sig: " << sig;
-
-//    std::array<uint8_t, MD5_DIGEST_LENGTH> sigp;
-//    MD5(reinterpret_cast<const uint8_t*>(sig.c_str()), sig.length(), sigp.data());
-//    sig.clear();
-
-//    hex(sigp, std::back_inserter(sig));
-//    TRACE_LOG(logject) << "MD5 sig: " << sig;
-
-//    method.getParameters().front().addMember("api_sig", sig);
-
-//    return std::move(method);
-//}
 
 pplx::task<jbson::document> service::get(std::string_view method, params_t params) {
     return pimpl->get(method, std::move(params))
