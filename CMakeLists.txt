@@ -12,7 +12,8 @@ option(LASTFMPP_ENABLE_LTO "" ON)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED 14)
 set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Wno-c++1z-extensions")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Wno-c++1z-extensions -fvisibility=hidden")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O1")
 
 if(LASTFMPP_ENABLE_LTO)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -flto")
@@ -21,10 +22,6 @@ if(LASTFMPP_ENABLE_LTO)
 endif(LASTFMPP_ENABLE_LTO)
 
 set(LASTFMPP_LIBDIR_SUFFIX "" CACHE STRING "Suffix for library installation directory")
-
-if(CMAKE_BUILD_TYPE MATCHES Release)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden")
-endif(CMAKE_BUILD_TYPE MATCHES Release)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
