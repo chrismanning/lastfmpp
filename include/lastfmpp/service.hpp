@@ -21,11 +21,6 @@
 
 namespace lastfmpp {
 
-struct user;
-struct track;
-struct tag;
-struct artist;
-
 namespace detail {
 struct service_access;
 }

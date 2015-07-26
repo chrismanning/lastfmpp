@@ -11,8 +11,6 @@
 #include <string>
 #include <vector>
 
-#include <boost/uuid/uuid.hpp>
-
 #include <lastfmpp/lastfmpp.hpp>
 #include <lastfmpp/artist.hpp>
 #include <lastfmpp/shout.hpp>

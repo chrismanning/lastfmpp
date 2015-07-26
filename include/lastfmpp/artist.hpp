@@ -8,8 +8,6 @@
 #ifndef LASTFM_ARTIST_HPP
 #define LASTFM_ARTIST_HPP
 
-#include <boost/uuid/uuid.hpp>
-
 #include <lastfmpp/lastfmpp.hpp>
 #include <lastfmpp/wiki.hpp>
 #include <lastfmpp/image.hpp>

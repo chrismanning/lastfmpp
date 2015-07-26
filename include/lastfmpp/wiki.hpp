@@ -9,7 +9,6 @@
 #define LASTFM_WIKI_HPP
 
 #include <string>
-#include <experimental/string_view>
 
 #include <lastfmpp/lastfmpp.hpp>
 #include <lastfmpp/date.hpp>
