@@ -11,7 +11,7 @@
 #include <lastfmpp/artist.hpp>
 #include <lastfmpp/album.hpp>
 #include <lastfmpp/track.hpp>
-#include <lastfmpp/service.hpp>
+#include <lastfmpp/detail/service_access.hpp>
 #include <lastfmpp/detail/params.hpp>
 #include <lastfmpp/detail/transform.hpp>
 #include <lastfmpp/detail/deserialise_tag.hpp>
@@ -71,7 +71,8 @@ void tag::wiki(struct wiki wiki) {
 }
 
 pplx::task<tag> tag::get_info(service& serv, std::string_view name) {
-    return serv.get("tag.getinfo", detail::make_params(std::make_pair("tag", name)), transform_select<tag>("tag"));
+    return detail::service_access::get(serv, "tag.getinfo", detail::make_params(std::make_pair("tag", name)),
+                                       transform_select<tag>("tag"));
 }
 
 pplx::task<tag> tag::get_info(service& serv) const {
@@ -79,8 +80,8 @@ pplx::task<tag> tag::get_info(service& serv) const {
 }
 
 pplx::task<std::vector<tag>> tag::get_similar(service& serv, std::string_view name) {
-    return serv.get("tag.getsimilar", detail::make_params(std::make_pair("tag", name)),
-                    transform_select<std::vector<tag>>("similartags.tag.*"));
+    return detail::service_access::get(serv, "tag.getsimilar", detail::make_params(std::make_pair("tag", name)),
+                                       transform_select<std::vector<tag>>("similartags.tag.*"));
 }
 
 pplx::task<std::vector<tag>> tag::get_similar(service& serv) const {
@@ -89,10 +90,10 @@ pplx::task<std::vector<tag>> tag::get_similar(service& serv) const {
 
 pplx::task<std::vector<album>> tag::get_top_albums(service& serv, std::string_view name, std::optional<int> limit,
                                                    std::optional<int> page) {
-    return serv.get("tag.gettopalbums",
-                    detail::make_params(std::make_tuple("tag", name), std::make_tuple("limit", limit),
-                                        std::make_tuple("page", page)),
-                    transform_select<std::vector<album>>("topalbums.album.*"));
+    return detail::service_access::get(serv, "tag.gettopalbums", detail::make_params(std::make_tuple("tag", name),
+                                                                                     std::make_tuple("limit", limit),
+                                                                                     std::make_tuple("page", page)),
+                                       transform_select<std::vector<album>>("topalbums.album.*"));
 }
 
 pplx::task<std::vector<album>> tag::get_top_albums(service& serv, std::optional<int> limit,
@@ -102,10 +103,10 @@ pplx::task<std::vector<album>> tag::get_top_albums(service& serv, std::optional<
 
 pplx::task<std::vector<artist>> tag::get_top_artists(service& serv, std::string_view name, std::optional<int> limit,
                                                      std::optional<int> page) {
-    return serv.get("tag.gettopartists",
-                    detail::make_params(std::make_tuple("tag", name), std::make_tuple("limit", limit),
-                                        std::make_tuple("page", page)),
-                    transform_select<std::vector<artist>>("topartists.artist.*"));
+    return detail::service_access::get(serv, "tag.gettopartists", detail::make_params(std::make_tuple("tag", name),
+                                                                                      std::make_tuple("limit", limit),
+                                                                                      std::make_tuple("page", page)),
+                                       transform_select<std::vector<artist>>("topartists.artist.*"));
 }
 
 pplx::task<std::vector<artist>> tag::get_top_artists(service& serv, std::optional<int> limit,
@@ -114,15 +115,16 @@ pplx::task<std::vector<artist>> tag::get_top_artists(service& serv, std::optiona
 }
 
 pplx::task<std::vector<tag>> tag::get_top_tags(service& serv) {
-    return serv.get("tag.gettoptags", {}, transform_select<std::vector<tag>>("toptags.tag.*"));
+    return detail::service_access::get(serv, "tag.gettoptags", params_t{},
+                                       transform_select<std::vector<tag>>("toptags.tag.*"));
 }
 
 pplx::task<std::vector<track>> tag::get_top_tracks(service& serv, std::string_view name, std::optional<int> limit,
                                                    std::optional<int> page) {
-    return serv.get("tag.gettoptracks",
-                    detail::make_params(std::make_tuple("tag", name), std::make_tuple("limit", limit),
-                                        std::make_tuple("page", page)),
-                    transform_select<std::vector<track>>("toptracks.track.*"));
+    return detail::service_access::get(serv, "tag.gettoptracks", detail::make_params(std::make_tuple("tag", name),
+                                                                                     std::make_tuple("limit", limit),
+                                                                                     std::make_tuple("page", page)),
+                                       transform_select<std::vector<track>>("toptracks.track.*"));
 }
 
 pplx::task<std::vector<track>> tag::get_top_tracks(service& serv, std::optional<int> limit,
@@ -137,10 +139,10 @@ pplx::task<std::vector<artist>> tag::get_weekly_artist_chart(service& serv, std:
     if(date_range)
         std::tie(from, to) = *date_range;
 
-    return serv.get("tag.getweeklyartistchart",
-                    detail::make_params(std::make_tuple("tag", name), std::make_tuple("from", from),
-                                        std::make_tuple("to", to), std::make_tuple("limit", limit)),
-                    transform_select<std::vector<artist>>("weeklyartistchart.artist.*"));
+    return detail::service_access::get(serv, "tag.getweeklyartistchart",
+                                       detail::make_params(std::make_tuple("tag", name), std::make_tuple("from", from),
+                                                           std::make_tuple("to", to), std::make_tuple("limit", limit)),
+                                       transform_select<std::vector<artist>>("weeklyartistchart.artist.*"));
 }
 
 pplx::task<std::vector<artist>> tag::get_weekly_artist_chart(service& serv,
@@ -162,7 +164,8 @@ pplx::task<std::vector<std::tuple<date_t, date_t>>> tag::get_weekly_chart_list(s
 
         return charts;
     };
-    return serv.get("tag.getweeklychartlist", detail::make_params(std::make_tuple("tag", name)), transformer);
+    return detail::service_access::get(serv, "tag.getweeklychartlist",
+                                       detail::make_params(std::make_tuple("tag", name)), transformer);
 }
 
 pplx::task<std::vector<std::tuple<date_t, date_t>>> tag::get_weekly_chart_list(service& serv) const {
@@ -171,9 +174,10 @@ pplx::task<std::vector<std::tuple<date_t, date_t>>> tag::get_weekly_chart_list(s
 
 pplx::task<std::vector<tag>> tag::search(service& serv, std::string_view name, std::optional<int> limit,
                                          std::optional<int> page) {
-    return serv.get("tag.search", detail::make_params(std::make_tuple("tag", name), std::make_tuple("limit", limit),
-                                                      std::make_tuple("page", page)),
-                    transform_select<std::vector<tag>>("results.tagmatches.tag.*"));
+    return detail::service_access::get(serv, "tag.search", detail::make_params(std::make_tuple("tag", name),
+                                                                               std::make_tuple("limit", limit),
+                                                                               std::make_tuple("page", page)),
+                                       transform_select<std::vector<tag>>("results.tagmatches.tag.*"));
 }
 
 pplx::task<std::vector<tag>> tag::search(service& serv, std::optional<int> limit, std::optional<int> page) const {

@@ -60,8 +60,8 @@ struct LASTFM_EXPORT artist {
 
     // api methods
 
-    static pplx::task<artist> get_info(service&, mbid_t mbid,
-                                       std::optional<std::string_view> lang = std::nullopt, bool autocorrect = false,
+    static pplx::task<artist> get_info(service&, mbid_t mbid, std::optional<std::string_view> lang = std::nullopt,
+                                       bool autocorrect = false,
                                        std::optional<std::string_view> username = std::nullopt);
     static pplx::task<artist> get_info(service&, std::string_view name,
                                        std::optional<std::string_view> lang = std::nullopt, bool autocorrect = false,

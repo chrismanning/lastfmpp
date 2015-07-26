@@ -6,7 +6,7 @@
 **************************************************************************/
 
 #include <lastfmpp/user.hpp>
-#include <lastfmpp/service.hpp>
+#include <lastfmpp/detail/service_access.hpp>
 #include <lastfmpp/detail/params.hpp>
 #include <lastfmpp/detail/transform.hpp>
 #include <lastfmpp/detail/deserialise_user.hpp>

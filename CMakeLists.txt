@@ -33,6 +33,7 @@ macro(add_src src)
 endmacro()
 
 add_src(service.cpp)
+add_src(service_impl.cpp)
 add_src(tag.cpp)
 add_src(user.cpp)
 add_src(artist.cpp)

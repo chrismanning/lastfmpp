@@ -8,6 +8,8 @@
 #ifndef LASTFM_PARAMS
 #define LASTFM_PARAMS
 
+#include <sstream>
+
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/hana/ext/std.hpp>
 
@@ -54,7 +56,8 @@ struct make_params_ {
   private:
     template <typename PairT> static std::tuple<std::string, std::optional<std::string>> make_param(PairT&& t) {
         return hana::unpack(std::forward<PairT>(t), [](auto&& a, auto&& b) {
-            return std::make_tuple(std::string{a}, hana::transform(hana::flatten(std::make_optional(b)), to_string_{}));
+            return std::make_tuple(std::string{a},
+                                   hana::transform(hana::flatten(std::make_optional(b)), to_string_{}));
         });
     }
 };
@@ -64,4 +67,3 @@ constexpr auto make_params = make_params_{};
 } // namespace lastfmpp::detail
 
 #endif // LASTFM_PARAMS
-

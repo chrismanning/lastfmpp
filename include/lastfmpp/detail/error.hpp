@@ -32,4 +32,3 @@ inline void check_error(const jbson::basic_document<ContainerT, EContainerT>& do
 } // namespace lastfmpp::detail
 
 #endif // LASTFM_ERROR_HPP
-

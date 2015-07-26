@@ -29,7 +29,7 @@ struct LASTFM_EXPORT location {
 
     // api methods
 
-private:
+  private:
     std::string m_street;
     std::string m_city;
     std::string m_country;

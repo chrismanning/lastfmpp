@@ -21,10 +21,10 @@ template <typename Container> void value_get(const jbson::basic_element<Containe
     auto str = jbson::get<jbson::element_type::string_element>(mbid_elem);
     try {
         var = gen(str.begin(), str.end());
-    } catch(...) {}
+    } catch(...) {
+    }
 }
 
 } // namespace boost::uuids
 
 #endif // LASTFM_DESERIALISE_MBID
-

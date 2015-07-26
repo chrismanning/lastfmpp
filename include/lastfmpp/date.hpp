@@ -17,4 +17,3 @@ using date_t = std::chrono::system_clock::time_point;
 } // namespace lastfmpp
 
 #endif // LASTFM_DATE_HPP
-

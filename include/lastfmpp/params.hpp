@@ -19,4 +19,3 @@ using params_t = std::vector<std::tuple<std::string, std::string>>;
 } // namespace lastfmpp
 
 #endif // LASTFM_PARAMS_HPP
-

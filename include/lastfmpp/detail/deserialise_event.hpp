@@ -56,4 +56,3 @@ template <typename Container> void value_get(const jbson::basic_element<Containe
 } // namespace lastfmpp
 
 #endif // LASTFM_DESERIALISE_EVENT
-

@@ -70,8 +70,8 @@ struct LASTFM_EXPORT album {
 
     // api methods
 
-    static pplx::task<album> get_info(service&, mbid_t mbid,
-                                      std::optional<std::string_view> lang = std::nullopt, bool autocorrect = false,
+    static pplx::task<album> get_info(service&, mbid_t mbid, std::optional<std::string_view> lang = std::nullopt,
+                                      bool autocorrect = false,
                                       std::optional<std::string_view> username = std::nullopt);
     static pplx::task<album> get_info(service&, std::string_view name, std::string_view artist,
                                       std::optional<std::string_view> lang = std::nullopt, bool autocorrect = false,
@@ -79,8 +79,8 @@ struct LASTFM_EXPORT album {
     pplx::task<album> get_info(service&, std::optional<std::string_view> lang = std::nullopt, bool autocorrect = false,
                                std::optional<std::string_view> username = std::nullopt) const;
 
-    static pplx::task<std::vector<affiliation>> get_buy_links(service&, mbid_t mbid,
-                                                              std::string_view country, bool autocorrect = false);
+    static pplx::task<std::vector<affiliation>> get_buy_links(service&, mbid_t mbid, std::string_view country,
+                                                              bool autocorrect = false);
     static pplx::task<std::vector<affiliation>> get_buy_links(service&, std::string_view name, std::string_view artist,
                                                               std::string_view country, bool autocorrect = false);
     pplx::task<std::vector<affiliation>> get_buy_links(service&, std::string_view country,
