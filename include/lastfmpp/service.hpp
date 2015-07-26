@@ -40,6 +40,18 @@ class LASTFM_EXPORT service {
     template <typename TransformerT, typename ReturnT = std::result_of_t<TransformerT(jbson::document)>>
     pplx::task<ReturnT> get(std::string_view method, params_t params, TransformerT&& transform);
 
+    pplx::task<jbson::document> post(std::string_view method, params_t params);
+
+    template <typename TransformerT, typename ReturnT = std::result_of_t<TransformerT(jbson::document)>>
+    pplx::task<ReturnT> post(std::string_view method, params_t params, TransformerT&& transform);
+
+    pplx::task<jbson::document> post_session(std::string_view method, params_t params);
+
+    template <typename TransformerT, typename ReturnT = std::result_of_t<TransformerT(jbson::document)>>
+    pplx::task<ReturnT> post_session(std::string_view method, params_t params, TransformerT&& transform);
+
+    pplx::task<std::string> get_mobile_session(std::string_view username, std::string_view password);
+
   private:
     struct impl;
     std::unique_ptr<impl> pimpl;
@@ -48,6 +60,16 @@ class LASTFM_EXPORT service {
 template <typename TransformerT, typename ReturnT>
 pplx::task<ReturnT> service::get(std::string_view method, params_t params, TransformerT&& transform) {
     return get(method, std::move(params)).then(transform);
+}
+
+template <typename TransformerT, typename ReturnT>
+pplx::task<ReturnT> service::post(std::string_view method, params_t params, TransformerT&& transform) {
+    return post(method, std::move(params)).then(transform);
+}
+
+template <typename TransformerT, typename ReturnT>
+pplx::task<ReturnT> service::post_session(std::string_view method, params_t params, TransformerT&& transform) {
+    return post_session(method, std::move(params)).then(transform);
 }
 
 } // namespace lastfm
