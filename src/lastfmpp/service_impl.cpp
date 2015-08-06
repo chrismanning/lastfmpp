@@ -61,7 +61,7 @@ encoded_params_t service::impl::make_params(std::string_view method, params_t pa
     params.emplace_back("api_key", api_key);
     params.emplace_back("method", method);
 
-    auto encoded_params = transform_copy(params, [](auto&& param) {
+    auto encoded_params = transform_copy(std::move(params), [](auto&& param) {
         return hana::transform(std::forward<decltype(param)>(param), [](auto&& query) {
             return uri_t::encode_uri(to_string_t(std::forward<decltype(query)>(query)), uri_t::components::query);
         });

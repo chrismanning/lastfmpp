@@ -136,6 +136,13 @@ struct LASTFM_EXPORT track {
     pplx::task<std::vector<track>> search(service&, std::optional<int> limit = std::nullopt,
                                           std::optional<int> page = std::nullopt) const;
 
+    static pplx::task<void> update_now_playing(service&, std::string_view title, std::string_view artist,
+                                               std::optional<std::string_view> album = std::nullopt,
+                                               std::optional<int> tracknumber = std::nullopt,
+                                               std::optional<std::chrono::seconds> duration = std::nullopt,
+                                               std::optional<std::string_view> album_artist = std::nullopt);
+    pplx::task<void> update_now_playing(service&) const;
+
   private:
     std::string m_name;
     struct artist m_artist;

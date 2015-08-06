@@ -39,8 +39,23 @@ struct transform_copy_ {
         std::vector<U, NewAlloc> result;
         result.reserve(v.size());
 
-        std::transform(std::begin(v), std::end(v), std::back_inserter(result), std::forward<F>(f));
+        std::transform(move_begin(v), move_end(v), std::back_inserter(result), std::forward<F>(f));
         return result;
+    }
+
+private:
+    template <typename V>
+    using iterator_type = std::conditional_t<std::is_rvalue_reference<V>::value,
+        std::move_iterator<decltype(std::begin(std::declval<V>()))>, decltype(std::begin(std::declval<V>()))>;
+
+    template <typename V>
+    static auto move_begin(V&& v) {
+        return iterator_type<V>{std::begin(v)};
+    }
+
+    template <typename V>
+    static auto move_end(V&& v) {
+        return iterator_type<V>{std::end(v)};
     }
 };
 
@@ -89,6 +104,14 @@ template <typename T> struct transform_select_<std::vector<T>> {
 } // namespace detail
 
 template <typename T> constexpr auto transform_select = detail::transform_select_<T>{};
+
+namespace detail {
+struct _ignore_impl {
+    template <typename... Args>
+    constexpr void operator()(Args&&...) const {}
+};
+constexpr _ignore_impl ignore{};
+}
 
 } // namespace lastfm
 

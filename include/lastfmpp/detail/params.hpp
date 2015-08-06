@@ -33,6 +33,10 @@ struct _to_string {
         ss << std::put_time(std::gmtime(&time), "%a, %d %b %Y %H:%M:%S");
         return ss.str();
     }
+    template <typename Rep, typename RatioT>
+    inline std::string operator()(std::chrono::duration<Rep, RatioT> d) const {
+        return (*this)(d.count());
+    }
     inline std::string operator()(const char* s) const {
         return std::string{s};
     }
@@ -106,6 +110,46 @@ struct _make_params {
 };
 
 constexpr auto make_params = _make_params{};
+
+struct _sv_impl {
+    template <typename CharT, typename CharTraits>
+    static std::basic_string_view<CharT, CharTraits> view(std::basic_string<CharT, CharTraits>&& s) {
+        static_assert(std::is_void<decltype(s)>::value,
+                      "Cannot create basic_string_view from an rvalue basic_string");
+    }
+
+    template <typename CharT, typename CharTraits>
+    static std::basic_string_view<CharT, CharTraits> view(const std::basic_string<CharT, CharTraits>&& s) {
+        static_assert(std::is_void<decltype(s)>::value,
+                      "Cannot create basic_string_view from an rvalue basic_string");
+    }
+
+    template <template <typename, typename> class S, typename CharT, typename CharTraits>
+    static std::basic_string_view<CharT, CharTraits> view(S<CharT, CharTraits>&& s) {
+        return s;
+    }
+
+    template <typename CharT> static std::basic_string_view<CharT> view(const CharT* s) {
+        return s;
+    }
+};
+
+#define SV(s) ::lastfmpp::detail::_sv_impl::view(s)
+
+constexpr auto only_when = hana::flip(hana::lockstep(hana::filter)(hana::lift<hana::ext::std::Optional>, hana::id));
+
+using namespace std::chrono_literals;
+
+struct _positive {
+    template <typename T> constexpr auto operator()(T&& t) const -> decltype(t > 0) {
+        return t > 0;
+    }
+    template <typename T> constexpr auto operator()(T&& t) const -> decltype(t > 0ms) {
+        return t > 0ms;
+    }
+};
+
+constexpr _positive positive{};
 
 } // namespace lastfmpp::detail
 

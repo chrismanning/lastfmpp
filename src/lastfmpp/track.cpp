@@ -327,4 +327,23 @@ pplx::task<std::vector<track>> track::search(service& serv, std::optional<int> l
     return search(serv, m_name, m_artist.name(), limit, page);
 }
 
+pplx::task<void> track::update_now_playing(service& serv, std::string_view title, std::string_view artist,
+                                           std::optional<std::string_view> album, std::optional<int> tracknumber,
+                                           std::optional<std::chrono::seconds> duration,
+                                           std::optional<std::string_view> album_artist) {
+    return detail::service_access::post_session(
+        serv, "track.updatenowplaying",
+        detail::make_params(std::make_pair("track", title), std::make_pair("artist", artist),
+                            std::make_pair("album", album), std::make_pair("tracknumber", tracknumber),
+                            std::make_pair("duration", duration), std::make_pair("albumartist", album_artist)),
+        detail::ignore);
+}
+
+pplx::task<void> track::update_now_playing(service& serv) const {
+    return update_now_playing(
+        serv, m_name, m_artist.name(), detail::only_when(detail::not_empty, SV(m_album.name())),
+        detail::only_when(detail::positive, m_tracknumber),
+        detail::only_when(detail::positive, std::chrono::duration_cast<std::chrono::seconds>(m_duration)));
+}
+
 } // namespace lastfm
