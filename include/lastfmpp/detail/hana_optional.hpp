@@ -66,6 +66,37 @@ template <> struct flatten_impl<ext::std::Optional> {
         return std::forward<X>(x);
     }
 };
+
+template <>
+struct concat_impl<ext::std::Optional> {
+    template <typename X, typename Y>
+    static constexpr auto apply(X&& x, Y&& y) {
+        return x ? std::forward<X>(x) : std::forward<Y>(y);
+    }
+};
+
+template <> struct empty_impl<ext::std::Optional> {
+    static constexpr auto apply() {
+        return std::nullopt;
+    }
+};
+
+template <>
+struct find_if_impl<ext::std::Optional> {
+    template <typename M, typename Pred>
+    static constexpr decltype(auto) apply(M&& m, Pred&& pred) {
+        return hana::any_of(std::forward<M>(m), std::forward<Pred>(pred)) ? hana::just(*m) : hana::nothing;
+    }
+};
+
+template <>
+struct any_of_impl<ext::std::Optional> {
+    template <typename M, typename Pred>
+    static constexpr decltype(auto) apply(M&& m, Pred&& p) {
+        return m && p(*m);
+    }
+};
+
 }
 
 #endif // LASTFM_HANA_OPTIONAL
