@@ -24,6 +24,13 @@ template <typename ContainerT, typename EContainerT>
 inline void check_error(const jbson::basic_document<ContainerT, EContainerT>& doc) {
     for(auto&& elem : doc) {
         if(elem.name() == "error") {
+            if(elem.type() == jbson::element_type::document_element) {
+                for(auto&& ielem : jbson::get<jbson::element_type::document_element>(elem)) {
+                    if(ielem.name() == "code") {
+                        handle_error_response(ielem);
+                    }
+                }
+            }
             handle_error_response(elem);
         }
     }

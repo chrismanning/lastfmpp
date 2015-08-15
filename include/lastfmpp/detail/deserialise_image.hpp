@@ -33,7 +33,8 @@ template <typename Container> void value_get(const jbson::basic_element<Containe
                                                                          {"extralarge"_sv, image_size::extralarge},
                                                                          {"mega"_sv, image_size::mega}};
     auto str = jbson::get<jbson::element_type::string_element>(elem);
-    var = map.at(str);
+    auto it = map.find(str);
+    var = it != map.end() ? std::get<1>(*it) : image_size::small;
 }
 
 } // namespace lastfmpp
