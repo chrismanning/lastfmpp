@@ -19,19 +19,11 @@
 
 namespace lastfmpp {
 
-service::service(std::string_view api_key, std::string_view shared_secret)
-    : pimpl(std::make_unique<impl>(api_key, shared_secret)) {
+service::service(std::string_view api_key, std::string_view shared_secret, std::optional<std::string_view> session_key)
+    : pimpl(std::make_unique<impl>(api_key, shared_secret, session_key)) {
 }
 
 service::~service() {
-}
-
-std::string_view service::api_key() const {
-    return pimpl->api_key;
-}
-
-std::string_view service::shared_secret() const {
-    return pimpl->shared_secret;
 }
 
 pplx::task<std::string> service::get_mobile_session(std::string_view username, std::string_view password) {

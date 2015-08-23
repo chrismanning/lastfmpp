@@ -34,7 +34,8 @@ using utility::conversions::to_string_t;
 using encoded_params_t = std::vector<std::tuple<utility::string_t, utility::string_t>>;
 
 struct service::impl {
-    impl(std::string_view api_key, std::string_view shared_secret);
+    impl(std::string_view api_key, std::string_view shared_secret,
+         std::optional<std::string_view> session_key = std::nullopt);
 
     pplx::task<jbson::document> get(std::string_view method, params_t params);
     template <typename TransformerT, typename ReturnT = std::result_of_t<TransformerT(jbson::document)>>
@@ -64,12 +65,12 @@ struct service::impl {
 
     web::http::client::http_client cas_client;
 
+private:
+
     const std::string api_key;
     const std::string shared_secret;
     mutable std::shared_timed_mutex session_mu;
     user user;
-
-  private:
     std::string session_key;
 };
 

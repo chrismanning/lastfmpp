@@ -27,12 +27,10 @@ struct service_access;
 
 class LASTFM_EXPORT service {
   public:
-    explicit service(std::string_view api_key, std::string_view shared_secret);
+    explicit service(std::string_view api_key, std::string_view shared_secret,
+                     std::optional<std::string_view> session_key = std::nullopt);
 
     ~service();
-
-    std::string_view api_key() const;
-    std::string_view shared_secret() const;
 
     pplx::task<std::string> get_mobile_session(std::string_view username, std::string_view password);
 

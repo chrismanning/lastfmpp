@@ -34,10 +34,14 @@ struct to_doc_impl {
 }
 static constexpr to_doc_impl to_doc{};
 
-service::impl::impl(std::string_view api_key, std::string_view shared_secret)
+service::impl::impl(std::string_view api_key, std::string_view shared_secret,
+                    std::optional<std::string_view> session_key)
     : cas_client(uri_t{base_url.to_string()}), api_key(api_key), shared_secret(shared_secret) {
     assert(!api_key.empty());
     assert(!shared_secret.empty());
+    if(session_key) {
+        this->session_key = session_key->to_string();
+    }
 }
 
 pplx::task<jbson::document> service::impl::get(std::string_view method, params_t params) {
