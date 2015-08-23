@@ -41,7 +41,7 @@ TEST_CASE("get_tag") {
     CHECK(wiki.content().size() > 0);
     CHECK(wiki.summary().size() <= wiki.content().size());
 
-    auto published = lastfmpp::date_t::clock::to_time_t(wiki.published());
+    auto published = lastfmpp::time_point::clock::to_time_t(wiki.published());
     std::clog << std::put_time(std::gmtime(&published), "%a %d %b %Y %H:%M:%S") << std::endl;
 
     auto similar_tags_fut = tag.get_similar(serv);
@@ -71,7 +71,7 @@ TEST_CASE("get_artist") {
     CHECK(wiki.content().size() > 0);
     CHECK(wiki.summary().size() <= wiki.content().size());
 
-    auto published = lastfmpp::date_t::clock::to_time_t(wiki.published());
+    auto published = lastfmpp::time_point::clock::to_time_t(wiki.published());
     std::clog << std::put_time(std::gmtime(&published), "%a %d %b %Y %H:%M:%S") << std::endl;
 
     CHECK(artist.similar().size() > 0);
@@ -95,7 +95,7 @@ TEST_CASE("get_artist_then") {
             CHECK(wiki.content().size() > 0);
             CHECK(wiki.summary().size() <= wiki.content().size());
 
-            auto published = lastfmpp::date_t::clock::to_time_t(wiki.published());
+            auto published = lastfmpp::time_point::clock::to_time_t(wiki.published());
             std::clog << std::put_time(std::gmtime(&published), "%a %d %b %Y %H:%M:%S") << std::endl;
 
             CHECK(artist.similar().size() > 0);
@@ -120,7 +120,7 @@ TEST_CASE("get_track") {
     CHECK(wiki.content().size() > 0);
     CHECK(wiki.summary().size() <= wiki.content().size());
 
-    auto published = lastfmpp::date_t::clock::to_time_t(wiki.published());
+    auto published = lastfmpp::time_point::clock::to_time_t(wiki.published());
     std::clog << std::put_time(std::gmtime(&published), "%a %d %b %Y %H:%M:%S") << std::endl;
 
     CHECK(track.similar().size() == 0);

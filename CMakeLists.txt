@@ -71,6 +71,22 @@ set(HANA_INCLUDE_DIR ${source_dir}/include CACHE INTERNAL "Path to include folde
 
 add_dependencies(${LASTFM} hana_${PROJECT_NAME})
 
+ExternalProject_Add(
+    date_${PROJECT_NAME}
+    GIT_REPOSITORY https://github.com/HowardHinnant/date.git
+    GIT_TAG ""
+    TIMEOUT 10
+    UPDATE_COMMAND ""
+    CONFIGURE_COMMAND ""
+    BUILD_COMMAND ""
+    INSTALL_COMMAND ""
+    LOG_DOWNLOAD ON
+   )
+ExternalProject_Get_Property(date_${PROJECT_NAME} source_dir)
+set(DATE_INCLUDE_DIR ${source_dir} CACHE INTERNAL "Path to include folder for Date library")
+
+add_dependencies(${LASTFM} date_${PROJECT_NAME})
+
 find_package(Boost REQUIRED)
 find_package(OpenSSL REQUIRED)
 find_package(JBSON REQUIRED)
@@ -84,6 +100,7 @@ include_directories(SYSTEM
     ${JBSON_INCLUDE_DIRS}
     ${HANA_INCLUDE_DIR}
     ${CPPREST_INCLUDE_DIR}
+    ${DATE_INCLUDE_DIR}
 )
 
 install(TARGETS lastfmpp

@@ -25,11 +25,11 @@ void shout::body(std::string_view body) {
     m_body = body.to_string();
 }
 
-date_t shout::date() const {
+time_point shout::date() const {
     return m_date;
 }
 
-void shout::date(date_t date) {
+void shout::date(time_point date) {
     m_date = date;
 }
 

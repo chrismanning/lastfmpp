@@ -10,9 +10,12 @@
 
 #include <chrono>
 
+#include <date.h>
+
 namespace lastfmpp {
 
-using date_t = std::chrono::system_clock::time_point;
+using time_point = std::chrono::system_clock::time_point;
+using day_point = date::day_point;
 
 } // namespace lastfmpp
 

@@ -133,9 +133,9 @@ pplx::task<std::vector<track>> tag::get_top_tracks(service& serv, std::optional<
 }
 
 pplx::task<std::vector<artist>> tag::get_weekly_artist_chart(service& serv, std::string_view name,
-                                                             std::optional<std::tuple<date_t, date_t>> date_range,
+                                                             std::optional<std::tuple<time_point, time_point>> date_range,
                                                              std::optional<int> limit) {
-    std::optional<date_t> from, to;
+    std::optional<time_point> from, to;
     if(date_range)
         std::tie(from, to) = *date_range;
 
@@ -146,20 +146,20 @@ pplx::task<std::vector<artist>> tag::get_weekly_artist_chart(service& serv, std:
 }
 
 pplx::task<std::vector<artist>> tag::get_weekly_artist_chart(service& serv,
-                                                             std::optional<std::tuple<date_t, date_t>> date_range,
+                                                             std::optional<std::tuple<time_point, time_point>> date_range,
                                                              std::optional<int> limit) const {
     return get_weekly_artist_chart(serv, m_name, date_range, limit);
 }
 
-pplx::task<std::vector<std::tuple<date_t, date_t>>> tag::get_weekly_chart_list(service& serv, std::string_view name) {
+pplx::task<std::vector<std::tuple<time_point, time_point>>> tag::get_weekly_chart_list(service& serv, std::string_view name) {
     auto transformer = [](jbson::document doc) {
         auto from = jbson::path_select(doc, "weeklychartlist.chart.*.from");
         auto to = jbson::path_select(doc, "weeklychartlist.chart.*.to");
 
-        std::vector<std::tuple<date_t, date_t>> charts{};
+        std::vector<std::tuple<time_point, time_point>> charts{};
 
         boost::transform(from, to, std::back_inserter(charts), [](auto&& from, auto&& to) {
-            return std::make_tuple(deserialise<date_t>(from), deserialise<date_t>(to));
+            return std::make_tuple(deserialise<time_point>(from), deserialise<time_point>(to));
         });
 
         return charts;
@@ -168,7 +168,7 @@ pplx::task<std::vector<std::tuple<date_t, date_t>>> tag::get_weekly_chart_list(s
                                        detail::make_params(std::make_tuple("tag", name)), transformer);
 }
 
-pplx::task<std::vector<std::tuple<date_t, date_t>>> tag::get_weekly_chart_list(service& serv) const {
+pplx::task<std::vector<std::tuple<time_point, time_point>>> tag::get_weekly_chart_list(service& serv) const {
     return get_weekly_chart_list(serv, m_name);
 }
 

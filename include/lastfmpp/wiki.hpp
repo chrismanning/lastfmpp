@@ -24,13 +24,13 @@ struct LASTFM_EXPORT wiki {
     std::string_view content() const;
     void content(std::string_view);
 
-    date_t published() const;
-    void published(date_t);
+    time_point published() const;
+    void published(time_point);
 
   private:
     std::string m_summary;
     std::string m_content;
-    date_t m_published;
+    time_point m_published;
 };
 
 } // namespace lastfm

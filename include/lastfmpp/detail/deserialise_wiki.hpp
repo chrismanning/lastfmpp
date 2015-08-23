@@ -24,7 +24,7 @@ template <typename Container> void value_get(const jbson::basic_element<Containe
             auto str = jbson::get<jbson::element_type::string_element>(elem);
             var.content({str.data(), str.size()});
         } else if(elem.name() == "published") {
-            var.published(jbson::get<date_t>(elem));
+            var.published(jbson::get<time_point>(elem));
         }
     }
 }

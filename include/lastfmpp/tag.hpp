@@ -72,14 +72,14 @@ struct LASTFM_EXPORT tag {
 
     static pplx::task<std::vector<artist>>
     get_weekly_artist_chart(service&, std::string_view name,
-                            std::optional<std::tuple<date_t, date_t>> date_range = std::nullopt,
+                            std::optional<std::tuple<time_point, time_point>> date_range = std::nullopt,
                             std::optional<int> limit = std::nullopt);
     pplx::task<std::vector<artist>>
-    get_weekly_artist_chart(service&, std::optional<std::tuple<date_t, date_t>> date_range = std::nullopt,
+    get_weekly_artist_chart(service&, std::optional<std::tuple<time_point, time_point>> date_range = std::nullopt,
                             std::optional<int> limit = std::nullopt) const;
 
-    static pplx::task<std::vector<std::tuple<date_t, date_t>>> get_weekly_chart_list(service&, std::string_view name);
-    pplx::task<std::vector<std::tuple<date_t, date_t>>> get_weekly_chart_list(service&) const;
+    static pplx::task<std::vector<std::tuple<time_point, time_point>>> get_weekly_chart_list(service&, std::string_view name);
+    pplx::task<std::vector<std::tuple<time_point, time_point>>> get_weekly_chart_list(service&) const;
 
     static pplx::task<std::vector<tag>> search(service&, std::string_view name, std::optional<int> limit = std::nullopt,
                                                std::optional<int> page = std::nullopt);

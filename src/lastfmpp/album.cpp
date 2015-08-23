@@ -42,11 +42,11 @@ void album::url(uri_t url) {
     m_url = std::move(url);
 }
 
-date_t album::release_date() const {
+day_point album::release_date() const {
     return m_release_date;
 }
 
-void album::release_date(date_t release_date) {
+void album::release_date(day_point release_date) {
     m_release_date = release_date;
 }
 

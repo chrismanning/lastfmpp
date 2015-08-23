@@ -36,7 +36,7 @@ template <typename Container> void value_get(const jbson::basic_element<Containe
             auto str = jbson::get<jbson::element_type::string_element>(elem);
             var.description(str);
         } else if(elem.name() == "startDate") {
-            var.start_date(jbson::get<date_t>(elem));
+            var.start_date(jbson::get<time_point>(elem));
         } else if(elem.name() == "venue") {
             var.venue(jbson::get<venue>(elem));
         } else if(elem.name() == "artists") {

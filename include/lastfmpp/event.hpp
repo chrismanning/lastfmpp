@@ -32,8 +32,8 @@ struct LASTFM_EXPORT event {
     const venue& venue() const;
     void venue(struct venue venue);
 
-    date_t start_date() const;
-    void start_date(date_t start_date);
+    time_point start_date() const;
+    void start_date(time_point start_date);
 
     std::string_view description() const;
     void description(std::string_view description);
@@ -52,7 +52,7 @@ struct LASTFM_EXPORT event {
     std::string m_name;
     std::vector<artist> m_artists;
     struct venue m_venue;
-    date_t m_start_date;
+    time_point m_start_date;
     std::string m_description;
     std::vector<image> m_images;
     int m_attendance = 0;

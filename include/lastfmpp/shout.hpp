@@ -24,13 +24,13 @@ struct LASTFM_EXPORT shout {
     std::string_view body() const;
     void body(std::string_view);
 
-    date_t date() const;
-    void date(date_t);
+    time_point date() const;
+    void date(time_point);
 
   private:
     std::string m_author;
     std::string m_body;
-    date_t m_date;
+    time_point m_date;
 };
 
 } // namespace lastfm

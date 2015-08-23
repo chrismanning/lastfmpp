@@ -1,0 +1,229 @@
+{
+  "artist": {
+    "name": "Metallica",
+    "mbid": "65f4f0c5-ef9e-490c-aee3-909e7ae6b2ab",
+    "url": "http://www.last.fm/music/Metallica",
+    "image": [
+      {
+        "#text": "http://img2-ak.lst.fm/i/u/34s/c14fdad46a5c423f86a683501c163c99.png",
+        "size": "small"
+      },
+      {
+        "#text": "http://img2-ak.lst.fm/i/u/64s/c14fdad46a5c423f86a683501c163c99.png",
+        "size": "medium"
+      },
+      {
+        "#text": "http://img2-ak.lst.fm/i/u/174s/c14fdad46a5c423f86a683501c163c99.png",
+        "size": "large"
+      },
+      {
+        "#text": "http://img2-ak.lst.fm/i/u/300x300/c14fdad46a5c423f86a683501c163c99.png",
+        "size": "extralarge"
+      },
+      {
+        "#text": "http://img2-ak.lst.fm/i/u/c14fdad46a5c423f86a683501c163c99.png",
+        "size": "mega"
+      },
+      {
+        "#text": "http://img2-ak.lst.fm/i/u/arQ/c14fdad46a5c423f86a683501c163c99.png",
+        "size": ""
+      }
+    ],
+    "streamable": "0",
+    "ontour": "1",
+    "stats": {
+      "listeners": "2749535",
+      "playcount": "240313755"
+    },
+    "similar": {
+      "artist": [
+        {
+          "name": "Pantera",
+          "url": "http://www.last.fm/music/Pantera",
+          "image": [
+            {
+              "#text": "http://img2-ak.lst.fm/i/u/34s/a03610ec09504d6ba583c4d556eb39d9.png",
+              "size": "small"
+            },
+            {
+              "#text": "http://img2-ak.lst.fm/i/u/64s/a03610ec09504d6ba583c4d556eb39d9.png",
+              "size": "medium"
+            },
+            {
+              "#text": "http://img2-ak.lst.fm/i/u/174s/a03610ec09504d6ba583c4d556eb39d9.png",
+              "size": "large"
+            },
+            {
+              "#text": "http://img2-ak.lst.fm/i/u/300x300/a03610ec09504d6ba583c4d556eb39d9.png",
+              "size": "extralarge"
+            },
+            {
+              "#text": "http://img2-ak.lst.fm/i/u/a03610ec09504d6ba583c4d556eb39d9.png",
+              "size": "mega"
+            },
+            {
+              "#text": "http://img2-ak.lst.fm/i/u/arQ/a03610ec09504d6ba583c4d556eb39d9.png",
+              "size": ""
+            }
+          ]
+        },
+        {
+          "name": "Megadeth",
+          "url": "http://www.last.fm/music/Megadeth",
+          "image": [
+            {
+              "#text": "http://img2-ak.lst.fm/i/u/34s/af49d7832676482889f0f6b5da0ffd1c.png",
+              "size": "small"
+            },
+            {
+              "#text": "http://img2-ak.lst.fm/i/u/64s/af49d7832676482889f0f6b5da0ffd1c.png",
+              "size": "medium"
+            },
+            {
+              "#text": "http://img2-ak.lst.fm/i/u/174s/af49d7832676482889f0f6b5da0ffd1c.png",
+              "size": "large"
+            },
+            {
+              "#text": "http://img2-ak.lst.fm/i/u/300x300/af49d7832676482889f0f6b5da0ffd1c.png",
+              "size": "extralarge"
+            },
+            {
+              "#text": "http://img2-ak.lst.fm/i/u/af49d7832676482889f0f6b5da0ffd1c.png",
+              "size": "mega"
+            },
+            {
+              "#text": "http://img2-ak.lst.fm/i/u/arQ/af49d7832676482889f0f6b5da0ffd1c.png",
+              "size": ""
+            }
+          ]
+        },
+        {
+          "name": "Iron Maiden",
+          "url": "http://www.last.fm/music/Iron+Maiden",
+          "image": [
+            {
+              "#text": "http://img2-ak.lst.fm/i/u/34s/3aaad2c9c92244c6a5bea6b01faa3eae.png",
+              "size": "small"
+            },
+            {
+              "#text": "http://img2-ak.lst.fm/i/u/64s/3aaad2c9c92244c6a5bea6b01faa3eae.png",
+              "size": "medium"
+            },
+            {
+              "#text": "http://img2-ak.lst.fm/i/u/174s/3aaad2c9c92244c6a5bea6b01faa3eae.png",
+              "size": "large"
+            },
+            {
+              "#text": "http://img2-ak.lst.fm/i/u/300x300/3aaad2c9c92244c6a5bea6b01faa3eae.png",
+              "size": "extralarge"
+            },
+            {
+              "#text": "http://img2-ak.lst.fm/i/u/3aaad2c9c92244c6a5bea6b01faa3eae.png",
+              "size": "mega"
+            },
+            {
+              "#text": "http://img2-ak.lst.fm/i/u/arQ/3aaad2c9c92244c6a5bea6b01faa3eae.png",
+              "size": ""
+            }
+          ]
+        },
+        {
+          "name": "Slayer",
+          "url": "http://www.last.fm/music/Slayer",
+          "image": [
+            {
+              "#text": "http://img2-ak.lst.fm/i/u/34s/3b14c2c329b34494808480158be34135.png",
+              "size": "small"
+            },
+            {
+              "#text": "http://img2-ak.lst.fm/i/u/64s/3b14c2c329b34494808480158be34135.png",
+              "size": "medium"
+            },
+            {
+              "#text": "http://img2-ak.lst.fm/i/u/174s/3b14c2c329b34494808480158be34135.png",
+              "size": "large"
+            },
+            {
+              "#text": "http://img2-ak.lst.fm/i/u/300x300/3b14c2c329b34494808480158be34135.png",
+              "size": "extralarge"
+            },
+            {
+              "#text": "http://img2-ak.lst.fm/i/u/3b14c2c329b34494808480158be34135.png",
+              "size": "mega"
+            },
+            {
+              "#text": "http://img2-ak.lst.fm/i/u/arQ/3b14c2c329b34494808480158be34135.png",
+              "size": ""
+            }
+          ]
+        },
+        {
+          "name": "Anthrax",
+          "url": "http://www.last.fm/music/Anthrax",
+          "image": [
+            {
+              "#text": "http://img2-ak.lst.fm/i/u/34s/7072ab45562448f7a646df83ae6741bc.png",
+              "size": "small"
+            },
+            {
+              "#text": "http://img2-ak.lst.fm/i/u/64s/7072ab45562448f7a646df83ae6741bc.png",
+              "size": "medium"
+            },
+            {
+              "#text": "http://img2-ak.lst.fm/i/u/174s/7072ab45562448f7a646df83ae6741bc.png",
+              "size": "large"
+            },
+            {
+              "#text": "http://img2-ak.lst.fm/i/u/300x300/7072ab45562448f7a646df83ae6741bc.png",
+              "size": "extralarge"
+            },
+            {
+              "#text": "http://img2-ak.lst.fm/i/u/7072ab45562448f7a646df83ae6741bc.png",
+              "size": "mega"
+            },
+            {
+              "#text": "http://img2-ak.lst.fm/i/u/arQ/7072ab45562448f7a646df83ae6741bc.png",
+              "size": ""
+            }
+          ]
+        }
+      ]
+    },
+    "tags": {
+      "tag": [
+        {
+          "name": "thrash metal",
+          "url": "http://www.last.fm/tag/thrash+metal"
+        },
+        {
+          "name": "metal",
+          "url": "http://www.last.fm/tag/metal"
+        },
+        {
+          "name": "heavy metal",
+          "url": "http://www.last.fm/tag/heavy+metal"
+        },
+        {
+          "name": "hard rock",
+          "url": "http://www.last.fm/tag/hard+rock"
+        },
+        {
+          "name": "rock",
+          "url": "http://www.last.fm/tag/rock"
+        }
+      ]
+    },
+    "bio": {
+      "links": {
+        "link": {
+          "#text": "",
+          "rel": "original",
+          "href": "http://last.fm/music/Metallica/+wiki"
+        }
+      },
+      "published": "01 Dec 2008, 18:07",
+      "summary": "Metallica is an American metal band formed in 1981 in Los Angeles, California, United States when drummer Lars Ulrich posted an advertisement in The Recycler. Metallica’s line-up originally consisted of Ulrich, rhythm guitarist and vocalist James Hetfield, and lead guitarist Dave Mustaine. Mustaine was later fired due to problems with alcoholism and drug addiction - he went on to form the band Megadeth. Exodus guitarist Kirk Hammett took his place. <a href=\"http://www.last.fm/music/Metallica\">Read more on Last.fm</a>.",
+      "content": "Metallica is an American metal band formed in 1981 in Los Angeles, California, United States when drummer Lars Ulrich posted an advertisement in The Recycler. Metallica’s line-up originally consisted of Ulrich, rhythm guitarist and vocalist James Hetfield, and lead guitarist Dave Mustaine. Mustaine was later fired due to problems with alcoholism and drug addiction - he went on to form the band Megadeth. Exodus guitarist Kirk Hammett took his place. Metallica has been through several bassists, including Ron McGovney, Cliff Burton (who died in a bus crash while the band was on tour), and Jason Newsted. The current bassist is Robert Trujillo, who joined in 2003.\n\nMetallica’s early releases included fast tempos, instrumentals, and aggressive musicianship that placed them as one of the “big four” of the thrash metal sub-genre alongside Slayer, Megadeth, and Anthrax. The band earned a growing fan base in the underground music community and critical acclaim, with the 1986 release Master of Puppets described as one of the most influential and “heavy” metal albums. The band achieved substantial commercial success with Metallica (1991), which debuted at number one on the Billboard 200. With this release the band expanded its musical direction resulting in an album that appealed to a more mainstream audience.\n\nIn 2000, Metallica was among several artists who filed a lawsuit against Napster for sharing the band’s copyright-protected material for free without the band members’ consent. A settlement was reached, and Napster became a pay-to-use service. Despite reaching number one on the Billboard 200, the release of St. Anger alienated many fans with the exclusion of guitar solos and the “steel-sounding” snare drum. A film titled Some Kind of Monster documented the recording process of St. Anger.\n\nMetallica has released nine studio albums, two live albums, two EPs, twenty-two music videos, and forty-four singles. The band has won nine Grammy Awards, and has had five consecutive albums debut at number one on the Billboard 200, making Metallica the only band ever to do so. The band’s 1991 album, Metallica, has sold over 15 million copies in the United States, and 22 million copies worldwide, which makes it the 25th-highest-selling album in the country. The band has sold an estimated 100 million records worldwide as of the release of their latest album Death Magnetic. As of September 2008, Metallica is the fourth highest-selling music artist since the SoundScan era began tracking sales on May 25, 1991, selling a total of 51,136,000 albums in the United States alone.\n\nMetallica was inducted into the Rock and Roll Hall of Fame in 2009. Metallica organised a brand new festival. They called it Sonishpere. Several cities in Europe were chosen by the band.\n\nOn June 15, 2011, Metallica announced that recording sessions with singer-songwriter Lou Reed had concluded. The album, titled Lulu, was recorded over several months, and resulted in ten songs based on Frank Wedekind's \"Lulu\" plays, Earth Spirit and Pandora's Box. The album was released on October 31, 2011. The recording of the album was problematic at times, with Lars Ulrich later stating Lou Reed challenged him to a \"street fight\". On October 16, 2011, Robert Trujillo confirmed that the band was back in the studio and writing new material, stating, \"The writing process for the new Metallica album has begun. We've been in the studio with Rick Rubin, working on a couple of things, and we're going to be recording during the most of next year.\"\n\nCurrent members:\n\nJames Hetfield – lead vocals, rhythm guitar (1981–present)\nLars Ulrich  – drums, percussion (1981–present)\nKirk Hammett  – lead guitar, backing vocals (1983–present)\nRobert Trujillo – bass, backing vocals (2003–present).\n\nFormer members:\n\nRon McGovney– bass (1982)\nDave Mustaine – lead guitar, backing vocals (1982–1983)\nCliff Burton – bass, backing vocals (1982–1986)\nJason Newsted – bass, backing vocals (1986–2001). <a href=\"http://www.last.fm/music/Metallica\">Read more on Last.fm</a>. User-contributed text is available under the Creative Commons By-SA License; additional terms may apply."
+    }
+  }
+}

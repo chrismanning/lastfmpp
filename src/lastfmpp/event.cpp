@@ -45,11 +45,11 @@ void event::venue(struct venue venue) {
     m_venue = std::move(venue);
 }
 
-date_t event::start_date() const {
+time_point event::start_date() const {
     return m_start_date;
 }
 
-void event::start_date(date_t start_date) {
+void event::start_date(time_point start_date) {
     m_start_date = start_date;
 }
 

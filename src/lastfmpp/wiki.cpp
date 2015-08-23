@@ -25,11 +25,11 @@ void wiki::content(std::string_view content) {
     m_content = content.to_string();
 }
 
-date_t wiki::published() const {
+time_point wiki::published() const {
     return m_published;
 }
 
-void wiki::published(date_t published) {
+void wiki::published(time_point published) {
     m_published = published;
 }
 

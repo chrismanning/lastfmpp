@@ -24,6 +24,8 @@
 #include <lastfmpp/tag.hpp>
 #include <lastfmpp/detail/deserialise_album.hpp>
 
+using namespace date;
+
 TEST_CASE("album_deserialise") {
     boost::filesystem::path test_dir{LASTFMPP_TEST_DATA_DIR};
     SECTION("get_info") {
@@ -47,5 +49,9 @@ TEST_CASE("album_deserialise") {
         CHECK(album.tracks().size() > 0);
         REQUIRE(album.images().size() > 0);
         CHECK(album.images().back().size() != lastfmpp::image_size::small);
+
+        CHECK(album.release_date() == 28_d/5/2004);
+
+        CHECK(truncate<days>(album.wiki().published()) == 23_d/12/2008);
     }
 }

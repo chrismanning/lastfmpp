@@ -8,6 +8,8 @@
 #ifndef LASTFM_DESERIALISE_ALBUM
 #define LASTFM_DESERIALISE_ALBUM
 
+#include <date.h>
+
 #include <jbson/element.hpp>
 
 #include <lastfmpp/album.hpp>
@@ -44,7 +46,7 @@ template <typename Container> void value_get(const jbson::basic_element<Containe
         } else if(elem.name() == "wiki") {
             var.wiki(jbson::get<wiki>(elem));
         } else if(elem.name() == "releasedate") {
-            var.release_date(jbson::get<date_t>(elem));
+            var.release_date(jbson::get<day_point>(elem));
         } else if(elem.name() == "toptags" || elem.name() == "tags") {
             if(elem.type() == jbson::element_type::document_element) {
                 for(auto&& e : jbson::get<jbson::element_type::document_element>(elem))

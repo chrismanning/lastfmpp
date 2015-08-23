@@ -27,10 +27,16 @@ namespace lastfmpp::detail {
 namespace hana = boost::hana;
 
 struct _to_string {
-    inline std::string operator()(date_t t) const {
-        auto time = date_t::clock::to_time_t(t);
+    inline std::string operator()(time_point t) const {
+        auto time = time_point::clock::to_time_t(t);
         std::stringstream ss{};
         ss << std::put_time(std::gmtime(&time), "%a, %d %b %Y %H:%M:%S");
+        return ss.str();
+    }
+    inline std::string operator()(day_point t) const {
+        auto time = day_point::clock::to_time_t(t);
+        std::stringstream ss{};
+        ss << std::put_time(std::gmtime(&time), "%d %b %Y");
         return ss.str();
     }
     template <typename Rep, typename RatioT>

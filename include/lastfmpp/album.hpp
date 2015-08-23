@@ -36,8 +36,8 @@ struct LASTFM_EXPORT album {
     const uri_t& url() const;
     void url(uri_t);
 
-    date_t release_date() const;
-    void release_date(date_t);
+    day_point release_date() const;
+    void release_date(day_point);
 
     const std::vector<track>& tracks() const;
     void tracks(std::vector<track>);
@@ -125,7 +125,7 @@ struct LASTFM_EXPORT album {
     std::string m_name;
     struct artist m_artist;
     uri_t m_url;
-    date_t m_release_date;
+    day_point m_release_date;
     std::vector<tag> m_top_tags;
     std::vector<track> m_tracks;
     int m_listeners = 0;
