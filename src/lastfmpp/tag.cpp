@@ -132,9 +132,9 @@ pplx::task<std::vector<track>> tag::get_top_tracks(service& serv, std::optional<
     return get_top_tracks(serv, m_name, limit, page);
 }
 
-pplx::task<std::vector<artist>> tag::get_weekly_artist_chart(service& serv, std::string_view name,
-                                                             std::optional<std::tuple<time_point, time_point>> date_range,
-                                                             std::optional<int> limit) {
+pplx::task<std::vector<artist>>
+tag::get_weekly_artist_chart(service& serv, std::string_view name,
+                             std::optional<std::tuple<time_point, time_point>> date_range, std::optional<int> limit) {
     std::optional<time_point> from, to;
     if(date_range)
         std::tie(from, to) = *date_range;
@@ -145,21 +145,24 @@ pplx::task<std::vector<artist>> tag::get_weekly_artist_chart(service& serv, std:
                                        transform_select<std::vector<artist>>("weeklyartistchart.artist.*"));
 }
 
-pplx::task<std::vector<artist>> tag::get_weekly_artist_chart(service& serv,
-                                                             std::optional<std::tuple<time_point, time_point>> date_range,
-                                                             std::optional<int> limit) const {
+pplx::task<std::vector<artist>>
+tag::get_weekly_artist_chart(service& serv, std::optional<std::tuple<time_point, time_point>> date_range,
+                             std::optional<int> limit) const {
     return get_weekly_artist_chart(serv, m_name, date_range, limit);
 }
 
-pplx::task<std::vector<std::tuple<time_point, time_point>>> tag::get_weekly_chart_list(service& serv, std::string_view name) {
+pplx::task<std::vector<std::tuple<time_point, time_point>>> tag::get_weekly_chart_list(service& serv,
+                                                                                       std::string_view name) {
     auto transformer = [](jbson::document doc) {
         auto from = jbson::path_select(doc, "weeklychartlist.chart.*.from");
         auto to = jbson::path_select(doc, "weeklychartlist.chart.*.to");
 
         std::vector<std::tuple<time_point, time_point>> charts{};
 
+        namespace hana = boost::hana;
         boost::transform(from, to, std::back_inserter(charts), [](auto&& from, auto&& to) {
-            return std::make_tuple(deserialise<time_point>(from), deserialise<time_point>(to));
+            return hana::transform(std::make_tuple(from, to), hana::compose(time_point::clock::from_time_t,
+                                                                            convert<std::time_t>, deserialise<int>));
         });
 
         return charts;

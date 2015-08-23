@@ -31,6 +31,19 @@ template <typename T> constexpr auto deserialise = detail::deserialise_<T>{};
 
 namespace detail {
 
+template <typename T> struct _convert {
+    template <typename U>
+    constexpr T operator()(U&& u) const {
+        return static_cast<T>(u);
+    }
+};
+
+} // namespace detail
+
+template <typename T> constexpr auto convert = detail::_convert<T>{};
+
+namespace detail {
+
 struct transform_copy_ {
     template <typename V, typename F> auto operator()(V&& v, F&& f) const {
         using U = std::remove_cv_t<std::remove_reference_t<decltype(f(*v.begin()))>>;
