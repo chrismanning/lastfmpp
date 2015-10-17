@@ -45,11 +45,9 @@ add_src(event.cpp)
 add_src(venue.cpp)
 add_src(location.cpp)
 
-add_library(${LASTFM} SHARED ${LASTFM_SRC})
+FILE(GLOB_RECURSE LASTFM_HEADERS_LIST include/*.hpp)
 
-FILE(GLOB_RECURSE LASTFM_COMMON_SRC_LIST include/*.hpp)
-
-add_custom_target(lastfm_heads ALL SOURCES ${LASTFM_COMMON_SRC_LIST})
+add_library(${LASTFM} SHARED ${LASTFM_SRC} ${LASTFM_HEADERS_LIST})
 
 add_definitions(-DOPENSSL_NO_SSL2)
 
