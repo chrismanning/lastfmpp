@@ -13,19 +13,19 @@
 
 namespace lastfmpp {
 
-std::string_view event::id() const {
+std::experimental::string_view event::id() const {
     return m_id;
 }
 
-void event::id(std::string_view id) {
+void event::id(std::experimental::string_view id) {
     m_id = id.to_string();
 }
 
-std::string_view event::name() const {
+std::experimental::string_view event::name() const {
     return m_name;
 }
 
-void event::name(std::string_view name) {
+void event::name(std::experimental::string_view name) {
     m_name = name.to_string();
 }
 
@@ -53,11 +53,11 @@ void event::start_date(time_point start_date) {
     m_start_date = start_date;
 }
 
-std::string_view event::description() const {
+std::experimental::string_view event::description() const {
     return m_description;
 }
 
-void event::description(std::string_view description) {
+void event::description(std::experimental::string_view description) {
     m_description = description.to_string();
 }
 

@@ -18,11 +18,11 @@ namespace lastfmpp {
 struct LASTFM_EXPORT wiki {
     wiki() = default;
 
-    std::string_view summary() const;
-    void summary(std::string_view);
+    std::experimental::string_view summary() const;
+    void summary(std::experimental::string_view);
 
-    std::string_view content() const;
-    void content(std::string_view);
+    std::experimental::string_view content() const;
+    void content(std::experimental::string_view);
 
     time_point published() const;
     void published(time_point);

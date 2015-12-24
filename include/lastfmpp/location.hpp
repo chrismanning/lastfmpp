@@ -15,17 +15,17 @@ namespace lastfmpp {
 struct LASTFM_EXPORT location {
     location() = default;
 
-    std::string_view street() const;
-    void street(std::string_view street);
+    std::experimental::string_view street() const;
+    void street(std::experimental::string_view street);
 
-    std::string_view city() const;
-    void city(std::string_view city);
+    std::experimental::string_view city() const;
+    void city(std::experimental::string_view city);
 
-    std::string_view country() const;
-    void country(std::string_view country);
+    std::experimental::string_view country() const;
+    void country(std::experimental::string_view country);
 
-    std::string_view post_code() const;
-    void post_code(std::string_view post_code);
+    std::experimental::string_view post_code() const;
+    void post_code(std::experimental::string_view post_code);
 
     // api methods
 

@@ -9,11 +9,11 @@
 
 namespace lastfmpp {
 
-std::string_view affiliation::supplier_name() const {
+std::experimental::string_view affiliation::supplier_name() const {
     return m_supplier_name;
 }
 
-void affiliation::supplier_name(std::string_view supplier_name) {
+void affiliation::supplier_name(std::experimental::string_view supplier_name) {
     m_supplier_name = supplier_name.to_string();
 }
 
@@ -25,11 +25,11 @@ void affiliation::buy_link(uri_t buy_link) {
     m_buy_link = std::move(buy_link);
 }
 
-std::string_view affiliation::price() const {
+std::experimental::string_view affiliation::price() const {
     return m_price;
 }
 
-void affiliation::price(std::string_view price) {
+void affiliation::price(std::experimental::string_view price) {
     m_price = price.to_string();
 }
 

@@ -16,14 +16,14 @@ namespace lastfmpp {
 struct LASTFM_EXPORT affiliation {
     affiliation() = default;
 
-    std::string_view supplier_name() const;
-    void supplier_name(std::string_view);
+    std::experimental::string_view supplier_name() const;
+    void supplier_name(std::experimental::string_view);
 
     const uri_t& buy_link() const;
     void buy_link(uri_t);
 
-    std::string_view price() const;
-    void price(std::string_view);
+    std::experimental::string_view price() const;
+    void price(std::experimental::string_view);
 
     const uri_t& supplier_icon() const;
     void supplier_icon(uri_t);

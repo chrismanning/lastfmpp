@@ -34,24 +34,24 @@ using utility::conversions::to_string_t;
 using encoded_params_t = std::vector<std::tuple<utility::string_t, utility::string_t>>;
 
 struct service::impl {
-    impl(std::string_view api_key, std::string_view shared_secret,
-         std::optional<std::string_view> session_key = std::nullopt);
+    impl(std::experimental::string_view api_key, std::experimental::string_view shared_secret,
+         std::experimental::optional<std::experimental::string_view> session_key = std::experimental::nullopt);
 
-    pplx::task<jbson::document> get(std::string_view method, params_t params);
+    pplx::task<jbson::document> get(std::experimental::string_view method, params_t params);
     template <typename TransformerT, typename ReturnT = std::result_of_t<TransformerT(jbson::document)>>
-    pplx::task<ReturnT> get(std::string_view method, params_t params, TransformerT&& transform);
+    pplx::task<ReturnT> get(std::experimental::string_view method, params_t params, TransformerT&& transform);
 
-    pplx::task<jbson::document> post_session(std::string_view method, params_t params);
-
-    template <typename TransformerT, typename ReturnT = std::result_of_t<TransformerT(jbson::document)>>
-    pplx::task<ReturnT> post_session(std::string_view method, params_t params, TransformerT&& transform);
-
-    pplx::task<jbson::document> post(std::string_view method, params_t params);
+    pplx::task<jbson::document> post_session(std::experimental::string_view method, params_t params);
 
     template <typename TransformerT, typename ReturnT = std::result_of_t<TransformerT(jbson::document)>>
-    pplx::task<ReturnT> post(std::string_view method, params_t params, TransformerT&& transform);
+    pplx::task<ReturnT> post_session(std::experimental::string_view method, params_t params, TransformerT&& transform);
 
-    encoded_params_t make_params(std::string_view method, params_t params, bool needs_signature);
+    pplx::task<jbson::document> post(std::experimental::string_view method, params_t params);
+
+    template <typename TransformerT, typename ReturnT = std::result_of_t<TransformerT(jbson::document)>>
+    pplx::task<ReturnT> post(std::experimental::string_view method, params_t params, TransformerT&& transform);
+
+    encoded_params_t make_params(std::experimental::string_view method, params_t params, bool needs_signature);
 
     utility::string_t make_query(encoded_params_t params);
 
@@ -59,33 +59,35 @@ struct service::impl {
 
     static std::string flatten(const params_t& params);
 
-    void set_session_key(std::string_view sk);
+    void set_session_key(std::experimental::string_view sk);
 
     std::string get_session_key() const;
 
     web::http::client::http_client cas_client;
 
-private:
-
+  private:
     const std::string api_key;
     const std::string shared_secret;
     mutable std::shared_timed_mutex session_mu;
-    user user;
+    user m_user;
     std::string session_key;
 };
 
 template <typename TransformerT, typename ReturnT>
-pplx::task<ReturnT> service::impl::get(std::string_view method, params_t params, TransformerT&& transform) {
+pplx::task<ReturnT> service::impl::get(std::experimental::string_view method, params_t params,
+                                       TransformerT&& transform) {
     return get(method, std::move(params)).then(transform);
 }
 
 template <typename TransformerT, typename ReturnT>
-pplx::task<ReturnT> service::impl::post(std::string_view method, params_t params, TransformerT&& transform) {
+pplx::task<ReturnT> service::impl::post(std::experimental::string_view method, params_t params,
+                                        TransformerT&& transform) {
     return post(method, std::move(params)).then(transform);
 }
 
 template <typename TransformerT, typename ReturnT>
-pplx::task<ReturnT> service::impl::post_session(std::string_view method, params_t params, TransformerT&& transform) {
+pplx::task<ReturnT> service::impl::post_session(std::experimental::string_view method, params_t params,
+                                                TransformerT&& transform) {
     return post_session(method, std::move(params)).then(transform);
 }
 

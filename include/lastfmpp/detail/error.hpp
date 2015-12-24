@@ -14,27 +14,27 @@
 
 namespace lastfmpp::detail {
 
-template <typename ContainerT>
-[[noreturn]] inline void handle_error_response(const jbson::basic_element<ContainerT>& elem) {
-    auto error = static_cast<api_error>(jbson::get<int>(elem));
-    throw api_exception(error);
-}
+    template <typename ContainerT>
+    [[noreturn]] inline void handle_error_response(const jbson::basic_element<ContainerT>& elem) {
+        auto error = static_cast<api_error>(jbson::get<int>(elem));
+        throw api_exception(error);
+    }
 
-template <typename ContainerT, typename EContainerT>
-inline void check_error(const jbson::basic_document<ContainerT, EContainerT>& doc) {
-    for(auto&& elem : doc) {
-        if(elem.name() == "error") {
-            if(elem.type() == jbson::element_type::document_element) {
-                for(auto&& ielem : jbson::get<jbson::element_type::document_element>(elem)) {
-                    if(ielem.name() == "code") {
-                        handle_error_response(ielem);
+    template <typename ContainerT, typename EContainerT>
+    inline void check_error(const jbson::basic_document<ContainerT, EContainerT>& doc) {
+        for(auto&& elem : doc) {
+            if(elem.name() == "error") {
+                if(elem.type() == jbson::element_type::document_element) {
+                    for(auto&& ielem : jbson::get<jbson::element_type::document_element>(elem)) {
+                        if(ielem.name() == "code") {
+                            handle_error_response(ielem);
+                        }
                     }
                 }
+                handle_error_response(elem);
             }
-            handle_error_response(elem);
         }
     }
-}
 
 } // namespace lastfmpp::detail
 

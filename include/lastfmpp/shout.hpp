@@ -18,11 +18,11 @@ class service;
 struct LASTFM_EXPORT shout {
     shout() = default;
 
-    std::string_view author() const;
-    void author(std::string_view);
+    std::experimental::string_view author() const;
+    void author(std::experimental::string_view);
 
-    std::string_view body() const;
-    void body(std::string_view);
+    std::experimental::string_view body() const;
+    void body(std::experimental::string_view);
 
     time_point date() const;
     void date(time_point);

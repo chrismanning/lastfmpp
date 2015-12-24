@@ -47,8 +47,8 @@ TEST_CASE("artist_deserialise") {
         REQUIRE(artist.images().size() > 0);
         CHECK(artist.images().back().size() != lastfmpp::image_size::small);
 
-        auto x = year_month_day(truncate<days>(artist.wiki().published()));
-        CHECK(x == 13_d/5/2014);
+        auto x = year_month_day(trunc<days>(artist.wiki().published()));
+        CHECK(x == 13_d / 5 / 2014);
     }
 }
 
@@ -72,9 +72,9 @@ TEST_CASE("artist_deserialise_alt") {
         CHECK_FALSE(artist.streamable());
         CHECK(artist.wiki().summary().size() > 0);
         REQUIRE(artist.images().size() > 0);
-//        CHECK(artist.images().back().size() != lastfmpp::image_size::small);
+        //        CHECK(artist.images().back().size() != lastfmpp::image_size::small);
 
-        auto x = year_month_day(truncate<days>(artist.wiki().published()));
-        CHECK(x == 01_d/12/2008);
+        auto x = year_month_day(trunc<days>(artist.wiki().published()));
+        CHECK(x == 01_d / 12 / 2008);
     }
 }

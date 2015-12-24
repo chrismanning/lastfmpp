@@ -20,8 +20,8 @@ struct tag;
 struct LASTFM_EXPORT track {
     track() = default;
 
-    std::string_view name() const;
-    void name(std::string_view);
+    std::experimental::string_view name() const;
+    void name(std::experimental::string_view);
 
     const artist& artist() const;
     void artist(struct artist);
@@ -61,86 +61,108 @@ struct LASTFM_EXPORT track {
 
     // api methods
 
-    static pplx::task<track> get_info(service&, mbid_t mbid, std::optional<std::string_view> lang = std::nullopt,
-                                      bool autocorrect = false,
-                                      std::optional<std::string_view> username = std::nullopt);
-    static pplx::task<track> get_info(service&, std::string_view name, std::string_view artist,
-                                      std::optional<std::string_view> lang = std::nullopt, bool autocorrect = false,
-                                      std::optional<std::string_view> username = std::nullopt);
-    pplx::task<track> get_info(service&, std::optional<std::string_view> lang = std::nullopt, bool autocorrect = false,
-                               std::optional<std::string_view> username = std::nullopt) const;
+    static pplx::task<track>
+    get_info(service&, mbid_t mbid,
+             std::experimental::optional<std::experimental::string_view> lang = std::experimental::nullopt,
+             bool autocorrect = false,
+             std::experimental::optional<std::experimental::string_view> username = std::experimental::nullopt);
+    static pplx::task<track>
+    get_info(service&, std::experimental::string_view name, std::experimental::string_view artist,
+             std::experimental::optional<std::experimental::string_view> lang = std::experimental::nullopt,
+             bool autocorrect = false,
+             std::experimental::optional<std::experimental::string_view> username = std::experimental::nullopt);
+    pplx::task<track>
+    get_info(service&, std::experimental::optional<std::experimental::string_view> lang = std::experimental::nullopt,
+             bool autocorrect = false,
+             std::experimental::optional<std::experimental::string_view> username = std::experimental::nullopt) const;
 
-    static pplx::task<std::vector<affiliation>> get_buy_links(service&, mbid_t mbid, std::string_view countrycode,
+    static pplx::task<std::vector<affiliation>>
+    get_buy_links(service&, mbid_t mbid, std::experimental::string_view countrycode, bool autocorrect = false);
+    static pplx::task<std::vector<affiliation>> get_buy_links(service&, std::experimental::string_view name,
+                                                              std::experimental::string_view artist,
+                                                              std::experimental::string_view countrycode,
                                                               bool autocorrect = false);
-    static pplx::task<std::vector<affiliation>> get_buy_links(service&, std::string_view name, std::string_view artist,
-                                                              std::string_view countrycode, bool autocorrect = false);
-    pplx::task<std::vector<affiliation>> get_buy_links(service&, std::string_view countrycode,
+    pplx::task<std::vector<affiliation>> get_buy_links(service&, std::experimental::string_view countrycode,
                                                        bool autocorrect = false) const;
 
-    static pplx::task<track> get_correction(service&, std::string_view name, std::string_view artist);
+    static pplx::task<track> get_correction(service&, std::experimental::string_view name,
+                                            std::experimental::string_view artist);
     pplx::task<track> get_correction(service&) const;
 
-    static pplx::task<std::vector<shout>> get_shouts(service&, mbid_t mbid, bool autocorrect = false,
-                                                     std::optional<int> limit = std::nullopt,
-                                                     std::optional<int> page = std::nullopt);
-    static pplx::task<std::vector<shout>> get_shouts(service&, std::string_view name, std::string_view artist,
-                                                     bool autocorrect = false, std::optional<int> limit = std::nullopt,
-                                                     std::optional<int> page = std::nullopt);
+    static pplx::task<std::vector<shout>>
+    get_shouts(service&, mbid_t mbid, bool autocorrect = false,
+               std::experimental::optional<int> limit = std::experimental::nullopt,
+               std::experimental::optional<int> page = std::experimental::nullopt);
+    static pplx::task<std::vector<shout>>
+    get_shouts(service&, std::experimental::string_view name, std::experimental::string_view artist,
+               bool autocorrect = false, std::experimental::optional<int> limit = std::experimental::nullopt,
+               std::experimental::optional<int> page = std::experimental::nullopt);
     pplx::task<std::vector<shout>> get_shouts(service&, bool autocorrect = false,
-                                              std::optional<int> limit = std::nullopt,
-                                              std::optional<int> page = std::nullopt) const;
+                                              std::experimental::optional<int> limit = std::experimental::nullopt,
+                                              std::experimental::optional<int> page = std::experimental::nullopt) const;
 
-    static pplx::task<std::vector<track>> get_similar(service&, mbid_t mbid, bool autocorrect = false,
-                                                      std::optional<int> limit = std::nullopt);
-    static pplx::task<std::vector<track>> get_similar(service&, std::string_view name, std::string_view artist,
-                                                      bool autocorrect = false,
-                                                      std::optional<int> limit = std::nullopt);
-    pplx::task<std::vector<track>> get_similar(service&, bool autocorrect = false,
-                                               std::optional<int> limit = std::nullopt) const;
+    static pplx::task<std::vector<track>>
+    get_similar(service&, mbid_t mbid, bool autocorrect = false,
+                std::experimental::optional<int> limit = std::experimental::nullopt);
+    static pplx::task<std::vector<track>>
+    get_similar(service&, std::experimental::string_view name, std::experimental::string_view artist,
+                bool autocorrect = false, std::experimental::optional<int> limit = std::experimental::nullopt);
+    pplx::task<std::vector<track>>
+    get_similar(service&, bool autocorrect = false,
+                std::experimental::optional<int> limit = std::experimental::nullopt) const;
 
-    static pplx::task<std::vector<user>> get_top_fans(service&, mbid_t mbid, bool autocorrect = false,
-                                                      std::optional<int> limit = std::nullopt,
-                                                      std::optional<int> page = std::nullopt);
-    static pplx::task<std::vector<user>> get_top_fans(service&, std::string_view name, std::string_view artist,
-                                                      bool autocorrect = false, std::optional<int> limit = std::nullopt,
-                                                      std::optional<int> page = std::nullopt);
-    pplx::task<std::vector<user>> get_top_fans(service&, bool autocorrect = false,
-                                               std::optional<int> limit = std::nullopt,
-                                               std::optional<int> page = std::nullopt) const;
+    static pplx::task<std::vector<user>>
+    get_top_fans(service&, mbid_t mbid, bool autocorrect = false,
+                 std::experimental::optional<int> limit = std::experimental::nullopt,
+                 std::experimental::optional<int> page = std::experimental::nullopt);
+    static pplx::task<std::vector<user>>
+    get_top_fans(service&, std::experimental::string_view name, std::experimental::string_view artist,
+                 bool autocorrect = false, std::experimental::optional<int> limit = std::experimental::nullopt,
+                 std::experimental::optional<int> page = std::experimental::nullopt);
+    pplx::task<std::vector<user>>
+    get_top_fans(service&, bool autocorrect = false,
+                 std::experimental::optional<int> limit = std::experimental::nullopt,
+                 std::experimental::optional<int> page = std::experimental::nullopt) const;
 
-    static pplx::task<std::vector<tag>> get_top_tags(service&, mbid_t mbid, bool autocorrect = false,
-                                                     std::optional<int> limit = std::nullopt,
-                                                     std::optional<int> page = std::nullopt);
-    static pplx::task<std::vector<tag>> get_top_tags(service&, std::string_view name, std::string_view artist,
-                                                     bool autocorrect = false, std::optional<int> limit = std::nullopt,
-                                                     std::optional<int> page = std::nullopt);
+    static pplx::task<std::vector<tag>>
+    get_top_tags(service&, mbid_t mbid, bool autocorrect = false,
+                 std::experimental::optional<int> limit = std::experimental::nullopt,
+                 std::experimental::optional<int> page = std::experimental::nullopt);
+    static pplx::task<std::vector<tag>>
+    get_top_tags(service&, std::experimental::string_view name, std::experimental::string_view artist,
+                 bool autocorrect = false, std::experimental::optional<int> limit = std::experimental::nullopt,
+                 std::experimental::optional<int> page = std::experimental::nullopt);
     pplx::task<std::vector<tag>> get_top_tags(service&, bool autocorrect = false,
-                                              std::optional<int> limit = std::nullopt,
-                                              std::optional<int> page = std::nullopt) const;
+                                              std::experimental::optional<int> limit = std::experimental::nullopt,
+                                              std::experimental::optional<int> page = std::experimental::nullopt) const;
 
-    static pplx::task<std::vector<tag>> get_tags(service&, mbid_t mbid, std::string_view username,
-                                                 bool autocorrect = false, std::optional<int> limit = std::nullopt,
-                                                 std::optional<int> page = std::nullopt);
-    static pplx::task<std::vector<tag>> get_tags(service&, std::string_view name, std::string_view artist,
-                                                 std::string_view username, bool autocorrect = false,
-                                                 std::optional<int> limit = std::nullopt,
-                                                 std::optional<int> page = std::nullopt);
-    pplx::task<std::vector<tag>> get_tags(service&, std::string_view username, bool autocorrect = false,
-                                          std::optional<int> limit = std::nullopt,
-                                          std::optional<int> page = std::nullopt) const;
+    static pplx::task<std::vector<tag>> get_tags(service&, mbid_t mbid, std::experimental::string_view username,
+                                                 bool autocorrect = false,
+                                                 std::experimental::optional<int> limit = std::experimental::nullopt,
+                                                 std::experimental::optional<int> page = std::experimental::nullopt);
+    static pplx::task<std::vector<tag>> get_tags(service&, std::experimental::string_view name,
+                                                 std::experimental::string_view artist,
+                                                 std::experimental::string_view username, bool autocorrect = false,
+                                                 std::experimental::optional<int> limit = std::experimental::nullopt,
+                                                 std::experimental::optional<int> page = std::experimental::nullopt);
+    pplx::task<std::vector<tag>> get_tags(service&, std::experimental::string_view username, bool autocorrect = false,
+                                          std::experimental::optional<int> limit = std::experimental::nullopt,
+                                          std::experimental::optional<int> page = std::experimental::nullopt) const;
 
-    static pplx::task<std::vector<track>> search(service&, std::string_view name,
-                                                 std::optional<std::string_view> artist = std::nullopt,
-                                                 std::optional<int> limit = std::nullopt,
-                                                 std::optional<int> page = std::nullopt);
-    pplx::task<std::vector<track>> search(service&, std::optional<int> limit = std::nullopt,
-                                          std::optional<int> page = std::nullopt) const;
+    static pplx::task<std::vector<track>>
+    search(service&, std::experimental::string_view name,
+           std::experimental::optional<std::experimental::string_view> artist = std::experimental::nullopt,
+           std::experimental::optional<int> limit = std::experimental::nullopt,
+           std::experimental::optional<int> page = std::experimental::nullopt);
+    pplx::task<std::vector<track>> search(service&, std::experimental::optional<int> limit = std::experimental::nullopt,
+                                          std::experimental::optional<int> page = std::experimental::nullopt) const;
 
-    static pplx::task<void> update_now_playing(service&, std::string_view title, std::string_view artist,
-                                               std::optional<std::string_view> album = std::nullopt,
-                                               std::optional<int> tracknumber = std::nullopt,
-                                               std::optional<std::chrono::seconds> duration = std::nullopt,
-                                               std::optional<std::string_view> album_artist = std::nullopt);
+    static pplx::task<void> update_now_playing(
+        service&, std::experimental::string_view title, std::experimental::string_view artist,
+        std::experimental::optional<std::experimental::string_view> album = std::experimental::nullopt,
+        std::experimental::optional<int> tracknumber = std::experimental::nullopt,
+        std::experimental::optional<std::chrono::seconds> duration = std::experimental::nullopt,
+        std::experimental::optional<std::experimental::string_view> album_artist = std::experimental::nullopt);
     pplx::task<void> update_now_playing(service&) const;
 
   private:

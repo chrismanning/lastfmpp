@@ -16,14 +16,14 @@
 
 namespace boost::uuids {
 
-template <typename Container> void value_get(const jbson::basic_element<Container>& mbid_elem, uuid& var) {
-    static constexpr string_generator gen{};
-    auto str = jbson::get<jbson::element_type::string_element>(mbid_elem);
-    try {
-        var = gen(str.begin(), str.end());
-    } catch(...) {
+    template <typename Container> void value_get(const jbson::basic_element<Container>& mbid_elem, uuid& var) {
+        static constexpr string_generator gen{};
+        auto str = jbson::get<jbson::element_type::string_element>(mbid_elem);
+        try {
+            var = gen(str.begin(), str.end());
+        } catch(...) {
+        }
     }
-}
 
 } // namespace boost::uuids
 

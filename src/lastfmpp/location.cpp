@@ -9,35 +9,35 @@
 
 namespace lastfmpp {
 
-std::string_view location::street() const {
+std::experimental::string_view location::street() const {
     return m_street;
 }
 
-void location::street(std::string_view street) {
+void location::street(std::experimental::string_view street) {
     m_street = street.to_string();
 }
 
-std::string_view location::city() const {
+std::experimental::string_view location::city() const {
     return m_city;
 }
 
-void location::city(std::string_view city) {
+void location::city(std::experimental::string_view city) {
     m_city = city.to_string();
 }
 
-std::string_view location::country() const {
+std::experimental::string_view location::country() const {
     return m_country;
 }
 
-void location::country(std::string_view country) {
+void location::country(std::experimental::string_view country) {
     m_country = country.to_string();
 }
 
-std::string_view location::post_code() const {
+std::experimental::string_view location::post_code() const {
     return m_post_code;
 }
 
-void location::post_code(std::string_view post_code) {
+void location::post_code(std::experimental::string_view post_code) {
     m_post_code = post_code.to_string();
 }
 

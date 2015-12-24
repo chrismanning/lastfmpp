@@ -21,11 +21,11 @@
 
 namespace lastfmpp {
 
-std::string_view artist::name() const {
+std::experimental::string_view artist::name() const {
     return m_name;
 }
 
-void artist::name(std::string_view name) {
+void artist::name(std::experimental::string_view name) {
     m_name = name.to_string();
 }
 
@@ -101,8 +101,9 @@ void artist::mbid(mbid_t mbid) {
     m_mbid = mbid;
 }
 
-pplx::task<artist> artist::get_info(service& serv, mbid_t mbid, std::optional<std::string_view> lang, bool autocorrect,
-                                    std::optional<std::string_view> username) {
+pplx::task<artist> artist::get_info(service& serv, mbid_t mbid,
+                                    std::experimental::optional<std::experimental::string_view> lang, bool autocorrect,
+                                    std::experimental::optional<std::experimental::string_view> username) {
     return detail::service_access::get(serv, "artist.getinfo",
                                        detail::make_params(std::make_pair("mbid", mbid), std::make_pair("lang", lang),
                                                            std::make_pair("autocorrect", autocorrect),
@@ -110,8 +111,9 @@ pplx::task<artist> artist::get_info(service& serv, mbid_t mbid, std::optional<st
                                        transform_select<artist>("artist"));
 }
 
-pplx::task<artist> artist::get_info(service& serv, std::string_view name, std::optional<std::string_view> lang,
-                                    bool autocorrect, std::optional<std::string_view> username) {
+pplx::task<artist> artist::get_info(service& serv, std::experimental::string_view name,
+                                    std::experimental::optional<std::experimental::string_view> lang, bool autocorrect,
+                                    std::experimental::optional<std::experimental::string_view> username) {
     return detail::service_access::get(serv, "artist.getinfo",
                                        detail::make_params(std::make_pair("artist", name), std::make_pair("lang", lang),
                                                            std::make_pair("autocorrect", autocorrect),
@@ -119,12 +121,13 @@ pplx::task<artist> artist::get_info(service& serv, std::string_view name, std::o
                                        transform_select<artist>("artist"));
 }
 
-pplx::task<artist> artist::get_info(service& serv, std::optional<std::string_view> lang, bool autocorrect,
-                                    std::optional<std::string_view> username) const {
+pplx::task<artist> artist::get_info(service& serv, std::experimental::optional<std::experimental::string_view> lang,
+                                    bool autocorrect,
+                                    std::experimental::optional<std::experimental::string_view> username) const {
     return get_info(serv, m_name, lang, autocorrect, username);
 }
 
-pplx::task<artist> artist::get_correction(service& serv, std::string_view name) {
+pplx::task<artist> artist::get_correction(service& serv, std::experimental::string_view name) {
     return detail::service_access::get(serv, "artist.getcorrection",
                                        detail::make_params(std::make_pair("artist", name)),
                                        transform_select<artist>("corrections.correction.artist"));
@@ -135,7 +138,8 @@ pplx::task<artist> artist::get_correction(service& serv) const {
 }
 
 pplx::task<std::vector<event>> artist::get_events(service& serv, mbid_t mbid, bool autocorrect, bool festivalsonly,
-                                                  std::optional<int> limit, std::optional<int> page) {
+                                                  std::experimental::optional<int> limit,
+                                                  std::experimental::optional<int> page) {
     return detail::service_access::get(
         serv, "artist.getevents",
         detail::make_params(std::make_pair("mbid", mbid), std::make_pair("autocorrect", autocorrect),
@@ -144,9 +148,9 @@ pplx::task<std::vector<event>> artist::get_events(service& serv, mbid_t mbid, bo
         transform_select<std::vector<event>>("events.event.*"));
 }
 
-pplx::task<std::vector<event>> artist::get_events(service& serv, std::string_view name, bool autocorrect,
-                                                  bool festivalsonly, std::optional<int> limit,
-                                                  std::optional<int> page) {
+pplx::task<std::vector<event>> artist::get_events(service& serv, std::experimental::string_view name, bool autocorrect,
+                                                  bool festivalsonly, std::experimental::optional<int> limit,
+                                                  std::experimental::optional<int> page) {
     return detail::service_access::get(
         serv, "artist.getevents",
         detail::make_params(std::make_pair("artist", name), std::make_pair("autocorrect", autocorrect),
@@ -156,14 +160,16 @@ pplx::task<std::vector<event>> artist::get_events(service& serv, std::string_vie
 }
 
 pplx::task<std::vector<event>> artist::get_events(service& serv, bool autocorrect, bool festivalsonly,
-                                                  std::optional<int> limit, std::optional<int> page) const {
+                                                  std::experimental::optional<int> limit,
+                                                  std::experimental::optional<int> page) const {
     if(!m_mbid.is_nil())
         return get_events(serv, m_mbid, autocorrect, festivalsonly, limit, page);
     return get_events(serv, m_name, autocorrect, festivalsonly, limit, page);
 }
 
 pplx::task<std::vector<event>> artist::get_past_events(service& serv, mbid_t mbid, bool autocorrect,
-                                                       std::optional<int> limit, std::optional<int> page) {
+                                                       std::experimental::optional<int> limit,
+                                                       std::experimental::optional<int> page) {
     return detail::service_access::get(
         serv, "artist.getpastevents",
         detail::make_params(std::make_pair("mbid", mbid), std::make_pair("autocorrect", autocorrect),
@@ -171,8 +177,9 @@ pplx::task<std::vector<event>> artist::get_past_events(service& serv, mbid_t mbi
         transform_select<std::vector<event>>("events.event.*"));
 }
 
-pplx::task<std::vector<event>> artist::get_past_events(service& serv, std::string_view name, bool autocorrect,
-                                                       std::optional<int> limit, std::optional<int> page) {
+pplx::task<std::vector<event>> artist::get_past_events(service& serv, std::experimental::string_view name,
+                                                       bool autocorrect, std::experimental::optional<int> limit,
+                                                       std::experimental::optional<int> page) {
     return detail::service_access::get(
         serv, "artist.getpastevents",
         detail::make_params(std::make_pair("artist", name), std::make_pair("autocorrect", autocorrect),
@@ -180,15 +187,17 @@ pplx::task<std::vector<event>> artist::get_past_events(service& serv, std::strin
         transform_select<std::vector<event>>("events.event.*"));
 }
 
-pplx::task<std::vector<event>> artist::get_past_events(service& serv, bool autocorrect, std::optional<int> limit,
-                                                       std::optional<int> page) const {
+pplx::task<std::vector<event>> artist::get_past_events(service& serv, bool autocorrect,
+                                                       std::experimental::optional<int> limit,
+                                                       std::experimental::optional<int> page) const {
     if(!m_mbid.is_nil())
         return get_past_events(serv, m_mbid, autocorrect, limit, page);
     return get_past_events(serv, m_name, autocorrect, limit, page);
 }
 
 pplx::task<std::vector<shout>> artist::get_shouts(service& serv, mbid_t mbid, bool autocorrect,
-                                                  std::optional<int> limit, std::optional<int> page) {
+                                                  std::experimental::optional<int> limit,
+                                                  std::experimental::optional<int> page) {
     return detail::service_access::get(
         serv, "artist.getshouts",
         detail::make_params(std::make_pair("mbid", mbid), std::make_pair("autocorrect", autocorrect),
@@ -196,8 +205,9 @@ pplx::task<std::vector<shout>> artist::get_shouts(service& serv, mbid_t mbid, bo
         transform_select<std::vector<shout>>("shouts.shout.*"));
 }
 
-pplx::task<std::vector<shout>> artist::get_shouts(service& serv, std::string_view name, bool autocorrect,
-                                                  std::optional<int> limit, std::optional<int> page) {
+pplx::task<std::vector<shout>> artist::get_shouts(service& serv, std::experimental::string_view name, bool autocorrect,
+                                                  std::experimental::optional<int> limit,
+                                                  std::experimental::optional<int> page) {
     return detail::service_access::get(
         serv, "artist.getshouts",
         detail::make_params(std::make_pair("artist", name), std::make_pair("autocorrect", autocorrect),
@@ -205,15 +215,16 @@ pplx::task<std::vector<shout>> artist::get_shouts(service& serv, std::string_vie
         transform_select<std::vector<shout>>("shouts.shout.*"));
 }
 
-pplx::task<std::vector<shout>> artist::get_shouts(service& serv, bool autocorrect, std::optional<int> limit,
-                                                  std::optional<int> page) const {
+pplx::task<std::vector<shout>> artist::get_shouts(service& serv, bool autocorrect,
+                                                  std::experimental::optional<int> limit,
+                                                  std::experimental::optional<int> page) const {
     if(!m_mbid.is_nil())
         return get_shouts(serv, m_mbid, autocorrect, limit, page);
     return get_shouts(serv, m_name, autocorrect, limit, page);
 }
 
 pplx::task<std::vector<artist>> artist::get_similar(service& serv, mbid_t mbid, bool autocorrect,
-                                                    std::optional<int> limit) {
+                                                    std::experimental::optional<int> limit) {
     return detail::service_access::get(serv, "artist.getsimilar",
                                        detail::make_params(std::make_pair("mbid", mbid),
                                                            std::make_pair("autocorrect", autocorrect),
@@ -221,8 +232,8 @@ pplx::task<std::vector<artist>> artist::get_similar(service& serv, mbid_t mbid, 
                                        transform_select<std::vector<artist>>("similarartists.artist.*"));
 }
 
-pplx::task<std::vector<artist>> artist::get_similar(service& serv, std::string_view name, bool autocorrect,
-                                                    std::optional<int> limit) {
+pplx::task<std::vector<artist>> artist::get_similar(service& serv, std::experimental::string_view name,
+                                                    bool autocorrect, std::experimental::optional<int> limit) {
     return detail::service_access::get(serv, "artist.getsimilar",
                                        detail::make_params(std::make_pair("artist", name),
                                                            std::make_pair("autocorrect", autocorrect),
@@ -230,14 +241,16 @@ pplx::task<std::vector<artist>> artist::get_similar(service& serv, std::string_v
                                        transform_select<std::vector<artist>>("similarartists.artist.*"));
 }
 
-pplx::task<std::vector<artist>> artist::get_similar(service& serv, bool autocorrect, std::optional<int> limit) const {
+pplx::task<std::vector<artist>> artist::get_similar(service& serv, bool autocorrect,
+                                                    std::experimental::optional<int> limit) const {
     if(!m_mbid.is_nil())
         return get_similar(serv, m_mbid, autocorrect, limit);
     return get_similar(serv, m_name, autocorrect, limit);
 }
 
-pplx::task<std::vector<tag>> artist::get_tags(service& serv, mbid_t mbid, std::string_view username, bool autocorrect,
-                                              std::optional<int> limit, std::optional<int> page) {
+pplx::task<std::vector<tag>> artist::get_tags(service& serv, mbid_t mbid, std::experimental::string_view username,
+                                              bool autocorrect, std::experimental::optional<int> limit,
+                                              std::experimental::optional<int> page) {
     return detail::service_access::get(
         serv, "artist.gettags", detail::make_params(std::make_pair("mbid", mbid), std::make_pair("username", username),
                                                     std::make_pair("autocorrect", autocorrect),
@@ -245,8 +258,10 @@ pplx::task<std::vector<tag>> artist::get_tags(service& serv, mbid_t mbid, std::s
         transform_select<std::vector<tag>>("tags.tag.*"));
 }
 
-pplx::task<std::vector<tag>> artist::get_tags(service& serv, std::string_view name, std::string_view username,
-                                              bool autocorrect, std::optional<int> limit, std::optional<int> page) {
+pplx::task<std::vector<tag>> artist::get_tags(service& serv, std::experimental::string_view name,
+                                              std::experimental::string_view username, bool autocorrect,
+                                              std::experimental::optional<int> limit,
+                                              std::experimental::optional<int> page) {
     return detail::service_access::get(
         serv, "artist.gettags",
         detail::make_params(std::make_pair("artist", name), std::make_pair("username", username),
@@ -255,13 +270,15 @@ pplx::task<std::vector<tag>> artist::get_tags(service& serv, std::string_view na
         transform_select<std::vector<tag>>("tags.tag.*"));
 }
 
-pplx::task<std::vector<tag>> artist::get_tags(service& serv, std::string_view username, bool autocorrect,
-                                              std::optional<int> limit, std::optional<int> page) const {
+pplx::task<std::vector<tag>> artist::get_tags(service& serv, std::experimental::string_view username, bool autocorrect,
+                                              std::experimental::optional<int> limit,
+                                              std::experimental::optional<int> page) const {
     return get_tags(serv, m_name, username, autocorrect, limit, page);
 }
 
 pplx::task<std::vector<album>> artist::get_top_albums(service& serv, mbid_t mbid, bool autocorrect,
-                                                      std::optional<int> limit, std::optional<int> page) {
+                                                      std::experimental::optional<int> limit,
+                                                      std::experimental::optional<int> page) {
     return detail::service_access::get(
         serv, "artist.gettopalbums",
         detail::make_params(std::make_pair("mbid", mbid), std::make_pair("autocorrect", autocorrect),
@@ -269,8 +286,9 @@ pplx::task<std::vector<album>> artist::get_top_albums(service& serv, mbid_t mbid
         transform_select<std::vector<album>>("topalbums.album.*"));
 }
 
-pplx::task<std::vector<album>> artist::get_top_albums(service& serv, std::string_view name, bool autocorrect,
-                                                      std::optional<int> limit, std::optional<int> page) {
+pplx::task<std::vector<album>> artist::get_top_albums(service& serv, std::experimental::string_view name,
+                                                      bool autocorrect, std::experimental::optional<int> limit,
+                                                      std::experimental::optional<int> page) {
     return detail::service_access::get(
         serv, "artist.gettopalbums",
         detail::make_params(std::make_pair("artist", name), std::make_pair("autocorrect", autocorrect),
@@ -278,15 +296,17 @@ pplx::task<std::vector<album>> artist::get_top_albums(service& serv, std::string
         transform_select<std::vector<album>>("topalbums.album.*"));
 }
 
-pplx::task<std::vector<album>> artist::get_top_albums(service& serv, bool autocorrect, std::optional<int> limit,
-                                                      std::optional<int> page) const {
+pplx::task<std::vector<album>> artist::get_top_albums(service& serv, bool autocorrect,
+                                                      std::experimental::optional<int> limit,
+                                                      std::experimental::optional<int> page) const {
     if(!m_mbid.is_nil())
         return get_top_albums(serv, m_mbid, autocorrect, limit, page);
     return get_top_albums(serv, m_name, autocorrect, limit, page);
 }
 
 pplx::task<std::vector<user>> artist::get_top_fans(service& serv, mbid_t mbid, bool autocorrect,
-                                                   std::optional<int> limit, std::optional<int> page) {
+                                                   std::experimental::optional<int> limit,
+                                                   std::experimental::optional<int> page) {
     return detail::service_access::get(
         serv, "artist.gettopfans",
         detail::make_params(std::make_pair("mbid", mbid), std::make_pair("autocorrect", autocorrect),
@@ -294,8 +314,9 @@ pplx::task<std::vector<user>> artist::get_top_fans(service& serv, mbid_t mbid, b
         transform_select<std::vector<user>>("topfans.user.*"));
 }
 
-pplx::task<std::vector<user>> artist::get_top_fans(service& serv, std::string_view name, bool autocorrect,
-                                                   std::optional<int> limit, std::optional<int> page) {
+pplx::task<std::vector<user>> artist::get_top_fans(service& serv, std::experimental::string_view name, bool autocorrect,
+                                                   std::experimental::optional<int> limit,
+                                                   std::experimental::optional<int> page) {
     return detail::service_access::get(
         serv, "artist.gettopfans",
         detail::make_params(std::make_pair("artist", name), std::make_pair("autocorrect", autocorrect),
@@ -303,15 +324,17 @@ pplx::task<std::vector<user>> artist::get_top_fans(service& serv, std::string_vi
         transform_select<std::vector<user>>("topfans.user.*"));
 }
 
-pplx::task<std::vector<user>> artist::get_top_fans(service& serv, bool autocorrect, std::optional<int> limit,
-                                                   std::optional<int> page) const {
+pplx::task<std::vector<user>> artist::get_top_fans(service& serv, bool autocorrect,
+                                                   std::experimental::optional<int> limit,
+                                                   std::experimental::optional<int> page) const {
     if(!m_mbid.is_nil())
         return get_top_fans(serv, m_mbid, autocorrect, limit, page);
     return get_top_fans(serv, m_name, autocorrect, limit, page);
 }
 
 pplx::task<std::vector<tag>> artist::get_top_tags(service& serv, mbid_t mbid, bool autocorrect,
-                                                  std::optional<int> limit, std::optional<int> page) {
+                                                  std::experimental::optional<int> limit,
+                                                  std::experimental::optional<int> page) {
     return detail::service_access::get(
         serv, "artist.gettoptags",
         detail::make_params(std::make_pair("mbid", mbid), std::make_pair("autocorrect", autocorrect),
@@ -319,8 +342,9 @@ pplx::task<std::vector<tag>> artist::get_top_tags(service& serv, mbid_t mbid, bo
         transform_select<std::vector<tag>>("toptags.tag.*"));
 }
 
-pplx::task<std::vector<tag>> artist::get_top_tags(service& serv, std::string_view name, bool autocorrect,
-                                                  std::optional<int> limit, std::optional<int> page) {
+pplx::task<std::vector<tag>> artist::get_top_tags(service& serv, std::experimental::string_view name, bool autocorrect,
+                                                  std::experimental::optional<int> limit,
+                                                  std::experimental::optional<int> page) {
     return detail::service_access::get(
         serv, "artist.gettoptags",
         detail::make_params(std::make_pair("artist", name), std::make_pair("autocorrect", autocorrect),
@@ -328,15 +352,17 @@ pplx::task<std::vector<tag>> artist::get_top_tags(service& serv, std::string_vie
         transform_select<std::vector<tag>>("toptags.tag.*"));
 }
 
-pplx::task<std::vector<tag>> artist::get_top_tags(service& serv, bool autocorrect, std::optional<int> limit,
-                                                  std::optional<int> page) const {
+pplx::task<std::vector<tag>> artist::get_top_tags(service& serv, bool autocorrect,
+                                                  std::experimental::optional<int> limit,
+                                                  std::experimental::optional<int> page) const {
     if(!m_mbid.is_nil())
         return get_top_tags(serv, m_mbid, autocorrect, limit, page);
     return get_top_tags(serv, m_name, autocorrect, limit, page);
 }
 
 pplx::task<std::vector<track>> artist::get_top_tracks(service& serv, mbid_t mbid, bool autocorrect,
-                                                      std::optional<int> limit, std::optional<int> page) {
+                                                      std::experimental::optional<int> limit,
+                                                      std::experimental::optional<int> page) {
     return detail::service_access::get(
         serv, "artist.gettoptracks",
         detail::make_params(std::make_pair("mbid", mbid), std::make_pair("autocorrect", autocorrect),
@@ -344,8 +370,9 @@ pplx::task<std::vector<track>> artist::get_top_tracks(service& serv, mbid_t mbid
         transform_select<std::vector<track>>("toptracks.track.*"));
 }
 
-pplx::task<std::vector<track>> artist::get_top_tracks(service& serv, std::string_view name, bool autocorrect,
-                                                      std::optional<int> limit, std::optional<int> page) {
+pplx::task<std::vector<track>> artist::get_top_tracks(service& serv, std::experimental::string_view name,
+                                                      bool autocorrect, std::experimental::optional<int> limit,
+                                                      std::experimental::optional<int> page) {
     return detail::service_access::get(
         serv, "artist.gettoptracks",
         detail::make_params(std::make_pair("artist", name), std::make_pair("autocorrect", autocorrect),
@@ -353,22 +380,25 @@ pplx::task<std::vector<track>> artist::get_top_tracks(service& serv, std::string
         transform_select<std::vector<track>>("toptracks.track.*"));
 }
 
-pplx::task<std::vector<track>> artist::get_top_tracks(service& serv, bool autocorrect, std::optional<int> limit,
-                                                      std::optional<int> page) const {
+pplx::task<std::vector<track>> artist::get_top_tracks(service& serv, bool autocorrect,
+                                                      std::experimental::optional<int> limit,
+                                                      std::experimental::optional<int> page) const {
     if(!m_mbid.is_nil())
         return get_top_tracks(serv, m_mbid, autocorrect, limit, page);
     return get_top_tracks(serv, m_name, autocorrect, limit, page);
 }
 
-pplx::task<std::vector<artist>> artist::search(service& serv, std::string_view name, std::optional<int> limit,
-                                               std::optional<int> page) {
+pplx::task<std::vector<artist>> artist::search(service& serv, std::experimental::string_view name,
+                                               std::experimental::optional<int> limit,
+                                               std::experimental::optional<int> page) {
     return detail::service_access::get(serv, "artist.search", detail::make_params(std::make_pair("artist", name),
                                                                                   std::make_pair("limit", limit),
                                                                                   std::make_pair("page", page)),
                                        transform_select<std::vector<artist>>("results.artistmatches.artist.*"));
 }
 
-pplx::task<std::vector<artist>> artist::search(service& serv, std::optional<int> limit, std::optional<int> page) const {
+pplx::task<std::vector<artist>> artist::search(service& serv, std::experimental::optional<int> limit,
+                                               std::experimental::optional<int> page) const {
     return search(serv, m_name, limit, page);
 }
 

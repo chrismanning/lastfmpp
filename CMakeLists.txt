@@ -1,4 +1,4 @@
-project(lastfmpp CXX)
+project(lastfmpp C CXX)
 cmake_minimum_required(VERSION 3.0)
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
@@ -89,8 +89,9 @@ find_package(Boost REQUIRED)
 find_package(OpenSSL REQUIRED)
 find_package(JBSON REQUIRED)
 find_package(CPPREST REQUIRED)
+find_package(Threads REQUIRED)
 
-target_link_libraries(${LASTFM} ${OPENSSL_LIBRARIES} ${LINK_LIBS} ${CPPREST_LIBRARIES})
+target_link_libraries(${LASTFM} ${OPENSSL_LIBRARIES} ${LINK_LIBS} ${CPPREST_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
 set_target_properties(${LASTFM} PROPERTIES COMPILE_DEFINITIONS LASTFM_EXPORTS=${LASTFM}_EXPORTS)
 include_directories(SYSTEM
     ${Boost_INCLUDE_DIR}

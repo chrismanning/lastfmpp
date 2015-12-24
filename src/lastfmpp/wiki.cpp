@@ -9,19 +9,19 @@
 
 namespace lastfmpp {
 
-std::string_view wiki::summary() const {
+std::experimental::string_view wiki::summary() const {
     return m_summary;
 }
 
-void wiki::summary(std::string_view summary) {
+void wiki::summary(std::experimental::string_view summary) {
     m_summary = summary.to_string();
 }
 
-std::string_view wiki::content() const {
+std::experimental::string_view wiki::content() const {
     return m_content;
 }
 
-void wiki::content(std::string_view content) {
+void wiki::content(std::experimental::string_view content) {
     m_content = content.to_string();
 }
 

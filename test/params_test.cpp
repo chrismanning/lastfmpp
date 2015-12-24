@@ -13,8 +13,7 @@
 using namespace lastfmpp;
 using namespace lastfmpp::detail;
 
-template <typename T>
-std::optional<T> nullopt = std::nullopt;
+template <typename T> std::experimental::optional<T> nullopt = std::experimental::nullopt;
 
 TEST_CASE("make_params") {
     SECTION("basic") {
@@ -31,14 +30,15 @@ TEST_CASE("make_params") {
 
     SECTION("optional non-null") {
         auto params = make_params(std::make_pair("a", "b"), std::make_pair("c", 3),
-                                  std::make_pair("d", std::make_optional(321)));
+                                  std::make_pair("d", std::experimental::make_optional(321)));
         auto expected = params_t{std::make_pair("a", "b"), std::make_pair("c", "3"), std::make_pair("d", "321")};
         REQUIRE(params == expected);
     }
 
     SECTION("optional non-null & null") {
-        auto params = make_params(std::make_pair("a", "b"), std::make_pair("c", nullopt<std::string_view>),
-                                  std::make_pair("d", std::make_optional(321)));
+        auto params =
+            make_params(std::make_pair("a", "b"), std::make_pair("c", nullopt<std::experimental::string_view>),
+                        std::make_pair("d", std::experimental::make_optional(321)));
         auto expected = params_t{std::make_pair("a", "b"), std::make_pair("d", "321")};
         REQUIRE(params == expected);
     }

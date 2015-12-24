@@ -27,11 +27,12 @@ template <typename Container> void value_get(const jbson::basic_element<Containe
 }
 
 template <typename Container> void value_get(const jbson::basic_element<Container>& elem, image_size& var) {
-    static const std::unordered_map<std::string_view, image_size> map = {{"small"_sv, image_size::small},
-                                                                         {"medium"_sv, image_size::medium},
-                                                                         {"large"_sv, image_size::large},
-                                                                         {"extralarge"_sv, image_size::extralarge},
-                                                                         {"mega"_sv, image_size::mega}};
+    static const std::unordered_map<std::experimental::string_view, image_size> map = {
+        {"small"_sv, image_size::small},
+        {"medium"_sv, image_size::medium},
+        {"large"_sv, image_size::large},
+        {"extralarge"_sv, image_size::extralarge},
+        {"mega"_sv, image_size::mega}};
     auto str = jbson::get<jbson::element_type::string_element>(elem);
     auto it = map.find(str);
     var = it != map.end() ? std::get<1>(*it) : image_size::small;

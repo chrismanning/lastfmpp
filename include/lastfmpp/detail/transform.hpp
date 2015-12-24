@@ -32,8 +32,7 @@ template <typename T> constexpr auto deserialise = detail::deserialise_<T>{};
 namespace detail {
 
 template <typename T> struct _convert {
-    template <typename U>
-    constexpr T operator()(U&& u) const {
+    template <typename U> constexpr T operator()(U&& u) const {
         return static_cast<T>(u);
     }
 };
@@ -56,18 +55,17 @@ struct transform_copy_ {
         return result;
     }
 
-private:
+  private:
     template <typename V>
     using iterator_type = std::conditional_t<std::is_rvalue_reference<V>::value,
-        std::move_iterator<decltype(std::begin(std::declval<V>()))>, decltype(std::begin(std::declval<V>()))>;
+                                             std::move_iterator<decltype(std::begin(std::declval<V>()))>,
+                                             decltype(std::begin(std::declval<V>()))>;
 
-    template <typename V>
-    static auto move_begin(V&& v) {
+    template <typename V> static auto move_begin(V&& v) {
         return iterator_type<V>{std::begin(v)};
     }
 
-    template <typename V>
-    static auto move_end(V&& v) {
+    template <typename V> static auto move_end(V&& v) {
         return iterator_type<V>{std::end(v)};
     }
 };
@@ -79,12 +77,14 @@ constexpr auto transform_copy = detail::transform_copy_{};
 namespace detail {
 
 struct vector_to_optional_ {
-    template <typename T, typename... Args> std::optional<T> operator()(std::vector<T, Args...>&& vec) const {
-        return vec.empty() ? std::nullopt : std::make_optional(std::move(vec.front()));
+    template <typename T, typename... Args>
+    std::experimental::optional<T> operator()(std::vector<T, Args...>&& vec) const {
+        return vec.empty() ? std::experimental::nullopt : std::experimental::make_optional(std::move(vec.front()));
     }
 
-    template <typename T, typename... Args> std::optional<T> operator()(const std::vector<T, Args...>& vec) const {
-        return vec.empty() ? std::nullopt : std::make_optional(vec.front());
+    template <typename T, typename... Args>
+    std::experimental::optional<T> operator()(const std::vector<T, Args...>& vec) const {
+        return vec.empty() ? std::experimental::nullopt : std::experimental::make_optional(vec.front());
     }
 };
 
@@ -95,7 +95,7 @@ constexpr auto vector_to_optional = detail::vector_to_optional_{};
 namespace detail {
 
 template <typename T> struct transform_select_ {
-    auto operator()(std::string_view path) const {
+    auto operator()(std::experimental::string_view path) const {
         return [path = path.to_string()](jbson::document doc) {
             if(auto elem = vector_to_optional(jbson::path_select(std::move(doc), path))) {
                 return jbson::get<T>(*elem);
@@ -106,7 +106,7 @@ template <typename T> struct transform_select_ {
 };
 
 template <typename T> struct transform_select_<std::vector<T>> {
-    auto operator()(std::string_view path) const {
+    auto operator()(std::experimental::string_view path) const {
         return [path = path.to_string()](jbson::document doc) {
             auto elems = jbson::path_select(std::move(doc), path);
             return transform_copy(elems, deserialise<T>);
@@ -120,8 +120,8 @@ template <typename T> constexpr auto transform_select = detail::transform_select
 
 namespace detail {
 struct _ignore_impl {
-    template <typename... Args>
-    constexpr void operator()(Args&&...) const {}
+    template <typename... Args> constexpr void operator()(Args&&...) const {
+    }
 };
 constexpr _ignore_impl ignore{};
 }

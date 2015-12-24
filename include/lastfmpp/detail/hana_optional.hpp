@@ -12,91 +12,87 @@
 
 #include <boost/hana.hpp>
 
-namespace std {
-using namespace experimental;
-}
-
 namespace boost::hana {
 
-namespace ext::std {
-    struct Optional;
-}
-
-template <typename T> struct datatype<::std::optional<T>> { using type = ext::std::Optional; };
-
-template <> struct lift_impl<ext::std::Optional> {
-    template <typename X> static constexpr decltype(auto) apply(X&& x) {
-        return std::make_optional(std::forward<X>(x));
-    }
-};
-
-template <> struct ap_impl<ext::std::Optional> {
-    template <typename F, typename... X>
-    static constexpr auto apply_impl(std::false_type, F&& f, X&&... x)
-        -> decltype(std::make_optional((*f)(x.value()...))) {
-        if(f && (... && x))
-            return std::make_optional((*f)(x.value()...));
-        return std::nullopt;
-    }
-    template <typename F, typename... X> static constexpr void apply_impl(std::true_type, F&& f, X&&... x) {
-        if(f && (... && x))
-            (*f)(x.value()...);
-    }
-    template <typename F, typename... X> static constexpr decltype(auto) apply(F&& f, X&&... x) {
-        return apply_impl(std::is_void<decltype((*f)(x.value()...))>{}, std::forward<F>(f), std::forward<X>(x)...);
-    }
-};
-
-template <> struct transform_impl<ext::std::Optional> : Applicative::transform_impl<ext::std::Optional> {};
-
-template <> struct flatten_impl<ext::std::Optional> {
-    template <typename X> static constexpr decltype(auto) apply(std::optional<std::optional<X>>&& x) {
-        return x ? *std::move(x) : std::nullopt;
+    namespace ext::std::experimental {
+        struct Optional;
     }
 
-    template <typename X> static constexpr decltype(auto) apply(std::optional<std::optional<X>>& x) {
-        return x ? *x : std::nullopt;
-    }
+    template <typename T> struct datatype<::std::experimental::optional<T>> {
+        using type = ext::std::experimental::Optional;
+    };
 
-    template <typename X> static constexpr decltype(auto) apply(const std::optional<std::optional<X>>& x) {
-        return x ? *x : std::nullopt;
-    }
+    template <> struct lift_impl<ext::std::experimental::Optional> {
+        template <typename X> static constexpr decltype(auto) apply(X&& x) {
+            return std::experimental::make_optional(std::forward<X>(x));
+        }
+    };
 
-    template <typename X> static constexpr decltype(auto) apply(X&& x) {
-        return std::forward<X>(x);
-    }
-};
+    template <> struct ap_impl<ext::std::experimental::Optional> {
+        template <typename F, typename... X>
+        static constexpr auto apply_impl(std::false_type, F&& f, X&&... x)
+            -> decltype(std::experimental::make_optional((*f)(x.value()...))) {
+            if(f && (... && x))
+                return std::experimental::make_optional((*f)(x.value()...));
+            return std::experimental::nullopt;
+        }
+        template <typename F, typename... X> static constexpr void apply_impl(std::true_type, F&& f, X&&... x) {
+            if(f && (... && x))
+                (*f)(x.value()...);
+        }
+        template <typename F, typename... X> static constexpr decltype(auto) apply(F&& f, X&&... x) {
+            return apply_impl(std::is_void<decltype((*f)(x.value()...))>{}, std::forward<F>(f), std::forward<X>(x)...);
+        }
+    };
 
-template <>
-struct concat_impl<ext::std::Optional> {
-    template <typename X, typename Y>
-    static constexpr auto apply(X&& x, Y&& y) {
-        return x ? std::forward<X>(x) : std::forward<Y>(y);
-    }
-};
+    template <>
+    struct transform_impl<ext::std::experimental::Optional>
+        : Applicative::transform_impl<ext::std::experimental::Optional> {};
 
-template <> struct empty_impl<ext::std::Optional> {
-    static constexpr auto apply() {
-        return std::nullopt;
-    }
-};
+    template <> struct flatten_impl<ext::std::experimental::Optional> {
+        template <typename X>
+        static constexpr decltype(auto) apply(std::experimental::optional<std::experimental::optional<X>>&& x) {
+            return x ? *std::move(x) : std::experimental::nullopt;
+        }
 
-template <>
-struct find_if_impl<ext::std::Optional> {
-    template <typename M, typename Pred>
-    static constexpr decltype(auto) apply(M&& m, Pred&& pred) {
-        return hana::any_of(std::forward<M>(m), std::forward<Pred>(pred)) ? hana::just(*m) : hana::nothing;
-    }
-};
+        template <typename X>
+        static constexpr decltype(auto) apply(std::experimental::optional<std::experimental::optional<X>>& x) {
+            return x ? *x : std::experimental::nullopt;
+        }
 
-template <>
-struct any_of_impl<ext::std::Optional> {
-    template <typename M, typename Pred>
-    static constexpr decltype(auto) apply(M&& m, Pred&& p) {
-        return m && p(*m);
-    }
-};
+        template <typename X>
+        static constexpr decltype(auto) apply(const std::experimental::optional<std::experimental::optional<X>>& x) {
+            return x ? *x : std::experimental::nullopt;
+        }
 
+        template <typename X> static constexpr decltype(auto) apply(X&& x) {
+            return std::forward<X>(x);
+        }
+    };
+
+    template <> struct concat_impl<ext::std::experimental::Optional> {
+        template <typename X, typename Y> static constexpr auto apply(X&& x, Y&& y) {
+            return x ? std::forward<X>(x) : std::forward<Y>(y);
+        }
+    };
+
+    template <> struct empty_impl<ext::std::experimental::Optional> {
+        static constexpr auto apply() {
+            return std::experimental::nullopt;
+        }
+    };
+
+    template <> struct find_if_impl<ext::std::experimental::Optional> {
+        template <typename M, typename Pred> static constexpr decltype(auto) apply(M&& m, Pred&& pred) {
+            return hana::any_of(std::forward<M>(m), std::forward<Pred>(pred)) ? hana::just(*m) : hana::nothing;
+        }
+    };
+
+    template <> struct any_of_impl<ext::std::experimental::Optional> {
+        template <typename M, typename Pred> static constexpr decltype(auto) apply(M&& m, Pred&& p) {
+            return m && p(*m);
+        }
+    };
 }
 
 #endif // LASTFM_HANA_OPTIONAL

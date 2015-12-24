@@ -34,7 +34,8 @@ TEST_CASE("venues_deserialise") {
         REQUIRE(boost::size(doc) == 1);
 
         std::vector<lastfmpp::venue> venues;
-        REQUIRE_NOTHROW(venues = lastfmpp::transform_select<std::vector<lastfmpp::venue>>("results.venuematches.venue.*")(doc));
+        REQUIRE_NOTHROW(
+            venues = lastfmpp::transform_select<std::vector<lastfmpp::venue>>("results.venuematches.venue.*")(doc));
 
         REQUIRE(venues.size() == 50);
         CHECK(venues.front().location().city() == "Moscow");

@@ -20,11 +20,11 @@ struct artist;
 struct LASTFM_EXPORT event {
     event() = default;
 
-    std::string_view id() const;
-    void id(std::string_view id);
+    std::experimental::string_view id() const;
+    void id(std::experimental::string_view id);
 
-    std::string_view name() const;
-    void name(std::string_view name);
+    std::experimental::string_view name() const;
+    void name(std::experimental::string_view name);
 
     const std::vector<artist>& artists() const;
     void artists(std::vector<artist> artists);
@@ -35,8 +35,8 @@ struct LASTFM_EXPORT event {
     time_point start_date() const;
     void start_date(time_point start_date);
 
-    std::string_view description() const;
-    void description(std::string_view description);
+    std::experimental::string_view description() const;
+    void description(std::experimental::string_view description);
 
     const std::vector<image>& images() const;
     void images(std::vector<image> images);

@@ -24,8 +24,8 @@ struct wiki;
 struct LASTFM_EXPORT tag {
     tag() = default;
 
-    std::string_view name() const;
-    void name(std::string_view);
+    std::experimental::string_view name() const;
+    void name(std::experimental::string_view);
 
     const uri_t& url() const;
     void url(uri_t);
@@ -44,47 +44,56 @@ struct LASTFM_EXPORT tag {
 
     // api methods
 
-    static pplx::task<tag> get_info(service&, std::string_view name);
+    static pplx::task<tag> get_info(service&, std::experimental::string_view name);
     pplx::task<tag> get_info(service&) const;
 
-    static pplx::task<std::vector<tag>> get_similar(service&, std::string_view name);
+    static pplx::task<std::vector<tag>> get_similar(service&, std::experimental::string_view name);
     pplx::task<std::vector<tag>> get_similar(service&) const;
 
-    static pplx::task<std::vector<album>> get_top_albums(service&, std::string_view name,
-                                                         std::optional<int> limit = std::nullopt,
-                                                         std::optional<int> page = std::nullopt);
-    pplx::task<std::vector<album>> get_top_albums(service&, std::optional<int> limit = std::nullopt,
-                                                  std::optional<int> page = std::nullopt) const;
+    static pplx::task<std::vector<album>>
+    get_top_albums(service&, std::experimental::string_view name,
+                   std::experimental::optional<int> limit = std::experimental::nullopt,
+                   std::experimental::optional<int> page = std::experimental::nullopt);
+    pplx::task<std::vector<album>>
+    get_top_albums(service&, std::experimental::optional<int> limit = std::experimental::nullopt,
+                   std::experimental::optional<int> page = std::experimental::nullopt) const;
 
-    static pplx::task<std::vector<artist>> get_top_artists(service&, std::string_view name,
-                                                           std::optional<int> limit = std::nullopt,
-                                                           std::optional<int> page = std::nullopt);
-    pplx::task<std::vector<artist>> get_top_artists(service&, std::optional<int> limit = std::nullopt,
-                                                    std::optional<int> page = std::nullopt) const;
+    static pplx::task<std::vector<artist>>
+    get_top_artists(service&, std::experimental::string_view name,
+                    std::experimental::optional<int> limit = std::experimental::nullopt,
+                    std::experimental::optional<int> page = std::experimental::nullopt);
+    pplx::task<std::vector<artist>>
+    get_top_artists(service&, std::experimental::optional<int> limit = std::experimental::nullopt,
+                    std::experimental::optional<int> page = std::experimental::nullopt) const;
 
     static pplx::task<std::vector<tag>> get_top_tags(service&);
 
-    static pplx::task<std::vector<track>> get_top_tracks(service&, std::string_view name,
-                                                         std::optional<int> limit = std::nullopt,
-                                                         std::optional<int> page = std::nullopt);
-    pplx::task<std::vector<track>> get_top_tracks(service&, std::optional<int> limit = std::nullopt,
-                                                  std::optional<int> page = std::nullopt) const;
+    static pplx::task<std::vector<track>>
+    get_top_tracks(service&, std::experimental::string_view name,
+                   std::experimental::optional<int> limit = std::experimental::nullopt,
+                   std::experimental::optional<int> page = std::experimental::nullopt);
+    pplx::task<std::vector<track>>
+    get_top_tracks(service&, std::experimental::optional<int> limit = std::experimental::nullopt,
+                   std::experimental::optional<int> page = std::experimental::nullopt) const;
 
-    static pplx::task<std::vector<artist>>
-    get_weekly_artist_chart(service&, std::string_view name,
-                            std::optional<std::tuple<time_point, time_point>> date_range = std::nullopt,
-                            std::optional<int> limit = std::nullopt);
-    pplx::task<std::vector<artist>>
-    get_weekly_artist_chart(service&, std::optional<std::tuple<time_point, time_point>> date_range = std::nullopt,
-                            std::optional<int> limit = std::nullopt) const;
+    static pplx::task<std::vector<artist>> get_weekly_artist_chart(
+        service&, std::experimental::string_view name,
+        std::experimental::optional<std::tuple<time_point, time_point>> date_range = std::experimental::nullopt,
+        std::experimental::optional<int> limit = std::experimental::nullopt);
+    pplx::task<std::vector<artist>> get_weekly_artist_chart(
+        service&,
+        std::experimental::optional<std::tuple<time_point, time_point>> date_range = std::experimental::nullopt,
+        std::experimental::optional<int> limit = std::experimental::nullopt) const;
 
-    static pplx::task<std::vector<std::tuple<time_point, time_point>>> get_weekly_chart_list(service&, std::string_view name);
+    static pplx::task<std::vector<std::tuple<time_point, time_point>>>
+    get_weekly_chart_list(service&, std::experimental::string_view name);
     pplx::task<std::vector<std::tuple<time_point, time_point>>> get_weekly_chart_list(service&) const;
 
-    static pplx::task<std::vector<tag>> search(service&, std::string_view name, std::optional<int> limit = std::nullopt,
-                                               std::optional<int> page = std::nullopt);
-    pplx::task<std::vector<tag>> search(service&, std::optional<int> limit = std::nullopt,
-                                        std::optional<int> page = std::nullopt) const;
+    static pplx::task<std::vector<tag>> search(service&, std::experimental::string_view name,
+                                               std::experimental::optional<int> limit = std::experimental::nullopt,
+                                               std::experimental::optional<int> page = std::experimental::nullopt);
+    pplx::task<std::vector<tag>> search(service&, std::experimental::optional<int> limit = std::experimental::nullopt,
+                                        std::experimental::optional<int> page = std::experimental::nullopt) const;
 
   private:
     std::string m_name;

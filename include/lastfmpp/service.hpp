@@ -11,6 +11,7 @@
 #include <string>
 #include <memory>
 #include <vector>
+#include <cstdlib>
 
 #include <pplx/pplxtasks.h>
 
@@ -27,12 +28,14 @@ struct service_access;
 
 class LASTFM_EXPORT service {
   public:
-    explicit service(std::string_view api_key, std::string_view shared_secret,
-                     std::optional<std::string_view> session_key = std::nullopt);
+    explicit service(
+        std::experimental::string_view api_key, std::experimental::string_view shared_secret,
+        std::experimental::optional<std::experimental::string_view> session_key = std::experimental::nullopt);
 
     ~service();
 
-    pplx::task<std::string> get_mobile_session(std::string_view username, std::string_view password);
+    pplx::task<std::string> get_mobile_session(std::experimental::string_view username,
+                                               std::experimental::string_view password);
 
   private:
     struct impl;

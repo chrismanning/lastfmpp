@@ -50,8 +50,8 @@ TEST_CASE("album_deserialise") {
         REQUIRE(album.images().size() > 0);
         CHECK(album.images().back().size() != lastfmpp::image_size::small);
 
-        CHECK(album.release_date() == 28_d/5/2004);
+        CHECK(album.release_date() == 28_d / 5 / 2004);
 
-        CHECK(truncate<days>(album.wiki().published()) == 23_d/12/2008);
+        CHECK(trunc<days>(album.wiki().published()) == 23_d / 12 / 2008);
     }
 }

@@ -34,8 +34,8 @@ struct to_doc_impl {
 }
 static constexpr to_doc_impl to_doc{};
 
-service::impl::impl(std::string_view api_key, std::string_view shared_secret,
-                    std::optional<std::string_view> session_key)
+service::impl::impl(std::experimental::string_view api_key, std::experimental::string_view shared_secret,
+                    std::experimental::optional<std::experimental::string_view> session_key)
     : cas_client(uri_t{base_url.to_string()}), api_key(api_key), shared_secret(shared_secret) {
     assert(!api_key.empty());
     assert(!shared_secret.empty());
@@ -44,26 +44,27 @@ service::impl::impl(std::string_view api_key, std::string_view shared_secret,
     }
 }
 
-pplx::task<jbson::document> service::impl::get(std::string_view method, params_t params) {
+pplx::task<jbson::document> service::impl::get(std::experimental::string_view method, params_t params) {
     auto query = uri_builder().set_query(make_query(make_params(method, std::move(params), false))).to_string();
     return cas_client.request(web::http::methods::GET, query).then(response_to_u8).then(to_doc);
 }
 
-pplx::task<jbson::document> service::impl::post_session(std::string_view method, params_t params) {
+pplx::task<jbson::document> service::impl::post_session(std::experimental::string_view method, params_t params) {
     params.emplace_back("sk", get_session_key());
     return post(method, std::move(params));
 }
 
-pplx::task<jbson::document> service::impl::post(std::string_view method, params_t params) {
+pplx::task<jbson::document> service::impl::post(std::experimental::string_view method, params_t params) {
     auto query = make_query(make_params(method, std::move(params), true));
     return cas_client.request(web::http::methods::POST, "", query, U("application/x-www-form-urlencoded"))
         .then(response_to_u8)
         .then(to_doc);
 }
 
-encoded_params_t service::impl::make_params(std::string_view method, params_t params, bool needs_signature) {
+encoded_params_t service::impl::make_params(std::experimental::string_view method, params_t params,
+                                            bool needs_signature) {
     params.emplace_back("api_key", api_key);
-    params.emplace_back("method", method);
+    params.emplace_back("method", method.to_string());
 
     auto encoded_params = transform_copy(std::move(params), [](auto&& param) {
         return hana::transform(std::forward<decltype(param)>(param), [](auto&& query) {
@@ -109,7 +110,7 @@ std::string service::impl::flatten(const params_t& params) {
     });
 }
 
-void service::impl::set_session_key(std::string_view sk) {
+void service::impl::set_session_key(std::experimental::string_view sk) {
     std::lock_guard<decltype(session_mu)> l(session_mu);
     session_key = sk.to_string();
 }

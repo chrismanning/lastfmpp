@@ -18,31 +18,28 @@
 
 namespace lastfmpp::detail {
 
-template <typename TimePoint>
-struct _parse_time_point {
-    auto operator()(std::string str) const {
-        static constexpr auto fmts = {"%a, %d %b %Y %H:%M:%S", "%d %b %Y, %H:%M", "%d %b %Y"};
-        std::tm tm{0};
-        std::istringstream ss{str};
-        auto fmt = std::begin(fmts);
+    template <typename TimePoint> struct _parse_time_point {
+        auto operator()(std::string str) const {
+            static constexpr auto fmts = {"%a, %d %b %Y %H:%M:%S", "%d %b %Y, %H:%M", "%d %b %Y"};
+            std::tm tm{0};
+            std::istringstream ss{str};
+            auto fmt = std::begin(fmts);
 
-        do {
-            tm = {0};
-            ss.clear();
-            ss.seekg(0);
-            ss >> std::get_time(&tm, *fmt);
-        } while(ss.fail() && ++fmt != std::end(fmts));
+            do {
+                tm = {0};
+                ss.clear();
+                ss.seekg(0);
+                ss >> std::get_time(&tm, *fmt);
+            } while(ss.fail() && ++fmt != std::end(fmts));
 
-        if(ss.fail()) {
-            BOOST_THROW_EXCEPTION(std::runtime_error("date/time parse failed"));
+            if(ss.fail()) {
+                BOOST_THROW_EXCEPTION(std::runtime_error("date/time parse failed"));
+            }
+            return date::floor<typename TimePoint::duration>(TimePoint::clock::from_time_t(std::mktime(&tm)));
         }
-        return date::floor<typename TimePoint::duration>(TimePoint::clock::from_time_t(std::mktime(&tm)));
-    }
-};
+    };
 
-template <typename TimePoint>
-auto constexpr parse_time_point = _parse_time_point<TimePoint>{};
-
+    template <typename TimePoint> auto constexpr parse_time_point = _parse_time_point<TimePoint>{};
 }
 
 namespace std {

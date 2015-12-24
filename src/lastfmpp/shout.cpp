@@ -9,19 +9,19 @@
 
 namespace lastfmpp {
 
-std::string_view shout::author() const {
+std::experimental::string_view shout::author() const {
     return m_author;
 }
 
-void shout::author(std::string_view author) {
+void shout::author(std::experimental::string_view author) {
     m_author = author.to_string();
 }
 
-std::string_view shout::body() const {
+std::experimental::string_view shout::body() const {
     return m_body;
 }
 
-void shout::body(std::string_view body) {
+void shout::body(std::experimental::string_view body) {
     m_body = body.to_string();
 }
 

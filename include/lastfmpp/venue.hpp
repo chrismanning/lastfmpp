@@ -21,11 +21,11 @@ struct event;
 struct LASTFM_EXPORT venue {
     venue() = default;
 
-    std::string_view id() const;
-    void id(std::string_view id);
+    std::experimental::string_view id() const;
+    void id(std::experimental::string_view id);
 
-    std::string_view name() const;
-    void name(std::string_view name);
+    std::experimental::string_view name() const;
+    void name(std::experimental::string_view name);
 
     const uri_t& url() const;
     void url(uri_t url);
@@ -41,24 +41,28 @@ struct LASTFM_EXPORT venue {
 
     // api methods
 
-    static pplx::task<std::vector<event>> get_events(service&, std::string_view venue_id, bool festivals_only = false);
+    static pplx::task<std::vector<event>> get_events(service&, std::experimental::string_view venue_id,
+                                                     bool festivals_only = false);
     pplx::task<std::vector<event>> get_events(service&, bool festivals_only = false) const;
 
-    static pplx::task<std::vector<event>> get_past_events(service&, std::string_view venue_id,
-                                                          bool festivals_only = false,
-                                                          std::optional<int> limit = std::nullopt,
-                                                          std::optional<int> page = std::nullopt);
-    pplx::task<std::vector<event>> get_past_events(service&, bool festivals_only = false,
-                                                   std::optional<int> limit = std::nullopt,
-                                                   std::optional<int> page = std::nullopt) const;
+    static pplx::task<std::vector<event>>
+    get_past_events(service&, std::experimental::string_view venue_id, bool festivals_only = false,
+                    std::experimental::optional<int> limit = std::experimental::nullopt,
+                    std::experimental::optional<int> page = std::experimental::nullopt);
+    pplx::task<std::vector<event>>
+    get_past_events(service&, bool festivals_only = false,
+                    std::experimental::optional<int> limit = std::experimental::nullopt,
+                    std::experimental::optional<int> page = std::experimental::nullopt) const;
 
-    static pplx::task<std::vector<venue>> search(service&, std::string_view venue_id,
-                                                 std::optional<std::string_view> country = std::nullopt,
-                                                 std::optional<int> limit = std::nullopt,
-                                                 std::optional<int> page = std::nullopt);
-    pplx::task<std::vector<venue>> search(service&, std::optional<std::string_view> country = std::nullopt,
-                                          std::optional<int> limit = std::nullopt,
-                                          std::optional<int> page = std::nullopt) const;
+    static pplx::task<std::vector<venue>>
+    search(service&, std::experimental::string_view venue_id,
+           std::experimental::optional<std::experimental::string_view> country = std::experimental::nullopt,
+           std::experimental::optional<int> limit = std::experimental::nullopt,
+           std::experimental::optional<int> page = std::experimental::nullopt);
+    pplx::task<std::vector<venue>>
+    search(service&, std::experimental::optional<std::experimental::string_view> country = std::experimental::nullopt,
+           std::experimental::optional<int> limit = std::experimental::nullopt,
+           std::experimental::optional<int> page = std::experimental::nullopt) const;
 
   private:
     std::string m_id;

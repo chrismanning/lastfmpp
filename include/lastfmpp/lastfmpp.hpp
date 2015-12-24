@@ -15,26 +15,21 @@
 
 #include <lastfmpp/exports.hpp>
 
-namespace std {
-namespace experimental {}
-using namespace experimental;
-}
-
 namespace lastfmpp {
 
-constexpr std::string_view operator""_sv(const char* str, size_t len) {
+constexpr std::experimental::string_view operator""_sv(const char* str, size_t len) {
     return {str, len};
 }
 
-constexpr std::wstring_view operator""_sv(const wchar_t* str, size_t len) {
+constexpr std::experimental::wstring_view operator""_sv(const wchar_t* str, size_t len) {
     return {str, len};
 }
 
-constexpr std::u16string_view operator""_sv(const char16_t* str, size_t len) {
+constexpr std::experimental::u16string_view operator""_sv(const char16_t* str, size_t len) {
     return {str, len};
 }
 
-constexpr std::u32string_view operator""_sv(const char32_t* str, size_t len) {
+constexpr std::experimental::u32string_view operator""_sv(const char32_t* str, size_t len) {
     return {str, len};
 }
 
