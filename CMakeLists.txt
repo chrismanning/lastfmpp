@@ -72,7 +72,7 @@ add_dependencies(${LASTFM} hana_${PROJECT_NAME})
 ExternalProject_Add(
     date_${PROJECT_NAME}
     GIT_REPOSITORY https://github.com/HowardHinnant/date.git
-    GIT_TAG ""
+    GIT_TAG bf5fbe26ff125280e4021d94cc23df1b2f4af92f
     TIMEOUT 10
     UPDATE_COMMAND ""
     CONFIGURE_COMMAND ""
